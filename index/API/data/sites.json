@@ -11,13 +11,13 @@
             {
                 "name": "中国站",
                 "icon": "./assets/icon.ico",
-                "url": "index/CN-COM/index.html",
+                "url": "https://WenTianPlay.com/index/CN-COM/index.html",
                 "describe": "文天玩WenTianPlay中国站-文天玩网络科技有限公司（未停止更新哦)（可以说成会一边托管在Github上面进行管理，一边在服务器上管理任何一切数据，半使用状态）"
             },
             {
                 "name": "数据站",
                 "icon": "./assets/icon.ico",
-                "url": "index/NET-COM/index.html/",
+                "url": "https://WenTianPlay.com/index/NET-COM/index.html/",
                 "describe": "文天玩WenTianPlay数据站-文天玩网络科技有限公司（半停止半更新）（可以说成会一直在服务器上进行管理，并而进行中国备案，优化探险者游戏体验，全使用状态）"
             }
         ]
@@ -148,7 +148,7 @@
             {
                 "name": "全职攻略教程兼邮箱QQ交流群导航站",
                 "icon": "./assets/siteIcons/MC.png",
-                "url":"index/NET/index.html",
+                "url":"https://WenTianPlay.com/index/NET/index.html",
                 "describe": "全职攻略教程兼祖帝邮箱QQ交流群导航站🐍"
             }
         ]
@@ -159,7 +159,7 @@
             {
                 "name": "文天玩WenTianPlay",
                 "icon": "./assets/icon.ico",
-                    "url": "index/CU/index.html",
+                    "url": "https://WenTianPlay.com/index/CU/index.html",
                 "describe": "请联系或加入我们-文天玩WenTianPlay网络科技有限公司"
             },
             {
@@ -171,7 +171,7 @@
             {
                 "name": "全职攻略教程兼邮箱QQ交流群导航站",
                 "icon": "./assets/siteIcons/MC.png",
-                "url": "index/NET/index.html",
+                "url": "https://WenTianPlay.com/index/NET/index.html",
                 "describe": "全职攻略教程兼祖帝邮箱QQ交流群导航站🐍"
             },
             {
