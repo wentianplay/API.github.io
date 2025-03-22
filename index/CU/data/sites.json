@@ -5,7 +5,7 @@
             {
                 "name": "导航站",
                 "icon": "./assets/icon.ico",
-                "url": "index/API/index.html/",
+                "url": "https://WenTianPlay.com/index/API/index.html/",
                 "describe": "文天玩WenTian Play | 官方导航网站🐍-文天玩网络科技有限公司"
             },
             {
@@ -17,19 +17,19 @@
             {
                 "name": "中国站",
                 "icon": "./assets/icon.ico",
-                "url": "index/CN-COM/index.html/",
+                "url": "https://WenTianPlay.com/index/CN-COM/index.html/",
                 "describe": "文天玩WenTianPlay中国站-文天玩网络科技有限公司"
             },
             {
                 "name": "数据站",
                 "icon": "./assets/icon.ico",
-                "url": "index/NET-COM/index.html/",
+                "url": "https://WenTianPlay.com/index/NET-COM/index.html/",
                 "describe": "文天玩WenTianPlay数据站-文天玩网络科技有限公司"
             },
             {
                 "name": "交流站",
                 "icon": "./assets/icon.ico",
-                "url": "index/CU/index.html/",
+                "url": "https://WenTianPlay.com/index/CU/index.html/",
                 "describe": "文天玩WenTianPlay交流站-文天玩网络科技有限公司"
            }
         ]
