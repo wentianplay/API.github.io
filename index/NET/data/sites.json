@@ -1,0 +1,292 @@
+{
+    "官方导航网站直达": {
+        "icon": "",
+        "data": [
+            {
+                "name": "导航站",
+                "icon": "./assets/icon.ico",
+                "url": "index/API/index.html/",
+                "describe": "文天玩WenTian Play | 官方导航网站🐍-文天玩网络科技有限公司"
+            }
+        ]
+    },
+    "官方网站导航直达": {
+        "icon": "",
+        "data": [
+            {
+                "name": "国际站",
+                "icon": "./assets/icon.ico",
+                "url": "index.html/",
+                "describe": "文天玩WenTianPlay国际站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "中国站",
+                "icon": "./assets/icon.ico",
+                "url": "index/CN-COM/index.html/",
+                "describe": "文天玩WenTianPlay中国站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "数据站",
+                "icon": "./assets/icon.ico",
+                "url": "index/NET-COM/index.html/",
+                "describe": "文天玩WenTianPlay数据站-文天玩网络科技有限公司"
+           }
+        ]
+    },
+    "官方邮箱导航直达": {
+        "icon": "",
+        "data": [
+            {
+                "name": "邮箱联系(QQ)",
+                "icon": "https://wentianplay.com/assets/siteIcons/mail_QQ.png",
+                "url": "mailto:wentianplay@qq.com",
+                "describe": "苏天彬(苏文飞)-QQ邮箱"
+            },
+            {
+                "name": "邮箱联系(163网易)",
+                "icon": "https://wentianplay.com/assets/siteIcons/163.png",
+                "url": "mailto:wentianplay@163.com",
+                "describe": "苏天彬(苏文飞)-163网易邮箱"
+            },
+            {
+                "name": "邮箱联系(foxmail)",
+                "icon": "https://wentianplay.com/assets/siteIcons/foxmail.ico",
+                "url": "mailto:wentianplay@foxmail.com",
+                "describe": "苏天彬(苏文飞)-foxmail邮箱"
+            },
+            {
+                "name": "邮箱联系(Outlook)",
+                "icon": "https://wentianplay.com/assets/siteIcons/outlook.ico",
+                "url": "mailto:wentianplay@outlook.com",
+                "describe": "苏天彬(苏文飞)-Outlook邮箱"
+            },
+            {
+                "name": "邮箱联系(Gmail)",
+                "icon": "https://wentianplay.com/assets/siteIcons/mall-Gmail.png",
+                "url": "mailto:wentianplay@Gmail.com",
+                "describe": "苏天彬(苏文飞)-Gmail邮箱"
+            }
+        ]
+    },
+    "官方的QQ交流群": {
+        "icon": "",
+        "data": [
+            {
+                "name": "天彬-创世纪元",
+                "icon": "./assets/siteIcons/favicon.png",
+                "url": "https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=N09UGMIR6UgcSJ7NyzGRUq1a4PKKn5Zf&authKey=7wGHuHDN3lAOCcoRYhGMU19iht64LrGtpvMEn9y4umslwPOToFTV62ZMbLmLUPZW&noverify=0",
+                "describe": "[001]粉丝群(兼《天彬》官方交流群)"
+            },
+            {
+                "name": "天彬-远古纪元",
+                "icon": "./assets/siteIcons/favicon.png",
+                "url": "https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=3iT3AVBD-57QRVq3hKbjYz1eHzj_Gnl1&authKey=vlG%2Bob4Zh0J8XhlffHLwe9Jw5YT6hvIj67I%2BwvFKLEA7gbSHiCbJxNgnP1QivIQk&noverify=0",
+                "describe": "[002]粉丝群(兼《天彬》官方交流群)"
+            },
+            {
+                "name": "文天星辰-风云天下",
+                "icon": "./assets/siteIcons/favicon.png",
+                "url": "https://qm.qq.com/cgi-bin/qm/qr?authKey=B%2BPsNtTtO%2FdqAslcBwF30TojYYc0uL1KWte5T7hmzGDvd6lRBLOXhSKSqbxrF%2BvL&k=pbE1q-voxeRJ5gF_E4GppDfHOIbzEOSF&noverify=0",
+                "describe": "[003]粉丝群(兼《天彬》官方交流群)"
+            },
+            {
+                "name": "文天星辰-星辰曙光",
+                "icon": "./assets/siteIcons/favicon.png",
+                "url": "https://qm.qq.com/cgi-bin/qm/qr?authKey=g7EComNgxqkpa%2BnUJ6oRUmuzAzAQB%2BkeSXJCCNGoM2GOJzf5Ek%2BU9CVFHbjTJf6I&k=fqDhuSIER1LAvfchGKqhdZqUeII77dHp&noverify=0",
+                "describe": "[004]粉丝群(兼《天彬》官方交流群)"
+            },
+            {
+                "name": "文天星辰-探险之旅",
+                "icon": "./assets/siteIcons/favicon.png",
+                "url": "http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=mf_VuUiLd3kycuZUoNTH1NyvAtsk8RjP&authKey=AQKuG9HQXztCNSNHKyNkyzFvIsvXYtCbenqs7tTFmlQbIgnNMJf1yuVFUw%2F8hmJR&noverify=0",
+                "describe": "[005]粉丝群(兼《天彬》官方交流群)"
+            }
+        ]
+    },
+    "官方群组交流频道": {
+        "icon": "",
+        "data": [
+            {
+                
+                "name": "KOOK-天彬 频道",
+                "icon": "./assets/siteIcons/kook.png",
+                "url": "https://www.kookapp.cn/app/invite/6GcFWj",
+                "describe": "KOOK语音是一款免费无广告的语音沟通工具，支持PC端、安卓端、IOS端、网页端设备，无论你在什么地方，都可以畅快沟通。KOOK里有各种主题的服务器，你也可以根据自己的喜好，创造..."
+            },
+            {
+                "name": "Discord-天彬 频道",
+                "icon": "./assets/siteIcons/Discord.png",
+                "url": "https://discord.gg/CwJqM27Nb7",
+                "describe": "Discord 是一款通讯工具，可以帮助用户通过文本、语音和视频聊天与社区和朋友保持连接。它适用于 Windows、macOS、Linux、iOS 和 Android 设备。该应用程序是免费的，安全性高，既能在台式电脑上使用，也能在手机上使用。今天就从 Google Playstore 或 Apple App Store 等受信任的来源下载最好的通过视频、语音沟通这种的话。"
+            },
+            {
+                "name": "Telegram 文天玩WenTianPlay",
+                "icon": "./assets/siteIcons/Telegram.png",
+                "url": "https://TG.WenTianPlay.COM",
+                "describe": "Telegram 文天玩WenTianPlay"
+            }
+        ]
+    },
+    "全职攻略教程兼投稿": {
+        "icon": "",
+        "data": [
+            {
+            
+                "name": "正式入驻B站",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/lOmeS8s",
+                "describe": "【【苏天彬(苏文飞)】60秒了解苏天彬(苏文飞)中号正式入驻B站（在乡下的小文飞）-哔哩哔哩】 https://b23.tv/lOmeS8s "
+            },
+            {
+                "name": "文天星辰都市公园",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/Ly4Z4lP",
+                "describe": "【【苏天彬(苏文飞)】我的世界：文天星辰都市公园，终于把初始的建筑建完了，来了几个人？太舒服了。-哔哩哔哩】 https://b23.tv/Ly4Z4lP"
+            },
+            {
+                "name": "恐龙部落",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/OKX7Mcw",
+                "describe": "【【苏天彬(苏文飞)】恐龙部落：当老玩家回归会发生什么？-哔哩哔哩】 https://b23.tv/OKX7Mcw"
+            },
+            {
+                "name": "恐龙部落",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/OKX7Mcw",
+                "describe": "【【苏天彬(苏文飞)】恐龙部落：当老玩家回归会发生什么？-哔哩哔哩】 https://b23.tv/OKX7Mcw"
+            },
+            {
+                "name": "《天彬》",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/k2U5hZF",
+                "describe": "【【苏天彬(苏文飞)】《天彬》🐍-哔哩哔哩】 https://b23.tv/k2U5hZF"
+            },
+            {
+                "name": "《天彬》文天玩WenTian Play",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/z1wkoVg",
+                "describe": "【【苏天彬(苏文飞)】我的世界：【《天彬》文天玩WenTian Play】服务器开荒！！！-哔哩哔哩】 https://b23.tv/z1wkoVg"
+            },
+            {
+                "name": "明日之后",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/XvJTBMY",
+                "describe": "【【苏天彬(苏文飞)】明日之后：2018年明日之后老玩家回归玩2024年明日之后新号开荒-哔哩哔哩】 https://b23.tv/XvJTBMY"
+            },
+            {
+                "name": "3000倍掉落生存",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/ZxtU6rC",
+                "describe": "【【苏天彬】《我的世界》3000倍掉落生存！妈妈说，这个视频多少点赞，就给我多少压岁钱。-哔哩哔哩】 https://b23.tv/ZxtU6rC"
+            },
+            {
+                "name": "我的世界攻略教程",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/gttXaBa",
+                "describe": "【【苏天彬】《我的世界》攻略教程-哔哩哔哩】 https://b23.tv/gttXaBa"
+            },
+            {
+                "name": "零大陆经典回忆",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/DlOQDHr",
+                "describe": "【【苏天彬】《我的世界》零大陆经典回忆-哔哩哔哩】 https://b23.tv/DlOQDHr"
+            },
+            {
+                "name": "一个方块的空岛生存！",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/QAjdkDP",
+                "describe": "【【苏天彬】《Minecraft》一个方块的空岛生存！第一期-哔哩哔哩】 https://b23.tv/QAjdkDP"
+            },
+            {
+                "name": "剑与王国",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/JU48THV",
+                "describe": "【【苏天彬】《Minecraft》剑与王国 第一期-哔哩哔哩】 https://b23.tv/JU48THV"
+            },
+            {
+                "name": "银河系与仙女座星系相撞，话说新的星系叫什么好呢？",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/YvByEfc",
+                "describe": "【【苏天彬】《宇宙沙盘》银河系与仙女座星系相撞，话说新的星系叫什么好呢？-哔哩哔哩】 https://b23.tv/YvByEfc"
+            },
+            {
+                "name": "实时视图-行星、卫星、航天器",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/DxD3tzj",
+                "describe": "【【苏天彬】《宇宙沙盘》实时视图-行星、卫星、航天器-哔哩哔哩】 https://b23.tv/DxD3tzj"
+            },
+            {
+                "name": "当我把三体搬到太阳系会发生什么?",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://b23.tv/ypZbDyf",
+                "describe": "【【苏天彬】《宇宙沙盘》当我把三体搬到太阳系会发生什么?-哔哩哔哩】 https://b23.tv/ypZbDyf"
+            },
+            {
+                "name": "这是一款即时战略游戏，目标是祝我生日快乐！！！",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://www.bilibili.com/video/BV1QFXXYMESU",
+                "describe": "【【苏天彬】《Planet S》这是一款即时战略游戏，目标是祝我生日快乐！！！】 https://www.bilibili.com/video/BV1QFXXYMESU"
+            }
+        ]
+    },
+    "星野Ai的崽崽投稿": {
+        "icon": "",
+        "data": [
+            {
+            
+                "name": "苏天彬",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "暂时未公开",
+                "describe": "苏天彬-星野Ai"
+            },
+            {
+                "name": "苏文彬",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/onidvI0VTeu",
+                "describe": "苏文彬-星野Ai"
+            },
+            {
+                "name": "苏文天",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/jcr6NjSMcDl",
+                "describe": "苏文天-星野Ai"
+            },
+            {
+                "name": "洛白喵",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/kiRbRGskGxt",
+                "describe": "洛白喵-星野Ai"
+            },
+            {
+                "name": "苏子辰",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/oP2YE49DdsV",
+                "describe": "苏子辰-星野Ai"
+            },
+            {
+                "name": "苏泽",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/ndUQr04xkOn",
+                "describe": "苏泽-星野Ai"
+            },
+            {
+                "name": "苏川",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/iey4ybk1HOI",
+                "describe": "苏川-星野Ai"
+            },
+            {
+                "name": "苏宁",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/jdqtWeua1Lz",
+                "describe": "苏宁-星野Ai"
+            },
+            {
+                "name": "苏酥",
+                "icon": "./assets/siteIcons/Ai.png",
+                "url": "https://short.xingyeai.com/ilCDUEPFXrp",
+                "describe": "苏酥-星野Ai"
+            }
+        ]
+    }
+}

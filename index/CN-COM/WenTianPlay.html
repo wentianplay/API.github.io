@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+ <script>
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener("copy", function(e) {
+            e.preventDefault();
+        });
+    </script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文天玩WenTianPlay团队官方网站</title>
+  <link rel="icon" href="index/CN-COM/assets/icon.ico" type="image/x-icon">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      position: relative;
+      font-family: 'San Francisco', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      background: url('index/CN-COM/WTP.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container {
+      width: 90%;
+      margin: 0 auto;
+    }
+    .scrolling-nav {
+      background-color: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(10px);
+      padding: 10px 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-radius: 10px;
+    }
+
+    .scrolling-nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+      margin: 0;
+      padding: 0;
+      flex-wrap: wrap;
+    }
+
+    .scrolling-nav li {
+      display: inline-block;
+      margin: 5px;
+    }
+
+    .scrolling-nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 0.9rem;
+      padding: 8px 12px;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
+    }
+    @media (max-width: 768px) {
+      .scrolling-nav a {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
+    }
+
+    .scrolling-nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2rem;
+      padding: 2rem 0;
+      flex-wrap: wrap;
+    }
+
+    .carousel {
+      flex: 1 1 600px;
+      min-width: 300px;
+      overflow: hidden;
+      position: relative;
+      border-radius: 10px;
+    }
+
+    .carousel-images {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-images a.carousel-slide {
+      display: block;
+      width: 100%;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .carousel-images img {
+      width: 100%;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.5), transparent);
+      color: #fff;
+      padding: 10px;
+      font-size: 1rem;
+      text-align: center;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
+
+    .carousel button.prev,
+    .carousel button.next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: transparent;
+      border: none;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease;
+      z-index: 5;
+    }
+
+    .carousel button.prev:hover,
+    .carousel button.next:hover {
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel button.prev {
+      left: 15px;
+    }
+
+    .carousel button.next {
+      right: 15px;
+    }
+
+    .news {
+      flex: 1 1 400px;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(8px);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .partners-logos {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 20px 0;
+    }
+
+    .partners-logos img {
+      width: 150px;
+      height: auto;
+      transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+      .partners-logos img {
+        width: 120px;
+      }
+    }
+
+    .news h2 {
+      font-size: 1.8rem;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid rgba(44, 62, 80, 0.1);
+    }
+
+    .news ul {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .news li {
+      background: rgba(255, 255, 255, 0.6);
+      padding: 1rem;
+      border-radius: 8px;
+      transition: transform 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+   .partners-logos img {
+      width: 200px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .partners-logos img:hover {
+      transform: scale(1.1);
+    }
+
+
+    .news li:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, 0.8);
+    }
+
+    .news a {
+      color: #3498db;
+      font-size: 1.1rem;
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.5rem;
+      text-decoration: none;
+    }
+
+    .news time {
+      display: block;
+      font-size: 0.9rem;
+      color: #7f8c8d;
+      margin-top: 0.3rem;
+    }
+
+    .section {
+      padding: 4rem 0;
+      background-color: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      margin: 30px 0;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .section h2 {
+      font-size: 2rem;
+      color: #333;
+      margin-bottom: 1rem;
+      font-weight: 500;
+    }
+
+    .section p {
+      font-size: 1.1rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+
+    button {
+      background: linear-gradient(135deg, #ff6a00 0%, #ee0979 100%);
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 25px;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+      transform: scale(1.05);
+    }
+
+    footer {
+      background: rgba(44, 62, 80, 0.3);
+      backdrop-filter: blur(10px);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 50px;
+      font-size: 0.9rem;
+      border-radius: 10px;
+    }
+
+    footer p {
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      header .container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .carousel, .news {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+
+      .section {
+        padding: 3rem 0;
+      }
+
+      button {
+        padding: 12px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scrolling-nav">
+    <ul>
+      <li><a href="index/CN-COM/WenTianPlay.html#about">关于游戏</a></li>
+      <li><a href="index/CN-COM/WenTianPlay.html#updates">游戏更新内容</a></li>
+      <li><a href="index/CN-COM/WenTianPlay.html#announcements">游戏公告</a></li>
+      <li><a href="index/CN-COM/WenTianPlay.html#wiki">Wiki</a></li>
+      <li><a href="index/CN-COM/WenTianPlay.html#about-us">关于我们</a></li>
+      <li><a href="index/CN-COM/WenTianPlay.html#play">进入游戏</a></li>
+      <li><a href="index/CN-COM/WenTianPlay.html#contact">联系我们</a></li>
+    </ul>
+  </div>
+  <header>
+    <div class="container">
+      <div class="carousel">
+        <div class="carousel-images">
+          <a href="http://bilibili.wentianplay.com" class="carousel-slide">
+            <img src="./index/CN-COM/WenTianPlay/3.png" alt="Carousel Image 1">
+            <div class="carousel-caption">苏天彬的精彩瞬间</div>
+          </a>
+          <a href="http://bilibili.wentianplay.com" class="carousel-slide">
+            <img src="./index/CN-COM/WenTianPlay/2.png" alt="Carousel Image 2">
+            <div class="carousel-caption">众多玩家齐聚</div>
+          </a>
+          <a href="https://bilibili.wentianplay.com" class="carousel-slide">
+            <img src="./index/CN-COM/WenTianPlay/1.png" alt="Carousel Image 3">
+            <div class="carousel-caption">高TPS带来流畅体验</div>
+          </a>
+        </div>
+        <button class="prev">&#10094;</button>
+        <button class="next">&#10095;</button>
+      </div>
+      <div class="news">
+        <h2>最新新闻</h2>
+        <ul>
+          <li>
+            <a href="index/CN-COM/WenTianPlay.html#">游戏更新公告: 新功能上线！</a>
+            <time>2024-03-20</time>
+          </li>
+          <li>
+            <a href="index/CN-COM/WenTianPlay.html#">即将推出新插件，敬请期待！</a>
+            <time>2024-03-18</time>
+          </li>
+          <li>
+            <a href="index/CN-COM/WenTianPlay.html#">加入我们的Minecraft社区，获得专属福利！</a>
+            <time>2024-03-15</time>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="about" class="section">
+      <div class="section-content">
+        <h2>关于社区</h2>
+        <p>我们的团队致力于提供最好的游戏体验，包括独特的插件和友好的社区。</p>
+        <button onclick="window.location.href='index/NET/index.html'>加入社区</button>
+      </div>
+    </section>
+    
+    <section id="wiki" class="section">
+      <div class="section-content">
+        <h2>游戏Wiki</h2>
+        <p>在这里，你可以找到关于我们游戏的所有详细信息，包括规则、插件、玩法等。</p>
+        <button onclick="window.location.href='index/NET-COM/index.html'">查看Wiki</button>
+      </div>
+    </section>
+
+    <section id="updates" class="section">
+      <div class="section-content">
+        <h2>游戏更新内容</h2>
+        <p>查看我们最新的游戏更新和功能添加。</p>
+      </div>
+    </section>
+
+    <section id="announcements" class="section">
+      <div class="section-content">
+        <h2>游戏公告</h2>
+        <p>查看我们最近的公告，了解服务器活动和重要消息。</p>
+      </div>
+    </section>
+
+    <section id="about-us" class="section">
+      <div class="section-content">
+        <h2>关于我们</h2>
+        <p>我们的团队由一群热爱开发的人组成，我们一直致力于为玩家提供一个公平、公正、愉快的游戏环境。</p>
+        
+ <button onclick="window.location.href='index/NET/team.html'">文天玩团队</button>
+      </div>
+    </section>
+
+    <section id="play" class="section">
+      <div class="section-content">
+        <h2>进入游戏</h2>
+        <p>点击下方按钮，快速进入我们的游戏。</p>
+        <button id="playButton">进入游戏</button>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-content">
+        <h2>联系我们</h2>
+        <p>如果你有任何问题，请通过以下方式联系我们：</p>
+        <ul>
+          <li>邮箱 :<a href="index/NET/index.html">点击联系</a></li>
+          <li>官方QQ群:<a href="index/NET/index.html">点击加入</a></li>
+          <li> </li>
+        </ul>
+      </div>
+  
+      
+      <div class="partners-logos">
+        <h2>合作伙伴</h2>
+        <a href="https://www.bilibili.com/" target="_blank"><img src="index/CN-COM/WenTianPlay/bilibili.png" alt="Partner 1"></a>
+      </div>
+    </section>
+    
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2025 文天玩WenTianPlay团队 | All Rights Reserved</p>
+    </div>
+  </footer>
+  <script>
+    let currentIndex = 0;
+    const carouselImages = document.querySelector('.carousel-images');
+    const totalImages = document.querySelectorAll('.carousel-images a').length;
+  
+    function updateCarousel() {
+      carouselImages.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+  
+    // 自动轮播
+    let autoSlide = setInterval(() => {
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateCarousel();
+    }, 5000);
+  
+    // 左右按钮点击事件
+    document.querySelector('.prev').addEventListener('click', () => {
+      clearInterval(autoSlide);
+      currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+      updateCarousel();
+      autoSlide = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateCarousel();
+      }, 5000);
+    });
+  
+    document.querySelector('.next').addEventListener('click', () => {
+      clearInterval(autoSlide);
+      currentIndex = (currentIndex + 1) % totalImages;
+      updateCarousel();
+      autoSlide = setInterval(() => {
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateCarousel();
+      }, 5000);
+    });
+  
+    // 触摸滑动支持
+    const carousel = document.querySelector('.carousel');
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const threshold = 50;
+  
+    carousel.addEventListener('touchstart', function(e) {
+      touchStartX = e.changedTouches[0].screenX;
+    });
+  
+    carousel.addEventListener('touchend', function(e) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleGesture();
+    });
+  
+    function handleGesture() {
+      if (touchEndX < touchStartX - threshold) {
+        clearInterval(autoSlide);
+        currentIndex = (currentIndex + 1) % totalImages;
+        updateCarousel();
+        autoSlide = setInterval(() => {
+          currentIndex = (currentIndex + 1) % totalImages;
+          updateCarousel();
+        }, 5000);
+      }
+      if (touchEndX > touchStartX + threshold) {
+        clearInterval(autoSlide);
+        currentIndex = (currentIndex - 1 + totalImages) % totalImages;
+        updateCarousel();
+        autoSlide = setInterval(() => {
+          currentIndex = (currentIndex + 1) % totalImages;
+          updateCarousel();
+        }, 5000);
+      }
+    }
+  
+    updateCarousel();
+  
+    // 检测设备并绑定进入游戏按钮的点击事件
+    function detectDevice() {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      const playButton = document.getElementById('playButton');
+      
+      if (!playButton) return;  // 防止找不到按钮时报错
+  
+      playButton.onclick = () => {
+        window.location.href = isMobile
+          ? 'index/NET-COM/team.html'
+          : 'index/NET-COM/index.html';
+      }
+    }
+    
+    detectDevice();
+  </script>
+</body>
+</html>
