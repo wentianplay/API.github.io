@@ -1,0 +1,717 @@
+{
+    "官方网站": {
+        "icon": "",
+        "data": [
+            {
+                "name": "国际站",
+                "icon": "./assets/icon.ico",
+                "url": "index.html/",
+                "describe": "文天玩WenTianPlay国际站-文天玩网络科技有限公司（已经停止更新）（可以说成会永远一直托管在Github上面进行管理，也会尽量用于服务器数据管理，低使用状态）"
+            },
+            {
+                "name": "中国站",
+                "icon": "./assets/icon.ico",
+                "url": "index/CN-COM/index.html",
+                "describe": "文天玩WenTianPlay中国站-文天玩网络科技有限公司（未停止更新哦)（可以说成会一边托管在Github上面进行管理，一边在服务器上管理任何一切数据，半使用状态）"
+            },
+            {
+                "name": "数据站",
+                "icon": "./assets/icon.ico",
+                "url": "index/NET-COM/index.html/",
+                "describe": "文天玩WenTianPlay数据站-文天玩网络科技有限公司（半停止半更新）（可以说成会一直在服务器上进行管理，并而进行中国备案，优化探险者游戏体验，全使用状态）"
+            }
+        ]
+    },
+    "官方网页": {
+        "icon": "",
+        "data": [
+            {
+                "name": "店铺(官方直营)",
+                "icon": "./assets/icon.ico",
+                "url": "https://g.WenTianPlay.cn/",
+                "describe": "文天玩WenTian Play店铺―—(官方直营)"
+            },
+            {
+                "name": "店铺(平台代营)",
+                "icon": "./assets/icon.ico",
+                "url": "https://G.WenTianPlay.com/",
+                "describe": "文天玩WenTian Play店铺―—(平台代营)"
+            },
+            {
+                "name": "Youtube",
+                "icon": "./assets/siteIcons/youtube.png",
+                "url": "https://youtube.WenTianPlay.com/",
+                "describe": "祖帝大人YouTube个人主页"
+            },
+            {
+                "name": "文天玩码支付",
+                "icon": "./assets/siteIcons/bilibili-Wenfei_.png",
+                "url": "https://pay.WenTianPlay.cn/",
+                "describe": "文天玩码支付-爱心捐款站(官方直营)-文天玩WenTianPlay"
+            },
+            {
+                "name": "爱心捐款站",
+                "icon": "./assets/siteIcons/bilibili-Wenfei_.png",
+                "url": "https://pay.WenTianPlay.net/",
+                "describe": "三码支付爱心捐款站(平台代营)-文天玩WenTianPlay"
+            },
+            {
+                "name": "哔哩哔哩",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://bilibili.WenTianPlay.com/",
+                "describe": "祖帝大人哔哩哔哩个人主页"
+            },
+            {
+                "name": "我的世界下载站🐍",
+                "icon": "./assets/siteIcons/minecraft_logo.png",
+                "url": "https://mcip.wentianplay.com",
+                "describe": "此下载站是祖帝大人分享出来的，无任何商业用途，仅供下载。"
+            },
+            {
+                "name": "邮箱联系(QQ)",
+                "icon": "./assets/siteIcons/mail_QQ.png",
+                "url": "mailto:wentianplay@qq.com",
+                "describe": "苏天彬(苏文飞)-QQ邮箱"
+            },
+            {
+                "name": "邮箱联系(163网易)",
+                "icon": "./assets/siteIcons/163.png",
+                "url": "mailto:wentianplay@163.com",
+                "describe": "苏天彬(苏文飞)-163网易邮箱"
+            },
+            {
+                "name": "邮箱联系(foxmail)",
+                "icon": "./assets/siteIcons/foxmail.ico",
+                "url": "mailto:wentianplay@foxmail.com",
+                "describe": "苏天彬(苏文飞)-foxmail邮箱"
+            },
+            {
+                "name": "邮箱联系(Outlook)",
+                "icon": "./assets/siteIcons/outlook.ico",
+                "url": "mailto:wentianplay@outlook.com",
+                "describe": "苏天彬(苏文飞)-Outlook邮箱"
+            },
+            {
+                "name": "邮箱联系(Gmail)",
+                "icon": "./assets/siteIcons/mall-Gmail.png",
+                "url": "mailto:wentianplay@Gmail.com",
+                "describe": "苏天彬(苏文飞)-Gmail邮箱"
+            },
+            {
+                "name": "KOOK-天彬",
+                "icon": "./assets/siteIcons/kook.png",
+                "url": "https://www.kookapp.cn/app/invite/6GcFWj",
+                "describe": "KOOK语音是一款免费无广告的语音沟通工具，支持PC端、安卓端、IOS端、网页端设备，无论你在什么地方，都可以畅快沟通。KOOK里有各种主题的服务器，你也可以根据自己的喜好，创造..."
+            },
+            {
+                "name": "Discord-天彬",
+                "icon": "./assets/siteIcons/Discord.png",
+                "url": "https://discord.gg/CwJqM27Nb7",
+                "describe": "Discord 是一款通讯工具，可以帮助用户通过文本、语音和视频聊天与社区和朋友保持连接。它适用于 Windows、macOS、Linux、iOS 和 Android 设备。该应用程序是免费的，安全性高，既能在台式电脑上使用，也能在手机上使用。今天就从 Google Playstore 或 Apple App Store 等受信任的来源下载最好的通过视频、语音沟通这种的话。"
+            },
+            {
+                "name": "Github",
+                "icon": "./assets/siteIcons/github.png",
+                "url": "https://github.com/wentianplay/",
+                "describe": "开源项目:仅供学习禁止任何形式的商业用途!!!-文天玩WenTian Play,祖帝大人github个人主页"
+            },
+            {
+                "name": "充电站🥛",
+                "icon": "./assets/siteIcons/bilibili-Wenfei_.png",
+                "url": "https://www.bilibili.com/h5/upower/index?mid=1607684364",
+                "describe": "苏天彬(苏文飞)哔哩哔哩牛奶🥛充电站"
+            },
+            {
+                "name": "博客站🌱",
+                "icon": "./assets/siteIcons/Wenfei_.png",
+                "url": "https://m.WenTianPlay.com/",
+                "describe": "本站作者常年拖更的博客"
+            },
+            {
+                "name": "祖帝站🐍",
+                "icon": "./assets/siteIcons/Wenfei_.png",
+                "url": "https://op.WenTianPlay.com/",
+                "describe": "昵称:苏天彬,游戏名:Wenfei_,文天玩WenTian Play创始人,董事长,首席执行官(CEO) 。(属于关于祖帝大人的自我介绍)"
+            },
+            {
+                "name": "《彬》小说在线阅读-首发起点中文网",
+                "icon": "./assets/siteIcons/favicon_.png",
+                "url": "https://www.qidian.com/book/1041044162/",
+                "describe": "《彬》记载了《天彬》文天风云以前奇幻神秘的历史。别名《文天星辰》或者《天彬星辰》这里是文飞儿时七岁的梦境世界，同时也是很真实的奇幻大世界，这里是以玄士阵营和科士阵营所领导的世界，也是神明与凡人共处的世界。表世界和里世界的战争与和平合作积极对外，还有以及不忘初心逐梦未来的不是因为有希望才坚持，而是只有坚持才有希望的勇往直前，探险之旅激励计划可以让探险者寻找到《天彬》世界那远古的历史…"
+            },
+            {
+                "name": "《天彬》小说在线阅读-首发起点中文网",
+                "icon": "./assets/siteIcons/favicon.png",
+                "url": "https://www.qidian.com/book/1041003789/",
+                "describe": "这里是文飞儿时七岁的梦境世界，同时也是很真实的奇幻大世界，这里是以玄士阵营和科士阵营所领导的世界，也是神明与凡人共处的世界，表世界和里世界的战争与和平合作积极对外，还有以及不忘初心逐梦未来的不是因为有希望才坚持，而是只有坚持才有希望的勇往直前，探险之旅激励计划可以让探险者寻找到《天彬》世界那远古的历史…"
+            },
+            {
+                "name": "全职攻略教程兼邮箱QQ交流群导航站",
+                "icon": "./assets/siteIcons/MC.png",
+                "url":"index/NET/index.html",
+                "describe": "全职攻略教程兼祖帝邮箱QQ交流群导航站🐍"
+            }
+        ]
+    },
+    "常用推荐": {
+        "icon": "",
+        "data": [
+            {
+                "name": "文天玩WenTianPlay",
+                "icon": "./assets/icon.ico",
+                    "url": "index/CU/index.html",
+                "describe": "请联系或加入我们-文天玩WenTianPlay网络科技有限公司"
+            },
+            {
+                "name": "文天玩永久发布页",
+                "icon": "./assets/icon.ico",
+                "url": "https://web.WenTianPlay.net/",
+                "describe": "文天玩WenTianPlay永久地址发布页-文天玩网络科技有限公司"
+            },
+            {
+                "name": "全职攻略教程兼邮箱QQ交流群导航站",
+                "icon": "./assets/siteIcons/MC.png",
+                "url": "index/NET/index.html",
+                "describe": "全职攻略教程兼祖帝邮箱QQ交流群导航站🐍"
+            },
+            {
+                "name": "你的影月月-原神攻略大全/攻略目录/随版本持续更新",
+                "icon": "./assets/siteIcons/431073645.png",
+                "url": "https://www.bilibili.com/read/mobile/13698984?share_session_id=4a1c32fd-4e5f-4e53-b0b5-c363b95c3911&share_medium=android&share_source=qq&bbid=XUA7479AD156F6C0E72469DAEF04AA63F4C78&ts=1737564069095",
+                "describe": "(含神瞳/宝箱/任务/突破材料/怪物素材)目录(电脑端CTRL+F输入对应数字可直接跳转)：(推荐做完开图主线去拿宝箱神瞳，最后清理其他世界任务 因为有些任务道具会在宝箱视频里顺路带着捡)文章的置顶评论有PC端小地图显示东南西北的工具"
+            },
+            {
+                "name": "AX导航站",
+                "icon": "https://AX.wentianplay.com/favcion.ico",
+                "url": "https://AX.wentianplay.com",
+                "describe": "AX导航站"},
+            {
+                "name": "Youtube",
+                "icon": "./assets/siteIcons/youtube.png",
+                "url": "https://www.youtube.com/",
+                "describe": "全球最大的视频学习分享平台"
+            },
+            {
+                "name": "哔哩哔哩",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://www.bilibili.com/",
+                "describe": "哔哩哔哩 (゜-゜)つロ 干杯~-bilibili"
+            },
+            {
+                "name": "爱奇艺",
+                "icon": "./assets/siteIcons/iqiyi.png",
+                "url": "https://www.iqiyi.com/",
+                "describe": "爱奇艺-在线视频网站-海量正版高清视频在线观看"
+            },
+            {
+                "name": "腾讯视频",
+                "icon": "./assets/siteIcons/v.png",
+                "url": "https://v.qq.com/",
+                "describe": "腾讯视频-中国领先的在线视频媒体平台,海量高清视频在线观看"
+            },
+            {
+                "name": "优酷",
+                "icon": "./assets/siteIcons/youku.png",
+                "url": "https://www.youku.com/",
+                "describe": "优酷 - 为好内容全力以赴 - 海量正版高清视频在线观看"
+            },
+            {
+                "name": "芒果TV",
+                "icon": "./assets/siteIcons/mgtv.png",
+                "url": "https://www.mgtv.com/",
+                "describe": "芒果TV-天生青春"
+            },
+            {
+                "name": "Google",
+                "icon": "./assets/siteIcons/google.png",
+                "url": "https://www.google.com/",
+                "describe": "全球最大的学习分享平台"
+            },
+            {
+                "name": "Github",
+                "icon": "./assets/siteIcons/github.png",
+                "url": "https://www.github.com/",
+                "describe": "基于web的版本控制和协作平台"
+            },
+            {
+                "name": "X",
+                "icon": "./assets/siteIcons/X.ico",
+                "url": "https://x.com/WenTianPlay",
+                "describe": "X 是一个公共对话平台，确保一个自由和安全的谈话场所。"
+            },
+            {
+                "name": "《彬》《天彬》简易修仙传",
+                "icon": "🖥",
+                "url": "https://bj.wentianplay.net/",
+                "describe": "🖥 《彬》《天彬》简易修仙传"
+            },
+            {
+                "name": "文天玩WenTianPlay五大联合创始人",
+                "icon": "./assets/icon.ico",
+                "url": "index/NET-COM/team.html/",
+                "describe": "文天玩WenTianPlay五大联合创始人"},
+            {
+                "name": "蚂蚁课堂(每特教育)",
+                "icon": "./assets/siteIcons/mayikt.png",
+                "url": "http://www.mayikt.com/",
+                "describe": "39.99永久会员这网站千万不要信(骗子网站)【本帝已试水，讲的不怎么样，望周知】  ——————割韭菜，编的故事越离谱筛出来的韭菜越好割，站在风口上，厉害的不是技术，是他敢去做这件事儿，19岁架构师，自封的吧？这个人感觉就是自己吹嘘出来的。兴许有一定的技术水平，但觉不对很高。                                                                                                                                                                                                                                                        ——— 蚂蚁课堂-每特教育-专注于互联网年轻人的IT在线教育-余胜军"
+            },
+            {
+                "name": "KOOK",
+                "icon": "./assets/siteIcons/kook.png",
+                "url": "https://www.kookapp.cn/",
+                "describe": "KOOK语音是一款免费无广告的语音沟通工具，支持PC端、安卓端、IOS端、网页端设备，无论你在什么地方，都可以畅快沟通。KOOK里有各种主题的服务器，你也可以根据自己的喜好..."
+            },
+            {
+                "name": "Discord",
+                "icon": "./assets/siteIcons/Discord.png",
+                "url": "https://discord.com",
+                "describe": "Discord 是一款通讯工具，可以帮助用户通过文本、语音和视频聊天与社区和朋友保持连接。它适用于 Windows、macOS、Linux、iOS 和 Android 设备。该应用程序是免费的，安全性高，既能在台式电脑上使用，也能在手机上使用。今天就从 Google Playstore 或 Apple App Store 等受信任的来源下载最好的通过视频、语..."
+            },
+            {
+                "name": "Gitee",
+                "icon": "./assets/siteIcons/Gitee.png",
+                "url": "https://gitee.com/WenTianPlay",
+                "describe": "文天玩网络科技有限公司 Gitee"
+            },
+            {
+                "name": "绿茶VPN",
+                "icon": "./assets/siteIcons/lvcha.png",
+                "url": "https://k1.lvcha.cfd/?id=165034437",
+                "describe": "看世界 从未如此简单 Seeing The World Has Never Been Easier"
+            },
+            {
+                "name": "17任务吧",
+                "icon": "./assets/siteIcons/17renwuba.png",
+                "url": "https://www.17renwuba.com/uid/162301",
+                "describe": "17任务吧是一家免费提供众多网上打字赚钱任务包括快递录入,图片录入,打字录入,发票录入,DP录入,优加录入,信用卡录入,ems录入等真实可靠的正 …"
+            },
+            {
+                "name": "蓝奏云",
+                "icon": "./assets/siteIcons/lanzoui.png",
+                "url": "https://www.lanzoui.com/",
+                "describe": "蓝奏云网盘为用户而变革，越简单越好，越快越好 "
+            },
+            {
+                "name": "人民网",
+                "icon": "./assets/siteIcons/wap-people.png",
+                "url": "https://www.people.com.cn/",
+                "describe": "人民网，是世界十大报纸之一《人民日报》建设的以新闻为主的大型网上信息发布平台，也是互联网上最大的中文和多语种新闻网站。"
+            },
+            {
+                "name": "央视网",
+                "icon": "./assets/siteIcons/CCTV.png",
+                "url": "https://www.CCTV.com/",
+                "describe": "CCTV节目官网是中央电视台电视节目官方呈现平台，提供央视24个频道的直播、点播、节目预告等服务，集纳央视所有栏目、电影、电视 …"
+            },
+            {
+                "name": "《新闻联播》",
+                "icon": "./assets/siteIcons/CCTV.png",
+                "url": "https://tv.cctv.com/lm/xwlb/",
+                "describe": "《新闻联播》,CCTV节目官网是中央电视台电视节目官方呈现平台，提供央视24个频道的直播、点播、节目预告等服务，集纳央视所有栏目、电影、电视 …"
+            },
+            {
+                "name": "Steam",
+                "icon": "./assets/siteIcons/steam.png",
+                "url": "https://store.steampowered.com/",
+                "describe": "您可以在下方看到多款您可能感兴趣的产品。Steam是游戏、讨论和创造游戏的最终目的地。"
+            },
+            {
+                "name": "Microsoft",
+                "icon": "./assets/siteIcons/microsoft.png",
+                "url": "https://www.microsoft.com/",
+                "describe": "Microsoft——AI、云、生产力、计算、游戏和应用"
+            },
+            {
+                "name": "Minecraft",
+                "icon": "./assets/siteIcons/minecraft.png",
+                "url": "https://www.minecraft.net/",
+                "describe": "在 Minecraft 官方网站上探索新的游戏冒险、配件和商品。 在此处购买并下载游戏，或查看网站以获取最新消息。"
+            },
+            {
+                "name": "MCMOD百科",
+                "icon": "./assets/siteIcons/mcmod.png",
+                "url": "https://www.mcmod.cn/",
+                "describe": "MC百科|最大的Minecraft中文MOD百科"
+            },
+            {
+                "name": "Cloudflare 中国官网",
+                "icon": "./assets/siteIcons/cloudflare.png",
+                "url": "https://www.cloudflare-cn.com/",
+                "describe": "全球云平台 | Cloudflare 中国官网"
+            },
+            {
+                "name": "Cloudflare Status",
+                "icon": "./assets/siteIcons/cloudflare.png",
+                "url": "https://www.cloudflarestatus.com/",
+                "describe": "Cloudflare Status"
+            },
+            {
+                "name": "ip138",
+                "icon": "./assets/siteIcons/ip138.png",
+                "url": "https://www.ip138.com/",
+                "describe": "iP地址查询--手机号码查询归属地 | 邮政编码查询 | iP地址归属 ..."
+            },
+            {
+                "name": "腾讯网",
+                "icon": "./assets/siteIcons/qq.png",
+                "url": "https://www.qq.com/",
+                "describe": "腾讯网从2003年创立至今，已经成为集新闻信息，区域垂直生活服务、社会化媒体资讯和产品为一体的互联网媒体平台。 "
+            },
+            {
+                "name": "网易",
+                "icon": "./assets/siteIcons/163.png",
+                "url": "https://www.163.com/",
+                "describe": "网易是中国领先的互联网技术公司，为用户提供免费邮箱、游戏、搜索引擎服务，"
+            },
+            {
+                "name": "米哈游",
+                "icon": "./assets/siteIcons/mihoyo.png",
+                "url": "https://www.mihoyo.com/",
+                "describe": "米哈游陆续推出了多款高品质人气产品，包括《崩坏学园2》、《崩坏3》、《未定事件簿》、《原神》、《崩坏：星穹铁道》、《绝区 …"
+            },
+            {
+                "name": "聚名网",
+                "icon": "./assets/siteIcons/juming.png",
+                "url": "https://www.juming.com/",
+                "describe": "聚名网-到期域名查询抢注-域名注册-老域名买卖交易平台"
+            },
+            {
+                "name": "Unreal Engine",
+                "icon": "./assets/siteIcons/Unreal Engine.png",
+                "url": "https://www.unrealengine.com/",
+                "describe": "无论你有何构想，都可以利用虚幻引擎——世界上最先进的实时3D创作工具——将其变为现实。 加入我们的开发者社区，立即开始。 我们制 …"
+            },
+            {
+                "name": "华为云",
+                "icon": "./assets/siteIcons/huaweicloud.png",
+                "url": "https://www.huaweicloud.com/",
+                "describe": "共建智能世界云底座-华为云"
+            },
+            {
+                "name": "阿里云",
+                "icon": "./assets/siteIcons/aliyun.png",
+                "url": "https://www.aliyun.com/",
+                "describe": "阿里云-计算，为了无法计算的价值"
+            },
+            {
+                "name": "Blender",
+                "icon": "./assets/siteIcons/blender.png",
+                "url": "https://www.blender.org/",
+                "describe": "Blender is the free and open source 3D creation suite."
+            },
+            {
+                "name": "cinema-4d",
+                "icon": "./assets/siteIcons/cinema4d.png",
+                "url": "https://www.maxon.net/en/products/cinema-4d/overview/",
+                "describe": "Cinema 4D is the perfect package for all 3D artists who want to achieve breathtaking results fast and hassle-free."
+            },
+            {
+                "name": "稀土掘金中国",
+                "icon": "./assets/siteIcons/juejin.png",
+                "url": "https://juejin.cn/",
+                "describe": "掘金是面向全球中文开发者的技术内容分享与交流平台。 我们通过技术文章、沸点、课程、直播等产品和服务，打造一个激发开发者创作灵感，激发创新的环境。"
+            },
+            {
+                "name": "中国大学MOOC",
+                "icon": "./assets/siteIcons/icourse163.png",
+                "url": "https://www.icourse163.org/",
+                "describe": "中国大学MOOC_优质在线课程学习平台"
+            },
+            {
+                "name": "Stack Overflow",
+                "icon": "./assets/siteIcons/Stack Overflow.png",
+                "url": "https://StackOverflow.com",
+                "describe": "Stack Overflow — 解决 bug 的社区"
+            },
+            {
+                "name": "在线工具大全",
+                "icon": "./assets/siteIcons/lddgo.png",
+                "url": "https://www.lddgo.net/",
+                "describe": "在线HKDF派生密钥和校验工具，使用 HMAC-based Extract-and-Expand Key Derivation Function 算法，根据输入密钥和随机盐派生密钥。"
+            },
+            {
+                "name": "在线批量修改图片尺寸",
+                "icon": "./assets/siteIcons/lddgo.png",
+                "url": "https://www.lddgo.net/image/modify-image-size",
+                "describe": "在线批量修改图片尺寸"
+            },
+            {
+                "name": "在线图片大小裁剪",
+                "icon": "./assets/siteIcons/lddgo.png",
+                "url": "https://www.lddgo.net/image/crop",
+                "describe": "在线图片大小裁剪"
+            },
+            {
+                "name": "程序员客栈",
+                "icon": "./assets/siteIcons/proginn.png",
+                "url": "https://www.proginn.com/",
+                "describe": "程序员客栈提供兼职程序员、程序员接私活、开发外包，程序员客栈是最大的程序员兼职平台，优质的程序员兼职网站，这里有 BAT 级兼职程序员。"
+            },
+            {
+                "name": "Gitee",
+                "icon": "./assets/siteIcons/Gitee.png",
+                "url": "https://www.Gitee.com/",
+                "describe": "Gitee 是国内领先的企业级研发效能和开源代码托管平台，支持多种语言和技术框架，提供项目协同、代码管理、代码扫描、持续集成等功能。"
+            },
+            {
+                "name": "雷锋网",
+                "icon": "./assets/siteIcons/leiphone.png",
+                "url": "https://www.leiphone.com/",
+                "describe": "人工智能和智能硬件领域的互联网科技媒体"
+            },
+            {
+                "name": "36kr",
+                "icon": "./assets/siteIcons/36kr.png",
+                "url": "http://36kr.com/",
+                "describe": "创业资讯、科技新闻"
+            },
+            {
+                "name": "中国新闻网",
+                "icon": "./assets/siteIcons/chinanews.png",
+                "url": "https://www.chinanews.com.cn/",
+                "describe": "中国新闻网是中国最大的新闻门户网站，提供时政、理论、财经、国际、社会、大湾区、华人、文娱、体育、教育、法治、健康、生活等各类新闻。"
+            },
+            {
+                "name": "苦力怕论坛",
+                "icon": "./assets/siteIcons/klpbbs.png",
+                "url": "https://klpbbs.com/",
+                "describe": "Minecraft(我的世界)苦力怕论坛——我的世界中文论坛。"
+            },
+            {
+                "name": "牛客网",
+                "icon": "./assets/siteIcons/nowcoder.png",
+                "url": "https://www.nowcoder.com/",
+                "describe": "牛客网 - 找工作神器|笔试题库|面试经验|实习招聘内推，求职。"
+            },
+            {
+                "name": "LeetCode",
+                "icon": "./assets/siteIcons/lintcode.png",
+                "url": "https://www.lintcode.com/",
+                "describe": "LintCode 炼码 - 更高效的学习体验！"
+            },
+            {
+                "name": "LeetCode 中文站",
+                "icon": "./assets/siteIcons/leetcode.png",
+                "url": "https://leetcode.cn/",
+                "describe": "力扣 (LeetCode) 全球极客挚爱的技术成长平台"
+            },
+            {
+                "name": "逗逗游戏伙伴 | 懂游戏，更懂你",
+                "icon": "./assets/siteIcons/doudou.png",
+                "url": "https://www.doudou.fun/",
+                "describe": "逗逗游戏伙伴是一款陪你一起玩游戏的AI桌宠软件，在这里有着各种个性的二次元人物，他们会在游戏过程中陪你聊天，还会讲笑话、唱歌等各种惊喜能力；他们懂游戏，更懂你，和为你定制..."
+            },
+            {
+                "name": "EVE官方网站",
+                "icon": "./assets/siteIcons/EVE.PNG",
+                "url": "https://www.eveonline.com/zh/signup?invc=1154021f-b8fd-43a6-83ef-257d2cfa5ca3",
+                "describe": "EVE官方网站，端游EVE Online国服（《星战前夜：晨曦》）和手游EVE无烬星河（《星战前夜：无烬星河》）是由冰岛CCP正版授权。 网易正式代理端游EVE Online国服，并与冰岛CCP合作 ..."
+            },
+            {
+                "name": "爱云i寄售",
+                "icon": "./assets/siteIcons/ay-yimfk.ico",
+                "url": "https://ay.yimfk.com/register?user_id=2566",
+                "describe": "爱云i寄售 - 程序测试请勿使用"
+            },
+            {
+                "name": "CSDN",
+                "icon": "./assets/siteIcons/CSDN.png",
+                "url": "https://www.csdn.net/",
+                "describe": "CSDN - 专业开发者社区"
+            },
+            {
+                "name": "Nature",
+                "icon": "./assets/siteIcons/nature.png",
+                "url": "https://www.nature.com/",
+                "describe": "Nature publishes the finest peer-reviewed research that drives ground-breaking discovery, and is read by thought-leaders and decision-makers around the world."
+            },
+            {
+                "name": "星野Ai",
+                "icon": "./assets/siteIcons/xingyeai.png",
+                "url": "https://www.xingyeai.com/",
+                "describe": "星野_沉浸式智能体社区_星野官网_星野app"
+            },
+            {
+                "name": "联壁计划",
+                "icon": "./assets/siteIcons/Barrierslink_logo.svg",
+                "url": "https://barrierslink.cn/",
+                "describe": "联壁计划 • 一个煮熟海外Minecraft地图的公益团队"
+            },
+            {
+                "name": "蚂蚁课堂(每特教育)【下载链接】",
+                "icon": "./assets/siteIcons/mayikt.png",
+                "url": "https://wwo.lanzouu.com/b00b4d6wra",
+                "describe": "🔐:6666 下载安装：蚂蚁课堂-每特教育-专注于互联网年轻人的IT在线教育-余胜军"
+            },
+            {
+                "name": "在线接收短信",
+                "icon": "./assets/siteIcons/sms-activate.ico",
+                "url": "https://sms-activate.guru/",
+                "describe": "一共花费33.75美元=245.79人民币 在线接收短信到虚拟号码以进行 OTP |短信激活   Receive SMS Online to Virtual Number for OTP | SMS-Activate"
+            },
+            {
+                "name": "捏咔",
+                "icon": "./assets/siteIcons/neka.ico",
+                "url": "https://www.neka.cc",
+                "describe": "捏咔-捏人创作分享平台"
+            },
+            {
+                "name": "DeviantArt",
+                "icon": "./assets/siteIcons/DeviantArt.png",
+                "url": "https://www.deviantart.com",
+                "describe": "DeviantArt - The Largest Online Art Gallery and Community"
+            },
+            {
+                "name": "BOOTH",
+                "icon": "./assets/siteIcons/BOOTH.ico",
+                "url": "https://booth.pm/",
+                "describe": "BOOTH - The International Indie Art Marketplace"
+            },
+            {
+                "name": "BowlRoll",
+                "icon": "./assets/siteIcons/bowlroll.ico",
+                "url": "https://bowlroll.net/",
+                "describe": "BowlRoll"
+            },
+            {
+                "name": "下载最新的独立游戏 - itch.io",
+                "icon": "./assets/siteIcons/itch.ico",
+                "url": "https://itch.io/",
+                "describe": "下载最新的独立游戏 - itch.io"
+            },
+            {
+                "name": "GeekPrank",
+                "icon": "./assets/siteIcons/bitburner.png",
+                "url": "https://geekprank.shi4home.com/hacker/index.htm",
+                "describe": "GeekPrank Hacker Typer - 在线黑客模拟器（可能图标是错的）"
+            },
+            {
+                "name": "AI 导航站",
+                "icon": "./assets/siteIcons/naviai.png",
+                "url": "https://www.naviai.cn/",
+                "describe": "AI 导航站 | 收录了国内外2000+优质AI工具，人工智能工具和模型，整理了AI对话聊天、AI绘画设计、AI视频制作、AI写作办公、AI编程开发等各类工具，还包括最新的AI资讯、AI绘画教程、AI工具技巧等实用内容。在这里，AI领域的专家和初学者都能轻松找到心仪的AI工具和学习资源。"
+            },
+            {
+                "name": "WebStackPage",
+                "icon": "https://webstackpage.wentianplay.net/assets/images/favicon.png",
+                "url": "https://webstackpage.wentianplay.net/",
+                "describe": "WebStackPage"
+            },
+            {
+                "name": "Cкачать",
+                "icon": "./assets/siteIcons/byrut.png",
+                "url": "https://byrut.org.ru/",
+                "describe": "Cкачать игры на ПК [последние версии 2022] через торрент бесплатно"
+            },
+            {
+                "name": "shi4home",
+                "icon": "./assets/siteIcons/shi4home.png",
+                "url": "https://shi4home.com/",
+                "describe": "shi4home"
+            },
+            {
+                "name": "liteapks",
+                "icon": "./assets/siteIcons/liteapks.png",
+                "url": "https://liteapks.com/",
+                "describe": "LITEAPKS - #1 MOD APK for Android"
+            },
+            {
+                "name": "Telegram",
+                "icon": "./assets/siteIcons/Telegram.png",
+                "url": "https://t.me/WenTianPlay_COM",
+                "describe": "Telegram"
+            },
+            {
+                "name": "pixiv",
+                "icon": "./assets/siteIcons/pixiv.png",
+                "url": "https://www.pixiv.net/",
+                "describe": "pixiv"
+            },
+            {
+                "name": "瓦特工具箱(Steam++官网)",
+                "icon": "./assets/siteIcons/steampp.ico",
+                "url": "https://steampp.net/",
+                "describe": "瓦特工具箱(Steam++官网) - Watt Toolkit"
+            },
+            {
+                "name": "RocSchool",
+                "icon": "./assets/siteIcons/RocSchool.ico",
+                "url": "https://www.rocschool.com/",
+                "describe": "RocSchool - 鲲之志向，无比远大 -- 鲲鹏知舟"
+            },
+            {
+                "name": "DeepSeek",
+                "icon": "./assets/siteIcons/DeepSeek.ico",
+                "url": "https://www.deepseek.com/",
+                "describe": "DeepSeek, unravel the mystery of AGI with curiosity. Answer the essential question with long-termism. 🎉 DeepSeek-R1 is now live."
+            },
+            {
+                "name": "修仙之路房东人生",
+                "icon": "./assets/siteIcons/修仙之路房东人生🏠.png",
+                "url": "https://m.q.qq.com/a/p/1112226201",
+                "describe": "修仙之路,房东人生🏠 -QQ小程序"
+            },
+            {
+                "name": "写作神器",
+                "icon": "./assets/siteIcons/writertool.jpeg",
+                "url": "https://www.writertool.cn/",
+                "describe": "我买的是永久会员，因为我是作家才买的。"
+            },
+            {
+                "name": "NCRE - 中国教育考试网",
+                "icon": "./assets/ncre-neea.ico",
+                "url": "https://ncre.neea.edu.cn/",
+                "describe": "全国计算机等级考试（National Computer Rank Examination，简称NCRE），是经原国家教育委员会（现教育部）批准，由教育部教育考试院主办的全国性计算机水平考试。"
+            },
+            {
+                "name": "生日天数计算器",
+                "icon": "📅",
+                "url": "https://tian.wentianplay.net/",
+                "describe": "📅 生日天数计算器"
+            },
+            {
+                "name": "进制转换计算器",
+                "icon": "🖥",
+                "url": "https://numeration.wentianplay.net/",
+                "describe": "🖥 进制转换计算器"
+            },
+            {
+                "name": "万能计算器",
+                "icon": "🖥",
+                "url": "https://jj.wentianplay.net/",
+                "describe": "🖥 万能计算器"
+            },
+            {
+                "name": "万能视频下载器",
+                "icon": "🖥",
+                "url": "https://vvv.wentianplay.net/",
+                "describe": "🖥 万能视频下载器-海外版"
+            },
+            {
+                "name": "文天传统助手",
+                "icon": "🖥",
+                "url": "https://vvv-1.wentianplay.net/",
+                "describe": "🖥 文天传统助手"
+            },
+            {
+                "name": "《彬》《天彬》简易修仙传",
+                "icon": "🖥",
+                "url": "https://bj.wentianplay.net/",
+                "describe": "🖥 《彬》《天彬》简易修仙传"
+            },
+            {
+                "name": "红人营销平台",
+                "icon": "./assets/siteIcons/weiq.ico",
+                "url": "https://weiq.com/",
+                "describe": "红人营销平台|精准化一站式营销投放"
+            },
+            {
+                "name": "NSSCTF",
+                "icon": "./assets/siteIcons/nssctf.ico",
+                "url": "https://www.nssctf.cn/",
+                "describe": "NSSCTF"
+            }
+        ]
+    }
+}

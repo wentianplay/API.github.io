@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+ <script>
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener("copy", function(e) {
+            e.preventDefault();
+        });
+    </script>
+<head>
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="./index/API/assets/icon.ico" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="keywords" content="文天玩，文天玩WenTian Play,文天玩WenTianPlay,WenTianPlay,WenTian Play,文天玩网络科技有限公司,天彬，天彬星辰，文天星辰，国际战争，文天阁，青云阁，乐言阁，言轩团队，小天工作室，ETB，落丽工作室，小天工作室管理协会，星辰管理协会，文天管理协会，管理协会，天彬"/>
+    <meta name="description" content="这里是文飞儿时七岁的梦境世界，同时也是很真实的奇幻大世界，这里是以玄士阵营和科士阵营所领导的世界，也是神明与凡人共处的世界，表世界和里世界的战争与和平合作积极对外，还有以及不忘初心逐梦未来的不是因为有希望才坚持，而是只有坚持才有希望的勇往直前，探险之旅激励计划可以让探险者寻找到《天彬》世界那远古的历史…"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index/API/css/index.css">
+    <title>文天玩WenTian Play | 官方导航网站🐍</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="left-nav">
+            <div class="head-image" :style="{backgroundImage:'url('+settings.headImage+')'}"></div>
+        </div>
+        <div class="main-container">
+
+            <div class="center-container">
+                <!-- 搜索框部分 -->
+                <div class="search-box" v-if="settings.searchEngine">
+                    <!-- 搜索建议框 -->
+                    <div class="advice_box" v-if="advices.length>0">
+                        <div :class="index === advice_selected?'selected':''" class="advice_item" @mouseenter="advice_selected = index" v-for="advice,index in advices" @click="advice_clicked(index)">
+                            {{advice}}</div>
+                    </div>
+                    <!-- 选择搜索引擎 -->
+                    <div :class="show_engine_box?'show':'hide'" class="engine-box" @blur='hideEngineBox(30)' tabindex="0" hidefocus="true" v-show="show_engine_box === true">
+                        <div class="engine" v-for="engine,id in getEngines()" @click="settings.searchEngine.selected = id;hideEngineBox()">
+                            <div class="icon" :style="{backgroundImage:'url('+engine.icon+')',backgroundColor:engine.mainColor}"></div>
+                            <div class="name" >{{engine.name}}</div>
+                        </div>
+                        <div class="engine not_show" v-for="i in 4"></div>
+                    </div>
+                    <!-- 搜索框左侧图标 -->
+                    <div class="search-engins" :style="{backgroundColor:getSelectedEngine().mainColor}"
+                        @click="show_engine_box?hideEngineBox():showEngineBox()">
+                        <!-- @click="show_engine_box?hideEngineBox():showEngineBox()"> -->
+                        <div class="selected-icon" :style="{backgroundImage:'url('+getSelectedEngine().icon+')'}"></div>
+                        <div class="engine-name" :style="{color:getSelectedEngine().textColor}">
+                            {{getSelectedEngine().name}}</div>
+                        <div class="show-more"></div>
+                    </div>
+                    <!-- 搜索框主体 -->
+                    <input id="search-input" autocomplete="off" onkeydown="return input_keydown(event)"  oninput="showAdvice()" />
+                    <!-- 搜索按钮 -->
+                    <div class="search-btn" @click="search()"></div>
+                </div>
+                <!-- 网站列表部分 -->
+                <div class="sites-container">
+                    <div class="second-kind" v-for="kind_val,kind_name,_ in sitesData">
+                        <div class="kind-name">
+                            <div class="icon" :style="{backgroundImage:'url('+kind_val.icon+')'}"></div>
+                            <div class="name">{{kind_name}}</div>
+                        </div>
+                        <div class="sites-box">
+                            <div @click="open(site_val.url)" class="site-box" v-for="site_val in kind_val.data">
+                                <div class="icon" :data-original="site_val.icon">
+                                </div>
+                                <div class="info">
+                                    <div class="name">{{site_val.name}}</div>
+                                    <div class="describe">{{site_val.describe}}</div>
+                                </div>
+                            </div>
+                            <div class="site-box not_show" v-for="i in 10"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<footer>
+    <script src="./index/API/js/vue3.js"></script>
+    <script src="./index/API/js/jquery.min.js"></script>
+    <script src="./index/API/js/jquery.lazyload.min.js"></script>
+    <script src="./index/API/js/utils.js"></script>
+    <script src="./index/API/js/index.js"></script>
+</footer>
+
+	
+<style type="text/css">	
+#bottom-outer {
+    color: #888;
+    text-align: center;
+    padding: 16px;
+    padding-top: 24px;
+    background-color: #fff;
+    font-size: 18px;
+    opacity:0.89;
+}
+</style>
+</head>
+<body>
+<div id="bottom-outer">
+                <div id="bottom-inner">              
+                    <br>文天玩WenTian Play官方导航网站访问量:<span id="result1"></span>
+                    <span id="year"></span>
+                </div>
+            </div>
+        </div>
+</body>
+<script type="text/javascript">
+	//流量统计
+                    if (localStorage.pagecount) {
+                        localStorage.pagecount = Number(localStorage.pagecount) + 1;
+                    } else {
+                        localStorage.pagecount = 1;
+                    }
+                    document.getElementById("result1").innerHTML = localStorage.pagecount;
+</script>
+<!-- Copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <p style="color:#dfe5ec;margin-bottom:0rem"> 友情外链:&nbsp;&nbsp;<a target="_blank" href="https://api.wentianplay.com">国际站</a>&nbsp;&nbsp;<a target="_blank" href="https://www.wentianplay.cn">中国站</a>&nbsp;&nbsp;<a target="_blank" href="https://www.wentianplay.net">数据站</a></p>
+                    <p class="p-small">Copyright &copy; 2015-2032 <a target="_blank" href="">文天玩WenTian Play</a>丨版权所有</p>
+                </div> <!-- end of col -->
+            </div> <!-- enf of row -->
+        </div> <!-- end of container -->
+    </div> <!-- end of copyright --> 
+<!-- end of copyright -->
+</html>
