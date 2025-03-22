@@ -1,0 +1,131 @@
+ 
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>文天玩WenTianPlay官方域名公示</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #f8f9fa;
+        }
+
+        .domain-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+            border-left: 4px solid var(--secondary-color);
+        }
+
+        .domain-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(52,152,219,0.2);
+        }
+
+        .domain-name {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .domain-regdate {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .official-badge {
+            background: #27ae60;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: var(--primary-color); text-align: center; margin-bottom: 2rem;">
+        官方域名公示系统
+        <br>
+        <small style="font-size: 0.8em; color: #95a5a6;">数据来源：文天玩WenTianPlay</small>
+    </h1>
+
+    <div id="domainList">
+        <div class="domain-card" data-domain="WenTianPlay.com" 
+             data-regdate="2024-5-3" 
+             data-url="https://wentianplay.com">
+            <div class="domain-name">
+                WenTianPlay.com
+                <span class="official-badge">官方认证</span>
+            </div>
+            <div class="domain-regdate">
+                注册时间：2024年5月3日
+            </div>
+        </div>
+
+        <div class="domain-card" data-domain="WenTianPlay.net" 
+             data-regdate="2024-12-27" 
+             data-url="https://wentianplay.net">
+            <div class="domain-name">
+                WenTianPlay.net
+                <span class="official-badge">官方认证</span>
+            </div>
+            <div class="domain-regdate">
+                注册时间：2024年12月27日
+            </div>
+        </div>
+
+        <div class="domain-card" data-domain="WenTianPlay.cn" 
+             data-regdate="2024-12-14" 
+             data-url="https://wentianplay.cn">
+            <div class="domain-name">
+                WenTianPlay.cn
+                <span class="official-badge">官方认证</span>
+            </div>
+            <div class="domain-regdate">
+                注册时间：2024年12月14日
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.domain-card').forEach(card => {
+            card.addEventListener('click', function() {
+                // 复制域名到剪贴板
+                const domain = this.dataset.domain;
+                navigator.clipboard.writeText(domain)
+                    .then(() => {
+                        alert(`已复制域名：${domain}`);
+                        // 跳转至对应网站
+                        window.location.href = this.dataset.url;
+                    })
+                    .catch(err => {
+                        // 兼容旧版浏览器
+                        const textarea = document.createElement('textarea');
+                        textarea.value = domain;
+                        document.body.appendChild(textarea);
+                        textarea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textarea);
+                        alert(`已复制域名：${domain}`);
+                        window.location.href = this.dataset.url;
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
+ 

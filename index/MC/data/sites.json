@@ -1,0 +1,92 @@
+{
+    "官方网站导航": {
+        "icon": "",
+        "data": [
+            {
+                "name": "导航站",
+                "icon": "./assets/icon.ico",
+                "url": "index/API/index.html/",
+                "describe": "文天玩WenTian Play | 官方导航网站🐍 -文天玩网络科技有限公司"
+            },
+            {
+                "name": "国际站",
+                "icon": "./assets/icon.ico",
+                "url": "index.html/",
+                "describe": "文天玩WenTianPlay国际站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "中国站",
+                "icon": "./assets/icon.ico",
+                "url": "index/CN-COM/index.html/",
+                "describe": "文天玩WenTianPlay中国站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "数据站",
+                "icon": "./assets/icon.ico",
+                "url": "index/NET-COM/index.html/",
+                "describe": "文天玩WenTianPlay数据站-文天玩网络科技有限公司"
+            
+            }
+        ]
+    },
+    "官方邮箱导航": {
+        "icon": "",
+        "data": [
+            {
+                "name": "邮箱联系(QQ)",
+                "icon": "https://wentianplay.com/assets/siteIcons/mail_QQ.png",
+                "url": "mailto:wentianplay@qq.com",
+                "describe": "苏天彬(苏文飞)-QQ邮箱"
+            },
+            {
+                "name": "邮箱联系(163网易)",
+                "icon": "https://wentianplay.com/assets/siteIcons/163.png",
+                "url": "mailto:wentianplay@163.com",
+                "describe": "苏天彬(苏文飞)-163网易邮箱"
+            },
+            {
+                "name": "邮箱联系(foxmail)",
+                "icon": "https://wentianplay.com/assets/siteIcons/foxmail.ico",
+                "url": "mailto:wentianplay@foxmail.com",
+                "describe": "苏天彬(苏文飞)-foxmail邮箱"
+            },
+            {
+                "name": "邮箱联系(Outlook)",
+                "icon": "https://wentianplay.com/assets/siteIcons/outlook.ico",
+                "url": "mailto:wentianplay@outlook.com",
+                "describe": "苏天彬(苏文飞)-Outlook邮箱"
+            },
+            {
+                "name": "邮箱联系(Gmail)",
+                "icon": "https://wentianplay.com/assets/siteIcons/mall-Gmail.png",
+                "url": "mailto:wentianplay@Gmail.com",
+                "describe": "苏天彬(苏文飞)-Gmail邮箱"
+            
+            }
+        ]
+    },
+    "我的世界导航": {
+        "icon": "",
+        "data": [
+            {
+            
+                "name": "我的世界下载专区",
+                "icon": "./assets/siteIcons/mc.png",
+                "url": "https://ios.wentianplay.com/",
+                "describe": "6666"
+            },
+            {
+                "name": "我的世界恐怖地图",
+                "icon": "./assets/siteIcons/mc.png",
+                "url": "https://wwo.lanzouu.com/b00b4ayxsh",
+                "describe": "6666"
+            },
+            {
+                "name": "3000倍掉落1.16.5",
+                "icon": "./assets/siteIcons/mc.png",
+                "url": "https://pan.quark.cn/s/d1dc1118b269",
+                "describe": "3000倍掉落-整合包（究极懒人包）1.16.5"
+            }
+        ]
+    }
+}

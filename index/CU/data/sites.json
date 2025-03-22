@@ -1,0 +1,137 @@
+{
+    "官方网站导航": {
+        "icon": "",
+        "data": [
+            {
+                "name": "导航站",
+                "icon": "./assets/icon.ico",
+                "url": "index/API/index.html/",
+                "describe": "文天玩WenTian Play | 官方导航网站🐍-文天玩网络科技有限公司"
+            },
+            {
+                "name": "国际站",
+                "icon": "./assets/icon.ico",
+                "url": "https://www.WenTianPlay.com/",
+                "describe": "文天玩WenTianPlay国际站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "中国站",
+                "icon": "./assets/icon.ico",
+                "url": "index/CN-COM/index.html/",
+                "describe": "文天玩WenTianPlay中国站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "数据站",
+                "icon": "./assets/icon.ico",
+                "url": "index/NET-COM/index.html/",
+                "describe": "文天玩WenTianPlay数据站-文天玩网络科技有限公司"
+            },
+            {
+                "name": "交流站",
+                "icon": "./assets/icon.ico",
+                "url": "index/CU/index.html/",
+                "describe": "文天玩WenTianPlay交流站-文天玩网络科技有限公司"
+           }
+        ]
+    },
+    "官方邮箱直通": {
+        "icon": "",
+        "data": [
+            {
+                "name": "邮箱联系(QQ)",
+                "icon": "https://wentianplay.com/assets/siteIcons/mail_QQ.png",
+                "url": "mailto:wentianplay@qq.com",
+                "describe": "苏天彬(苏文飞)-QQ邮箱"
+            },
+            {
+                "name": "邮箱联系(163网易)",
+                "icon": "https://wentianplay.com/assets/siteIcons/163.png",
+                "url": "mailto:wentianplay@163.com",
+                "describe": "苏天彬(苏文飞)-163网易邮箱"
+            },
+            {
+                "name": "邮箱联系(foxmail)",
+                "icon": "https://wentianplay.com/assets/siteIcons/foxmail.ico",
+                "url": "mailto:wentianplay@foxmail.com",
+                "describe": "苏天彬(苏文飞)-foxmail邮箱"
+            },
+            {
+                "name": "邮箱联系(Outlook)",
+                "icon": "https://wentianplay.com/assets/siteIcons/outlook.ico",
+                "url": "mailto:wentianplay@outlook.com",
+                "describe": "苏天彬(苏文飞)-Outlook邮箱"
+            },
+            {
+                "name": "邮箱联系(Gmail)",
+                "icon": "https://wentianplay.com/assets/siteIcons/mall-Gmail.png",
+                "url": "mailto:wentianplay@Gmail.com",
+                "describe": "苏天彬(苏文飞)-Gmail邮箱"
+            }
+        ]
+    },
+    "官方媒体频道": {
+        "icon": "",
+        "data": [
+            {
+                "name": "哔哩哔哩中国 媒体",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://bilibili.WenTianPlay.com",
+                "describe": "苏天彬 bilibili.com"
+            },
+            {
+                "name": "哔哩哔哩国际 媒体",
+                "icon": "./assets/siteIcons/bilibili.png",
+                "url": "https://www.bilibili.tv/en/space/2095553040",
+                "describe": "苏天彬 bilibili.tv"
+            },
+            {
+                "name": "YouTube 媒体",
+                "icon": "./assets/siteIcons/YouTube.ico",
+                "url": "https://www.youtube.com/@WenTianPlay",
+                "describe": "苏天彬 YouTube.com"
+            },
+            {
+                "name": "X 媒体",
+                "icon": "./assets/siteIcons/X.ico",
+                "url": "https://x.com/WenTianPlay",
+                "describe": "苏天彬 X.COM"
+            },
+            {
+                "name": "微博 媒体",
+                "icon": "./assets/siteIcons/weibo.png",
+                "url": "https://weibo.com/u/7900350949",
+                "describe": "苏天彬 weibo.COM"
+            },
+            {
+                "name": "facebook 媒体",
+                "icon": "./assets/siteIcons/facebook.png",
+                "url": "https://www.facebook.com/profile.php?id=61574428552177",
+                "describe": "苏天彬 facebook.COM"
+            },
+            {
+                "name": "twitter 媒体",
+                "icon": "./assets/siteIcons/twitter.jpg",
+                "url": "http://twitter.com/WenTianPlay",
+                "describe": "苏天彬 twitter.COM"
+            },
+            {
+                "name": "KOOK-天彬 频道",
+                "icon": "./assets/siteIcons/kook.png",
+                "url": "https://www.kookapp.cn/app/invite/6GcFWj",
+                "describe": "KOOK 天彬"
+            },
+            {
+                "name": "Discord-天彬 频道",
+                "icon": "./assets/siteIcons/Discord.png",
+                "url": "https://discord.gg/CwJqM27Nb7",
+                "describe": "Discord 天彬"
+            },
+            {
+                "name": "Telegram 文天玩WenTianPlay 频道",
+                "icon": "./assets/siteIcons/Telegram.png",
+                "url": "https://TG.WenTianPlay.COM",
+                "describe": "Telegram 文天玩WenTianPlay"
+            }
+        ]
+    }
+}
