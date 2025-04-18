@@ -1,1 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文天玩WenTianPlay全能导航</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
 
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .nav-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-card a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-card:hover .nav-icon {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <h1>文天玩全能导航</h1>
+        </div>
+        
+        <div class="nav-grid">
+            <!-- 主要导航项 -->
+            <div class="nav-card">
+                <a href="./index/COM-CN-NET/index.html">
+                    <span class="nav-icon">🐍</span>
+                    <span>域名公示</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="./index/API/index.html" target="_blank">
+                    <span class="nav-icon">✈️</span>
+                    <span>快速导航</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="./index/NET/index.html" target="_blank">
+                    <span class="nav-icon">🔗</span>
+                    <span>联系我们</span>
+                </a>
+            </div>
+
+            <!-- 中国专区 -->
+            <div class="nav-card">
+                <a href="./index/CN-COM/index.html" target="_blank">
+                    <span class="nav-icon">🇨🇳</span>
+                    <span>中国专区</span>
+                </a>
+            </div>
+
+            <!-- 数据与游戏 -->
+            <div class="nav-card">
+                <a href="./index/NET-COM/index.html" target="_blank">
+                    <span class="nav-icon">🎮</span>
+                    <span>游戏数据</span>
+                </a>
+            </div>
+
+            <!-- 我的世界专区 -->
+            <div class="nav-card">
+                <a href="./index/MC/index.html" target="_blank">
+                    <span class="nav-icon">☁️</span>
+                    <span>MC云服务</span>
+                </a>
+            </div>
+
+            <!-- 媒体中心 -->
+            <div class="nav-card">
+                <a href="./index/CU/index.html" target="_blank">
+                    <span class="nav-icon">📭</span>
+                    <span>媒体中心</span>
+                </a>
+            </div>
+
+            <!-- 团队信息 -->
+            <div class="nav-card">
+                <a href="./index/NET-COM/team.html" target="_blank">
+                    <span class="nav-icon">🍃</span>
+                    <span>团队信息</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 点击统计功能
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                const clickId = this.getAttribute('clickid');
+                if (clickId) {
+                    console.log(`点击事件: ${clickId}`);
+                    // 这里可以添加实际统计代码（例如Google Analytics）
+                }
+            });
+        });
+    </script>
+</body>
+</html>
