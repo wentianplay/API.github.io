@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文天玩WenTianPlay官方群聊</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .nav-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-card a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-card:hover .nav-icon {
+            transform: scale(1.2);
+        }
+
+        @media (max-width: 768px) {
+            .nav-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="nav-header">
+            <h1>文天玩官方群聊</h1>
+        </div>
+        
+        <div class="nav-grid">
+            <div class="nav-card">
+                <a href="https://qm.qq.com/q/QP7JJhIMMi" target="_blank">
+                    <span class="nav-icon">壹</span>
+                    <span>创始纪元</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="https://qm.qq.com/q/F0BpATN4yc" target="_blank">
+                    <span class="nav-icon">贰</span>
+                    <span>远古纪元</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="https://qm.qq.com/q/45z4voiQqY" target="_blank">
+                    <span class="nav-icon">叁</span>
+                    <span>文天风云</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="https://qm.qq.com/q/tsCOwIU0Aa" target="_blank">
+                    <span class="nav-icon">肆</span>
+                    <span>探险之旅</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="https://qm.qq.com/q/WcutSJgFMG" target="_blank">
+                    <span class="nav-icon">伍</span>
+                    <span>星辰曙光</span>
+                </a>
+            </div>
+
+            <div class="nav-card">
+                <a href="https://qm.qq.com/q/E8Y3TvW80w" target="_blank">
+                    <span class="nav-icon">陆</span>
+                    <span>风云天下</span>
+                </a>
+            </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 点击统计功能
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                const clickId = this.getAttribute('clickid');
+                if (clickId) {
+                    console.log(`点击事件: ${clickId}`);
+                    // 这里可以添加实际统计代码（例如Google Analytics）
+                }
+            });
+        });
+    </script>
+</body>
+</html>
