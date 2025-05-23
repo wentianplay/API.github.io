@@ -17,7 +17,7 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 4px solid var(--brand-blue);
+            border: 4px solid #00a1d6;
         }
         .error {
             color: #f56c6c;
@@ -34,33 +34,47 @@
 
     <script>
         // 获取当前UID
-        const uid = location.pathname.split('/').pop().split('.')[0];
-        
+        const uid = location.pathname.split('/').pop().split('.')[0] || '3546574612874286';
+
         // 动态加载用户数据
         const loadData = () => {
             const callbackName = `jsonp_${Date.now()}`;
-            
+            let timeoutTriggered = false;
+
+            const cleanup = () => {
+                delete window[callbackName];
+                if (script.parentNode) {
+                    document.body.removeChild(script);
+                }
+            };
+
+            // 超时处理
+            const timeoutId = setTimeout(() => {
+                timeoutTriggered = true;
+                showError();
+                cleanup();
+            }, 5000);
+
             window[callbackName] = data => {
-                if(data.code === 0) {
+                clearTimeout(timeoutId);
+                if (timeoutTriggered) return;
+                if (data && data.code === 0) {
                     showUser(data.data);
                 } else {
                     showError();
                 }
-                delete window[callbackName];
-            }
+                cleanup();
+            };
 
-             
- 
- 
-import { getWbiParams } from '@/utils/wbi'; 
-const params = {
-    mid: uid,
-    ...getWbiParams() 
-};
-script.src = `https://api.bilibili.com/x/space/wbi/acc/info?${new URLSearchParams(params)}&callback=${callbackName}`;
- 
- 
- 
+            const script = document.createElement('script');
+            script.src = `https://api.bilibili.com/x/space/acc/info?mid=${uid}&jsonp=jsonp&callback=${callbackName}`;
+            
+            script.onerror = () => {
+                clearTimeout(timeoutId);
+                showError();
+                cleanup();
+            };
+
             document.body.appendChild(script);
         }
 
@@ -69,12 +83,12 @@ script.src = `https://api.bilibili.com/x/space/wbi/acc/info?${new URLSearchParam
             document.title = `${user.name} | B站用户信息`;
             document.getElementById('content').innerHTML = `
                 <div style="display: flex; gap: 2rem; align-items: center">
-                    <img src="${user.face}" class="avatar">
+                    <img src="${user.face.replace(/^http:/, 'https:')}" class="avatar" onerror="this.src='https://i1.hdslb.com/bfs/face/member/noface.jpg'">
                     <div>
                         <h1>${user.name}</h1>
-                        <p>📢 粉丝数：${user.fans.toLocaleString()}</p>
-                        <p>❤️ 关注数：${user.following.toLocaleString()}</p>
-                        <p>🚻 性别：${user.sex}</p>
+                        <p>📢 粉丝数：${user.fans?.toLocaleString() || '未知'}</p>
+                        <p>❤️ 关注数：${user.following?.toLocaleString() || '未知'}</p>
+                        <p>🚻 性别：${user.sex || '未知'}</p>
                     </div>
                 </div>
             `;
@@ -85,17 +99,13 @@ script.src = `https://api.bilibili.com/x/space/wbi/acc/info?${new URLSearchParam
             document.getElementById('content').innerHTML = `
                 <div class="error">
                     <h2>⚠️ 提示</h2>
-                    <p>该用户尚未关注UP主或页面正在建设中...</p>
+                    <p>数据加载失败，可能原因：<br>
+                    1. 用户不存在或未公开信息<br>
+                    2. 网络连接异常<br>
+                    3. API限制请求</p>
                 </div>
             `;
         }
-
-        // 5秒超时检测
-        setTimeout(() => {
-            if(document.getElementById('content').innerText.includes('正在加载')) {
-                showError();
-            }
-        }, 5000);
 
         loadData();
     </script>
