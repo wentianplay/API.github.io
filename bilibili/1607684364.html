@@ -49,8 +49,11 @@
                 delete window[callbackName];
             }
 
-            const script = document.createElement('script');
-            script.src = `https://api.bilibili.com/x/space/acc/info?mid=${uid}&jsonp=${callbackName}`;
+             
+const script = document.createElement('script');
+script.src = `https://api.bilibili.com/x/space/acc/info?mid=${uid}&callback=${callbackName}`; 
+document.body.appendChild(script);
+ 
             document.body.appendChild(script);
         }
 
@@ -80,12 +83,12 @@
             `;
         }
 
-        // 5秒超时检测
+        // 15秒超时检测
         setTimeout(() => {
             if(document.getElementById('content').innerText.includes('正在加载')) {
                 showError();
             }
-        }, 5000);
+        }, 15000);
 
         loadData();
     </script>
