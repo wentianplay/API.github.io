@@ -1,0 +1,73 @@
+ 
+<!DOCTYPE html>
+<html style="background: #f4f5f7; height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>苏天彬粉丝查询系统</title>
+    <style>
+        :root {
+            --brand-blue: #00aeec;
+            --hover-blue: #00a1d6;
+        }
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .search-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        input {
+            width: 300px;
+            padding: 12px;
+            border: 2px solid #e3e5e7;
+            border-radius: 8px;
+            font-size: 16px;
+            margin: 1rem 0;
+        }
+        button {
+            background: var(--brand-blue);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        button:hover {
+            background: var(--hover-blue);
+        }
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <h1>🔍 苏天彬粉丝查询系统</h1>
+        <form id="searchForm">
+            <input 
+                type="number" 
+                id="uidInput" 
+                placeholder="输入B站UID" 
+                required
+                autofocus
+            >
+            <button type="submit">立即查询</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').onsubmit = e => {
+            e.preventDefault();
+            const uid = document.getElementById('uidInput').value;
+            window.location.href = `./${uid}.html`;
+        }
+    </script>
+</body>
+</html>
+ 
