@@ -1,102 +1,73 @@
-
+ 
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html style="background: #f4f5f7; height: 100%">
 <head>
     <meta charset="UTF-8">
     <title>苏天彬粉丝查询系统</title>
     <style>
         :root {
-            --primary-blue: #00A1D6;
-            --hover-blue: #00B5E5;
+            --brand-blue: #00aeec;
+            --hover-blue: #00a1d6;
         }
-
         body {
-            font-family: "Microsoft YaHei", "Helvetica Neue", sans-serif;
-            background: #F4F5F7;
-            margin: 0;
-            min-height: 100vh;
             display: flex;
-            justify-content: center;
+            height: 100vh;
+            margin: 0;
             align-items: center;
+            justify-content: center;
+            font-family: system-ui, -apple-system, sans-serif;
         }
-
         .search-container {
-            text-align: center;
-            padding: 40px;
             background: white;
-            border-radius: 12px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-            max-width: 600px;
-            width: 90%;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            text-align: center;
         }
-
-        .bilibili-logo {
-            width: 120px;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            color: var(--primary-blue);
-            margin-bottom: 30px;
-            font-weight: 600;
-        }
-
-        .search-box {
-            display: inline-flex;
-            gap: 10px;
-            width: 100%;
-            max-width: 400px;
-        }
-
         input {
-            padding: 12px 20px;
-            border: 2px solid #E7E7E7;
-            border-radius: 24px;
-            flex: 1;
+            width: 300px;
+            padding: 12px;
+            border: 2px solid #e3e5e7;
+            border-radius: 8px;
             font-size: 16px;
+            margin: 1rem 0;
         }
-
         button {
-            background: var(--primary-blue);
+            background: var(--brand-blue);
             color: white;
             border: none;
-            padding: 12px 28px;
-            border-radius: 24px;
+            padding: 12px 24px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s;
-            font-size: 16px;
+            transition: background 0.2s;
         }
-
         button:hover {
             background: var(--hover-blue);
-            transform: translateY(-1px);
         }
     </style>
 </head>
 <body>
     <div class="search-container">
-        <img src="https://www.bilibili.com/favicon.ico" alt="B站logo" class="bilibili-logo">
-        <h1>苏天彬粉丝信息查询系统</h1>
-        <div class="search-box">
-            <input type="number" id="uidInput" placeholder="请输入B站UID" required>
-            <button onclick="searchUser()">立即查询</button>
-        </div>
+        <h1>🔍 苏天彬粉丝查询系统</h1>
+        <form id="searchForm">
+            <input 
+                type="number" 
+                id="uidInput" 
+                placeholder="输入B站UID" 
+                required
+                autofocus
+            >
+            <button type="submit">立即查询</button>
+        </form>
     </div>
 
     <script>
-        function searchUser() {
+        document.getElementById('searchForm').onsubmit = e => {
+            e.preventDefault();
             const uid = document.getElementById('uidInput').value;
-            if (uid) {
-                window.location.href = `./bilibili/users/${uid}.html`;
-            }
+            window.location.href = `./bilibili/${uid}.html`;
         }
-
-        // 支持回车键触发
-        document.getElementById('uidInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchUser();
-            }
-        });
     </script>
 </body>
 </html>
+ 
