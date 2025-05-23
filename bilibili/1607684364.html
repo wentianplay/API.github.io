@@ -50,9 +50,15 @@
             }
 
              
-const script = document.createElement('script');
-script.src = `https://api.bilibili.com/x/space/acc/info?mid=${uid}&callback=${callbackName}`; 
-document.body.appendChild(script);
+ 
+script.src = `https://api.bilibili.com/x/space/acc/info?mid=${uid}&callback=${callbackName}`;
+
+const headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+    "Referer": `https://space.bilibili.com/${uid}/`
+};
+script.headers = headers; // 部分浏览器需通过其他方式注入
+ 
  
             document.body.appendChild(script);
         }
@@ -83,12 +89,12 @@ document.body.appendChild(script);
             `;
         }
 
-        // 15秒超时检测
+        // 5秒超时检测
         setTimeout(() => {
             if(document.getElementById('content').innerText.includes('正在加载')) {
                 showError();
             }
-        }, 15000);
+        }, 5000);
 
         loadData();
     </script>
