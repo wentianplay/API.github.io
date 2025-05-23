@@ -1,134 +1,172 @@
  
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <script>
-        document.addEventListener("contextmenu", function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "F12") {
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener("copy", function(e) {
-            e.preventDefault();
-        });
-  </script>
 <head>
     <meta charset="UTF-8">
-    <title>UID 1607684364 - 粉丝信息</title>
+    <title>苏天彬粉丝详细信息</title>
     <style>
         :root {
-            --primary-color: #00a1d6;
+            --primary-blue: #00A1D6;
+            --dark-text: #18191C;
+            --light-text: #76787D;
         }
 
         body {
-            font-family: "Microsoft Yahei", Arial, sans-serif;
-            background: #f8f9fa;
+            font-family: "Microsoft YaHei", "Helvetica Neue", sans-serif;
+            background: #F4F5F7;
             margin: 0;
         }
 
         .container {
             max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .user-card {
+        .profile-card {
             background: white;
             border-radius: 12px;
-            padding: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 40px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-header {
             text-align: center;
+            margin-bottom: 30px;
         }
 
         .avatar {
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            border: 3px solid var(--primary-color);
-            margin-bottom: 20px;
+            border: 3px solid var(--primary-blue);
+            margin: 0 auto 20px;
         }
 
-        .back-button {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 25px;
-            background: var(--primary-color);
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s;
+        .username {
+            color: var(--dark-text);
+            margin: 0;
+            font-size: 26px;
+            font-weight: 600;
         }
 
-        .back-button:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 30px 0;
         }
 
-        .user-info {
-            text-align: left;
-            max-width: 500px;
-            margin: 0 auto;
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #F8FAFC;
+            border-radius: 8px;
         }
 
-        .user-info p {
-            margin: 15px 0;
-            font-size: 16px;
+        .stat-label {
+            color: var(--light-text);
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+
+        .stat-value {
+            color: var(--dark-text);
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .signature {
+            padding: 20px;
+            background: #F8FAFC;
+            border-radius: 8px;
+            color: var(--dark-text);
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="user-card">
-            <div id="user-content">
-                <div class="loading"></div>
-                <p>正在加载用户信息...</p>
+        <div class="profile-card">
+            <a href="../index.html" class="back-btn">← 返回查询</a>
+            <div id="profile-content">
+                <div class="profile-header">
+                    <div class="loading">加载中...</div>
+                </div>
             </div>
-            <a href="../search.html" class="back-button">返回查询</a>
         </div>
     </div>
 
     <script>
-     
-        const uid = '1607684364';  
+        const uid = '1607684364';
 
-        async function loadUserData() {
+        async function fetchUserData() {
             try {
                 const response = await fetch(`https://api.bilibili.com/x/space/acc/info?mid=${uid}`);
                 const data = await response.json();
 
-                const content = document.getElementById('user-content');
+                const container = document.getElementById('profile-content');
                 
                 if (data.code === 0) {
                     const user = data.data;
-                    content.innerHTML = `
-                        <img src="${user.face}" class="avatar" alt="粉丝头像">
-                        <div class="user-info">
-                            <h2>${user.name}</h2>
-                            <p>📌 UID: ${uid}</p>
-                            <p>🎮 粉丝数: ${user.follower}</p>
-                            <p>📝 签名: ${user.sign || '暂无签名'}</p>
-                            <a href="https://space.bilibili.com/${uid}" 
-                               target="_blank" 
-                               style="color: var(--primary-color);">
-                                访问B站主页 →
-                            </a>
+                    container.innerHTML = `
+                        <div class="profile-header">
+                            <img src="${user.face}@200w.jpg" class="avatar" alt="头像">
+                            <h2 class="username">${user.name}</h2>
+                        </div>
+                        <div class="stats">
+                            <div class="stat-item">
+                                <div class="stat-label">粉丝数</div>
+                                <div class="stat-value">${user.follower}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">关注数</div>
+                                <div class="stat-value">${user.following}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">等级</div>
+                                <div class="stat-value">Lv${user.level}</div>
+                            </div>
+                        </div>
+                        <div class="signature">
+                            ${user.sign || '该用户还没有填写签名哦~'}
                         </div>
                     `;
                 } else {
-                    content.innerHTML = '<p>⚠️ 用户信息获取失败</p>';
+                    container.innerHTML = `
+                        <div style="text-align:center; padding:40px;">
+                            <h3 style="color:#F56C6C;">⚠️ 提示</h3>
+                            <p>你没有三连关注UP或者页面正在搭建中...</p>
+                            <p>错误代码：${data.code}</p>
+                        </div>
+                    `;
                 }
             } catch (error) {
-                document.getElementById('user-content').innerHTML = 
-                    '<p>⚠️ 数据加载失败，请检查网络连接</p>';
+                document.getElementById('profile-content').innerHTML = `
+                    <div style="text-align:center; padding:40px;">
+                        <h3 style="color:#F56C6C;">网络请求失败</h3>
+                        <p>请检查网络连接后刷新页面</p>
+                    </div>
+                `;
             }
         }
 
-        // 页面加载时获取数据
-        loadUserData();
+        // 页面初始化
+        document.title = `UID ${uid} - 用户信息`;
+        fetchUserData();
     </script>
 </body>
 </html>
