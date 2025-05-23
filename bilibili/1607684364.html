@@ -52,10 +52,10 @@
              
  
  
-import { getWbiParams } from '@/utils/wbi'; // 示例签名函数
+import { getWbiParams } from '@/utils/wbi'; 
 const params = {
     mid: uid,
-    ...getWbiParams() // 生成 w_rid 和 wts
+    ...getWbiParams() 
 };
 script.src = `https://api.bilibili.com/x/space/wbi/acc/info?${new URLSearchParams(params)}&callback=${callbackName}`;
  
