@@ -123,10 +123,10 @@
             showLoading();
 
             try {
-                const response = await fetch(`users/${uid}.html`);
+                const response = await fetch(`./bilibili/users/${uid}.html`);
 
                 if (response.status === 200) {
-                    window.location.href = `bilibili/users/${uid}.html`;
+                    window.location.href = `./bilibili/users/${uid}.html`;
                 } else {
                     showNotFoundMessage();
                 }
