@@ -51,13 +51,14 @@
 
              
  
-script.src = `https://api.bilibili.com/x/space/acc/info?mid=${uid}&callback=${callbackName}`;
-
-const headers = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
-    "Referer": `https://space.bilibili.com/${uid}/`
+ 
+import { getWbiParams } from '@/utils/wbi'; // 示例签名函数
+const params = {
+    mid: uid,
+    ...getWbiParams() // 生成 w_rid 和 wts
 };
-script.headers = headers; // 部分浏览器需通过其他方式注入
+script.src = `https://api.bilibili.com/x/space/wbi/acc/info?${new URLSearchParams(params)}&callback=${callbackName}`;
+ 
  
  
             document.body.appendChild(script);
