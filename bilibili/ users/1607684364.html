@@ -1,0 +1,135 @@
+ 
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <script>
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener("copy", function(e) {
+            e.preventDefault();
+        });
+  </script>
+<head>
+    <meta charset="UTF-8">
+    <title>UID 1607684364 - 用户信息</title>
+    <style>
+        :root {
+            --primary-color: #00a1d6;
+        }
+
+        body {
+            font-family: "Microsoft Yahei", Arial, sans-serif;
+            background: #f8f9fa;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .user-info {
+            text-align: left;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .user-info p {
+            margin: 15px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="user-card">
+            <div id="user-content">
+                <div class="loading"></div>
+                <p>正在加载用户信息...</p>
+            </div>
+            <a href="../search.html" class="back-button">返回查询</a>
+        </div>
+    </div>
+
+    <script>
+     
+        const uid = '1607684364';  
+
+        async function loadUserData() {
+            try {
+                const response = await fetch(`https://api.bilibili.com/x/space/acc/info?mid=${uid}`);
+                const data = await response.json();
+
+                const content = document.getElementById('user-content');
+                
+                if (data.code === 0) {
+                    const user = data.data;
+                    content.innerHTML = `
+                        <img src="${user.face}" class="avatar" alt="用户头像">
+                        <div class="user-info">
+                            <h2>${user.name}</h2>
+                            <p>📌 UID: ${uid}</p>
+                            <p>🎮 粉丝数: ${user.follower}</p>
+                            <p>📝 签名: ${user.sign || '暂无签名'}</p>
+                            <a href="https://space.bilibili.com/${uid}" 
+                               target="_blank" 
+                               style="color: var(--primary-color);">
+                                访问B站主页 →
+                            </a>
+                        </div>
+                    `;
+                } else {
+                    content.innerHTML = '<p>⚠️ 用户信息获取失败</p>';
+                }
+            } catch (error) {
+                document.getElementById('user-content').innerHTML = 
+                    '<p>⚠️ 数据加载失败，请检查网络连接</p>';
+            }
+        }
+
+        // 页面加载时获取数据
+        loadUserData();
+    </script>
+</body>
+</html>
+ 
