@@ -1,170 +1,101 @@
+
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <script>
-        document.addEventListener("contextmenu", function(e) {
-            e.preventDefault();
-        });
-
-        document.addEventListener("keydown", function(e) {
-            if (e.key === "F12") {
-                e.preventDefault();
-            }
-        });
-
-        document.addEventListener("copy", function(e) {
-            e.preventDefault();
-        });
-    </script>
 <head>
     <meta charset="UTF-8">
-    <title>粉丝UID查询系统</title>
+    <title>苏天彬粉丝查询系统</title>
     <style>
         :root {
-            --primary-color: #00a1d6;
-            --error-bg: #fff2f0;
-            --error-border: #ffccc7;
+            --primary-blue: #00A1D6;
+            --hover-blue: #00B5E5;
         }
 
         body {
-            font-family: "Microsoft Yahei", Arial, sans-serif;
-            background: #f8f9fa;
+            font-family: "Microsoft YaHei", "Helvetica Neue", sans-serif;
+            background: #F4F5F7;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 100px auto;
-            padding: 20px;
+        .search-container {
             text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 90%;
+        }
+
+        .bilibili-logo {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            font-weight: 600;
         }
 
         .search-box {
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            display: inline-flex;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
         }
 
-        input[type="number"] {
+        input {
             padding: 12px 20px;
-            width: 300px;
+            border: 2px solid #E7E7E7;
+            border-radius: 24px;
+            flex: 1;
             font-size: 16px;
-            border: 2px solid var(--primary-color);
-            border-radius: 25px;
-            margin-right: 10px;
         }
 
         button {
-            padding: 12px 35px;
-            background: var(--primary-color);
+            background: var(--primary-blue);
             color: white;
             border: none;
-            border-radius: 25px;
+            padding: 12px 28px;
+            border-radius: 24px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
+            font-size: 16px;
         }
 
         button:hover {
-            opacity: 0.9;
+            background: var(--hover-blue);
             transform: translateY(-1px);
-        }
-
-        #message {
-            margin-top: 20px;
-            min-height: 60px;
-        }
-
-        .error-box {
-            background: var(--error-bg);
-            border: 1px solid var(--error-border);
-            padding: 20px;
-            border-radius: 8px;
-            text-align: left;
-            margin: 20px auto;
-            max-width: 500px;
-        }
-
-        .loading {
-            display: inline-block;
-            width: 24px;
-            height: 24px;
-            border: 3px solid rgba(0,0,0,0.1);
-            border-top-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="search-container">
+        <img src="https://www.bilibili.com/favicon.ico" alt="B站logo" class="bilibili-logo">
+        <h1>苏天彬粉丝信息查询系统</h1>
         <div class="search-box">
-            <h1 style="color: var(--primary-color); margin-bottom: 30px;">粉丝UID查询系统</h1>
-            <div>
-                <input type="number" id="uidInput" placeholder="请输入B站UID" autofocus>
-                <button onclick="checkUID()">立即查询</button>
-            </div>
-            <div id="message"></div>
+            <input type="number" id="uidInput" placeholder="请输入B站UID" required>
+            <button onclick="searchUser()">立即查询</button>
         </div>
     </div>
 
     <script>
-        async function checkUID() {
-            const uid = document.getElementById('uidInput').value.trim();
-            const message = document.getElementById('message');
-
-            if (!uid) {
-                showMessage('请输入有效的UID', 'error');
-                return;
-            }
-
-            showLoading();
-
-            try {
-                const response = await fetch(`./bilibili/users/${uid}.html`);
-
-                if (response.status === 200) {
-                    window.location.href = `./bilibili/users/${uid}.html`;
-                } else {
-                    showNotFoundMessage();
-                }
-            } catch (error) {
-                showNotFoundMessage();
+        function searchUser() {
+            const uid = document.getElementById('uidInput').value;
+            if (uid) {
+                window.location.href = `./bilibili/users/${uid}.html`;
             }
         }
 
-        function showLoading() {
-            document.getElementById('message').innerHTML = `
-                <div style="padding: 15px;">
-                    <div class="loading"></div>
-                    <p style="margin-top: 10px;">正在验证UID...</p>
-                </div>
-            `;
-        }
-
-        function showNotFoundMessage() {
-            document.getElementById('message').innerHTML = `
-                <div class="error-box">
-                    <h3 style="color: #ff4d4f; margin-top: 0;">🚨 页面未找到</h3>
-                    <p>可能原因：</p>
-                    <ul>
-                        <li>你还没有三连关注UP主</li>
-                        <li>该页面正在搭建中</li>
-                        <li>输入的UID不存在</li>
-                    </ul>
-                    <button onclick="location.reload()" 
-                            style="margin-top: 15px; padding: 8px 20px;">
-                        重新查询
-                    </button>
-                </div>
-            `;
-        }
-
-        // 支持回车键
-        document.getElementById('uidInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') checkUID();
+        // 支持回车键触发
+        document.getElementById('uidInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchUser();
+            }
         });
     </script>
 </body>
