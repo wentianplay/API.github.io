@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文天玩WenTianPlay服务器状态监测-文天玩网络科技有限公司</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .server {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            width: 250px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        /* 禁用文本选择 */
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+        }
+    </style>
+</head>
+<body>
+
+<h1>文天玩服务器在线状态监测</h1>
+
+<div class="server" id="server1">
+    <h2>湖北天门(三网专线)</h2>
+    <p>状态：在线</p>
+    <p id="time1"></p>
+</div>
+
+<div class="server" id="server2">
+    <h2>上海青浦(电信专线)</h2>
+    <p>状态：在线</p>
+    <p id="time2"></p>
+</div>
+
+<div class="server" id="server3">
+    <h2>上海青浦(联通专线)</h2>
+    <p>状态：在线</p>
+    <p id="time3"></p>
+</div>
+
+<div class="server" id="server4">
+    <h2>上海青浦(移动专线)</h2>
+    <p>状态：在线</p>
+    <p id="time4"></p>
+</div>
+
+<div class="server" id="server5">
+    <h2>美国纽约(Verizon)</h2>
+    <p>状态：在线</p>
+    <p id="time5"></p>
+</div>
+
+<script>
+    function startTime(startDateString, timeElementId) {
+        const startDate = new Date(startDateString).getTime();
+        const timeElement = document.getElementById(timeElementId);
+
+        function updateTime() {
+            const now = new Date().getTime();
+            const elapsedSeconds = Math.floor((now - startDate) / 1000);
+            const days = Math.floor(elapsedSeconds / 86400);
+            const hours = Math.floor((elapsedSeconds % 86400) / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+
+            timeElement.innerHTML = `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();  // 初始化显示
+    }
+
+    window.onload = function() {
+        // 启动时间设置
+        startTime('2015/01/10', 'time1'); // 湖北天门
+        startTime('2017/03/11', 'time2'); // 上海青浦(电信专线)
+        startTime('2020/04/20', 'time3'); // 上海青浦(联通专线)
+        startTime('2024/05/03', 'time4'); // 上海青浦(移动专线)
+        startTime('2024/08/09', 'time5'); // 美国纽约
+    }
+
+    // 禁用右键菜单
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
+    // 防止检测到F12
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>
