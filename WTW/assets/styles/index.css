@@ -1,0 +1,729 @@
+*,*::before,*::after { box-sizing: border-box; margin: 0;scroll-behavior: smooth; }
+body {
+  min-height: 100vh;
+}
+/*样式初始化*/
+body,h1,h2,h3,h4,h5,h6,hr,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,input,button,textarea,p,blockquote,th,td {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+}
+div,ul,li,ol,a,section,nav,header,footer { box-sizing: border-box; }
+body {font-family:Source Han Sans, Source Han Sans;}
+a { text-decoration: none; }
+svg { cursor: pointer; flex-shrink: 0; }
+img { border: none; }
+ol,ul,li { list-style: none; margin: 0; padding: 0; }
+table { border-collapse: collapse; }
+.page{
+    width: 100%;
+    background-color: #2B0955;
+    padding-bottom: 60px;
+    overflow: hidden;
+}
+.content{
+    margin: auto;
+    max-width: 1200px;
+}
+.one-box_content{
+    text-align: center;
+    padding-top: 88px;
+    font-size: 0;
+}
+.one-box_title{
+    font-size: 30px;
+    line-height: 36px;
+    color: #ffffff;
+    font-weight: 700;
+    text-shadow: 0px 4px 16px rgba(0,0,0,0.16);
+    letter-spacing: 1px;
+}
+.one-box_msg{
+    margin-top: 12px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 28px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.85);
+}
+.one-box_logo{
+    width: 84px;
+    height: 84px;
+    border-radius: 16px;
+    margin: 60px auto 0;
+    overflow: hidden;
+}
+.logo_img{
+    width: 84px;
+    height: 84px;
+    display: block;
+}
+.logo-tip_parent{
+    margin-top: 12px;
+}
+.logo-tip{
+    padding: 0 20px;
+    display: inline;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 32px;
+    border: 1px solid rgba(255,255,255,0.25);
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    text-align: center;
+}
+.download-box{
+    margin: 60px auto 0;
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 0;
+    max-width: 1008px;
+}
+.download-item{
+    width: 50%;
+    padding: 20px 0;
+    text-align: center;
+    display: block;
+}
+.download-item_icon{
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: auto;
+}
+.download-item_text{
+    margin-top: 12px;
+    font-size: 16px;
+    line-height: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+.download-item_btn{
+    margin: 10px auto 0;
+    width: 64px;
+    height: 18px;
+    border-radius: 32px;
+    border: 1px solid rgba(174,151,203,0.25);
+    text-align: center;
+    line-height: 16px;
+    font-weight: 400;
+    font-size: 12px;
+    color: rgba(174,151,203,0.5);
+}
+.download-left-right-border::after{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(174,151,203,0.15), rgba(174,151,203,0));
+}
+.download-right-left-border::before{
+    content: '';
+    width: 100%;
+    height: 1px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(to right, rgba(174,151,203,0), rgba(174,151,203,0.15));
+}
+.download-bottom-top-border::after{
+    content: '';
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: linear-gradient(to top, rgba(174,151,203,0.15), rgba(174,151,203,0));
+}
+.download-top-bottom-border::before{
+    content: '';
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: linear-gradient(to top, rgba(174,151,203,0), rgba(174,151,203,0.15));
+}
+.download-item_left:hover{
+    background: linear-gradient( 315deg, rgba(174,151,203,0.15) 0%, rgba(174,151,203,0.02) 100%);
+}
+.download-item_right:hover{
+    background: linear-gradient( 315deg, rgba(174,151,203,0.02) 0%, rgba(174,151,203,0.15) 100%);
+}
+.wait-online_img{
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: none;
+}
+.wait-online .download-item_text{
+    color: rgba(174,151,203,0.5);
+}
+.wait-online .wait-online_img{
+    display: block;
+}
+.wait-online{
+    cursor: auto !important;
+}
+.zero-box{
+    padding-top: 60px;
+}
+.zero1-box{
+    padding-top: 60px;
+}
+.offline-box{
+    padding-top: 60px;
+}
+.two-box{
+    padding-top: 60px;
+}
+.one-bg{
+    position: absolute;
+    top: -225px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.offline-bg{
+    width: 490px;
+    position: absolute;
+    top: -39px;
+    left: 50%;
+    transform: translateX(-108px);
+}
+.two-bg{
+    width: 490px;
+    position: absolute;
+    top: -39px;
+    left: 50%;
+    transform: translateX(-108px);
+}
+.zero-box_title{
+    font-size: 0;
+    text-align: center;
+}
+.zero1-box_title{
+    font-size: 0;
+    text-align: center;
+}
+.offline-box_title{
+    font-size: 0;
+    text-align: center;
+}
+.two-box_title{
+    font-size: 0;
+    text-align: center;
+}
+.item-title_content{
+    display: inline-block;
+    height: 33px;
+    line-height: 33px;
+    padding: 0 6px;
+    position: relative;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 20px;
+}
+.item-title_content::before{
+    position: absolute;
+    content: url('../images/title-bottom-icon.svg');
+    width: 17px;
+    height: 17px;
+    left: -2px;
+    bottom: -2px;
+}
+.item-title_content::after{
+    position: absolute;
+    content: url('../images/title-top-icon.svg');
+    width: 17px;
+    height: 17px;
+    top: -5px;
+    right: 0;
+}
+
+.zero-box_content,
+.zero1-box_content,
+.offline-box_content
+{
+    width: 84%;
+    margin: 32px auto 0;
+}
+.zero-box_item,
+.offline-box_item{
+    margin-bottom: 3px;
+    background: rgba(174,151,203,0.15);
+    border-radius: 6px;
+}
+.zero-box_tab,
+.offline-box_tab{
+    border: 1px solid transparent;
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px 0 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.zero-box_tab_left,
+.offline-box_tab_left{
+    font-size: 14px;
+    color: #ffffff;
+    padding-left: 16px;
+    position: relative;
+}
+.zero-box_tab_left::before,
+.offline-box_tab_left::before{
+    content: url('../images/rotundity-cion.svg');
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 0;
+    top: 6px;
+}
+.zero-box_tab_right,
+.offline-box_tab_right{
+    width: 16px;
+    height: 16px;
+}
+.zero-box_item.active .zero-box_tab,
+.offline-box_item.active .offline-box_tab{
+    border: 1px solid #AE97CB;
+    background: #2B0955;
+}
+.zero-box_content_parent,
+.offline-box_content_parent{
+    background: rgba(174,151,203,0.15);
+    height: 0;
+    overflow: hidden;
+    transition: height 2s;
+}
+.zero-box_item.active .zero-box_content_parent,
+.offline-box_item.active .offline-box_content_parent{
+    height: auto;
+}
+.zero-box_tab_content,
+.offline-box_tab_content{
+    padding: 20px;
+}
+
+
+
+.zero1-box_item{
+    margin-bottom: 3px;
+    background: rgba(174,151,203,0.15);
+    border-radius: 6px;
+}
+.zero1-box_tab{
+    border: 1px solid transparent;
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px 0 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.zero1-box_tab_left{
+    font-size: 14px;
+    color: #ffffff;
+    padding-left: 16px;
+    position: relative;
+}
+.zero1-box_tab_left::before{
+    content: url('../images/rotundity-cion.svg');
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 0;
+    top: 6px;
+}
+.zero1-box_tab_right{
+    width: 16px;
+    height: 16px;
+}
+.zero1-box_item.active .zero-box_tab{
+    border: 1px solid #AE97CB;
+    background: #2B0955;
+}
+.zero1-box_content_parent{
+    background: rgba(174,151,203,0.15);
+    height: 0;
+    overflow: hidden;
+    transition: height 2s;
+}
+.zero1-box_item.active .zero1-box_content_parent{
+    height: auto;
+}
+.zero1-box_tab_content{
+    padding: 20px;
+}
+
+
+
+.two-box_content{
+    width: 84%;
+    margin: 32px auto 0;
+}
+.two-box_item{
+    margin-bottom: 3px;
+    background: rgba(174,151,203,0.15);
+    border-radius: 6px;
+}
+.two-box_tab{
+    border: 1px solid transparent;
+    height: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 12px 0 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.two-box_tab_left{
+    font-size: 14px;
+    color: #ffffff;
+    padding-left: 16px;
+    position: relative;
+}
+.two-box_tab_left::before{
+    content: url('../images/rotundity-cion.svg');
+    width: 8px;
+    height: 8px;
+    position: absolute;
+    left: 0;
+    top: 6px;
+}
+.two-box_tab_right{
+    width: 16px;
+    height: 16px;
+}
+.two-box_item.active .two-box_tab{
+    border: 1px solid #AE97CB;
+    background: #2B0955;
+}
+.two-box_content_parent{
+    background: rgba(174,151,203,0.15);
+    height: 0;
+    overflow: hidden;
+    transition: height 2s;
+}
+.two-box_item.active .two-box_content_parent{
+    height: auto;
+}
+.two-box_tab_content{
+    padding: 20px;
+}
+.tab-title{
+    font-size: 16px;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 22px;
+    margin-bottom: 12px;
+}
+.tab-content{
+    margin-bottom: 20px;
+}
+.tab-content_item{
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(229,229,229,0.85);
+    padding-left: 12px;
+    position: relative;
+}
+.tab-content_item::before{
+    content: '•';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    left: 0;
+    top: 0;
+    color: #B13BDB;
+}
+.tab-tip{
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba(229,229,229,0.85);
+    padding: 12px;
+    border: 1px solid rgba(174, 151, 203, 0.25);
+    border-radius: 6px;
+    margin-bottom: 20px;
+    background-color: rgba(174,151,203,0.1);
+}
+.tab-img_list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.tab-img_item{
+    width: 275px;
+    height: 160px;
+    border-radius: 6px;
+    border: 4px solid rgba(174,151,203,0.25);
+    position: relative;
+    margin-bottom: 12px;
+}
+.tab-img_number{
+    position: absolute;
+    top: -4px;
+    left: -4px;
+    width:24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 6px;
+    text-align: center;
+    background: #B13BDB;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    z-index: 2;
+}
+.tab-img_parent{
+    width: 267px;
+    height: 152px;
+    position: relative;
+    overflow: hidden;
+}
+.tab-img_box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.fixed-width_img{
+    max-width: 275px;
+}
+.fixed-height_img{
+    max-height: 160px;
+}
+.tab-title_blur{
+    font-size: 14px;
+    font-weight: bold;
+    color: #ae97cb;
+    line-height: 20px;
+    margin-bottom: 12px;
+}
+.tab-content_item_text{
+    padding-left: 12px;
+    position: relative;
+}
+.tab-content_item_text::before{
+    content: '·';
+    position: absolute;
+    top:0;
+    left: 4px;
+    width: 6px;
+    height: 6px;
+    color: rgba(229, 229, 229, 0.85);
+}
+.three-box{
+    padding-top: 56px;
+}
+.three-box_content{
+    max-width: 1008px;
+    margin: auto;
+    padding-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.three-box_item{
+    width: 49%;
+    margin: auto;
+    position: relative;
+    padding: 20px;
+    background: rgba(174,151,203,0.25);
+    border-radius: 12px;
+    font-size: 0;
+}
+.good-icon{
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: -20px;
+    right: 20px;
+}
+.starts-icon{
+    width: 125px;
+}
+.three-box_item_text{
+    margin-top: 12px;
+    font-size: 14px;
+    color: #ffffff;
+    line-height: 20px;
+}
+.dialog-parent{
+    display: none;
+}
+.dialog-show{
+    display: block;
+}
+.dialog_bg{
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+.dialog_box{
+    width: 325px;
+   position: fixed;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+}
+.dialog-box_content{
+    padding: 40px 0;
+    border-radius: 12px;
+    position:relative;
+    background-color: #ffffff;
+    font-size: 0;
+}
+.close-icon_box{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+}
+.close-icon{
+    width: 20px;
+    height: 20px;
+    display: block;
+}
+.dialog-box_title{
+    font-weight: 500;
+    font-size: 20px;
+    color: #2B0955;
+    line-height: 24px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+.dialog-link{
+    display: block;
+    margin: auto;
+    width: 245px;
+    height: 48px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.dialog-link_content{
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient( 135deg, #641CFD 0%, #B13BDB 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.dialog-wait-online{
+    display: none;
+}
+.dialog-link_wait_online{
+    cursor: auto;
+}
+.dialog-link_wait_online .dialog-link_content{
+    background: linear-gradient( 135deg, rgba(100,28,253,0.6) 0%, rgba(177,59,219,0.6) 100%);
+}
+.dialog-link_wait_online .dialog-wait-online{
+    display: block;
+    margin-left: 8px;
+    position: relative;
+    top: 2px;
+    width: 52px;
+    height: 18px;
+    background-image: url('https://www.cyz.one/assets/images/wait-online-icon-2.png');
+    background-size: cover;
+}
+.dialog-download_icon{
+    width: 16px;
+    height: 16px;
+    display: block;
+    margin-right: 7px;
+}
+.dialog-link_text{
+    font-size: 16px;
+    color: #FFFFFF;
+}
+.relative{
+    position:relative;
+}
+.inline{
+    display: inline-block;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.m-b-12{
+    margin-bottom: 12px;
+}
+.m-t-12{
+    margin-top: 12px;
+}
+.blur_text{
+    color: #B13BDB;
+}
+.red_text{
+    color: #ae97cb;
+}
+.m-r-12{
+    margin-right: 12px;
+}
+.flex-start{
+    justify-content: flex-start;
+}
+.link_text{
+    color: #409eff;
+    white-space: normal;
+    word-break: break-all;
+}
+.m-t-32{
+    margin-top: 0;
+}
+.m-b-20{
+    margin-bottom: 20px;
+}
+.guide-bg{
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.85);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    display: none;
+}
+.guide-box{
+    width: 80%;
+    position: fixed;
+    top: 5px;
+    right: 18px;
+}
+.guide-img{
+    width: 100%;
+}
+@media (max-width: 560px) {
+    .m-r-12{
+        margin-right: 0;
+    }
+    .tab-img_list{
+        justify-content: center;
+    }
+    .flex-start{
+        justify-content: center;
+    }
+}
+@media (max-width: 1200px) {
+    .three-box_item{
+        width: 84%;
+    }
+    .m-t-32{
+        margin-top: 32px;
+    }
+}
