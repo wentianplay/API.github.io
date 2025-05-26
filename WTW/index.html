@@ -1,5 +1,20 @@
  
 <html lang="en" style="font-size: 200px;">
+    <script>
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        document.addEventListener("keydown", function(e) {
+            if (e.key === "F12") {
+                e.preventDefault();
+            }
+        });
+
+        document.addEventListener("copy", function(e) {
+            e.preventDefault();
+        });
+    </script>
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="https://www.wentianplay.com/favicon.ico">
