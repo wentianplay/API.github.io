@@ -1,0 +1,31 @@
+name: Deploy Subdirectories as Roots
+
+on:
+  push:
+    branches: [ main ]  # 触发分支
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set Up Directories
+        run: |
+          # 创建根目录的符号链接（或直接复制）
+          ln -s ./API/Blog ./Blog || true
+          ln -s ./API/pay ./pay || true
+          ln -s ./API/WTP ./WTP || true
+          ln -s ./API/WTW ./WTW || true
+          ln -s ./API/TianBIN ./TianBIN || true
+
+          # 如果符号链接不生效，改用复制（适用于 GitHub Pages）
+          # cp -r ./API/Blog ./Blog
+          # cp -r ./API/pay ./pay
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./  # 发布整个仓库根目录
