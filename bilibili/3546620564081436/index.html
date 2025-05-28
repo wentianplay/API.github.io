@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>苏天彬粉丝档案｜干员3546620564081436</title>
+    <style>
+        :root {
+            --bili-pink: #FF69B4;
+            --bili-blue: #00AEEC;
+            --barrage-speed: 30s;
+        }
+        body {
+            margin: 0;
+            background: #f4f5f7;
+            font-family: 'HarmonyOS Sans', 'PingFang SC', system-ui;
+            overflow-x: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, var(--bili-blue) 0%, var(--bili-pink) 100%);
+            padding: 80px 20px 120px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        .banner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+        .avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+        .avatar:hover {
+            transform: rotate(360deg);
+        }
+        .info-box {
+            color: white;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .barrage-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .barrage {
+            position: absolute;
+            white-space: nowrap;
+            font-weight: bold;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            animation: barrage var(--barrage-speed) linear infinite;
+        }
+        @keyframes barrage {
+            from { transform: translateX(100vw); }
+            to { transform: translateX(-100%); }
+        }
+        .content {
+            max-width: 1200px;
+            margin: -60px auto 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .nav-button {
+            display: inline-block;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, var(--bili-blue), var(--bili-pink));
+            color: white!important;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,105,180,0.4);
+        }
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        .video-item {
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .video-item:hover {
+            transform: translateY(-5px);
+        }
+        .video-item::after {
+            content: "▶";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            font-size: 40px;
+            color: white;
+            opacity: 0.8;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .meme-alert {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #fff;
+            padding: 15px 25px;
+            border-radius: 50px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: alertPop 3s;
+            display: none;
+        }
+        @keyframes alertPop {
+            0% { transform: translateY(100%); opacity: 0; }
+            20% { transform: translateY(0); opacity: 1; }
+            80% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="barrage-container" id="barrageContainer"></div>
+        <div class="banner">
+            <img src="./WTP.png" 
+                 class="avatar"
+                 alt="干员头像">
+            <div class="info-box">
+                <h1 style="font-size: 2.5em; margin: 0">第一轮</h1>
+                <p style="font-size: 1.2em">
+                    <span style="color: #FFD700">▎LEVEL 6</span> 
+                    <span style="margin-left: 20px">🔑 正式干员</span>
+                </p>
+                <div style="display: flex; gap: 30px; margin-top: 20px">
+                    <a href="https://space.bilibili.com/3546620564081436" 
+                       target="_blank"
+                       class="nav-button">
+                        🚀 前往指挥部
+                    </a>
+                    <button class="nav-button" onclick="showMemeAlert()">
+                        💡 三连通道
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content">
+        <h2 style="color: var(--bili-pink)">
+            ▍随机照片显示 <span style="font-size: 0.8em; color: #666">（战术目镜启动中）</span>
+        </h2>
+        <div class="video-grid">
+            <img src="https://picsum.photos/300/200?random=1" class="video-item">
+            <img src="https://picsum.photos/300/200?random=2" class="video-item">
+            <img src="https://picsum.photos/300/200?random=3" class="video-item">
+        </div>
+
+        <div style="margin-top: 40px; text-align: center">
+            <p style="color: #666">⚠️ 系统提示：侦测到<span id="memeText"></span>波动</p>
+            <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px">
+                <a href="https://space.bilibili.com/3546620564081436" 
+                   target="_blank"
+                   class="nav-button">
+                    🔍 完整档案
+                </a>
+                <button class="nav-button" onclick="showMemeAlert()">
+                    💰 老板大气
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="meme-alert" id="memeAlert">
+        🎉 自动三连协议已部署成功！
+    </div>
+
+    <script>
+        // 初始化弹幕
+        const barrages = [
+            {text: "AWSL", color: "#FF69B4"},
+            {text: "一键三连走起！", color: "#00AEEC"},
+            {text: "下次一定", color: "#FFD700"},
+            {text: "白嫖党探头", color: "#666"},
+            {text: "三连+关注=永动机", color: "#FF4500"},
+            {text: "你币有了", color: "#00C4A2"},
+            {text: "前方高能预警", color: "#FF0000"},
+            {text: "感谢课代表", color: "#9400D3"}
+        ]
+
+        function createBarrage() {
+            const container = document.getElementById('barrageContainer');
+            const barrage = document.createElement('div');
+            const random = Math.floor(Math.random() * barrages.length);
+
+            barrage.className = 'barrage';
+            barrage.style.color = barrages[random].color;
+            barrage.style.top = Math.random() * 90 + '%';
+            barrage.style.fontSize = Math.floor(Math.random() * 12 + 18) + 'px';
+            barrage.style.animationDuration = Math.random() * 10 + 20 + 's';
+            barrage.textContent = barrages[random].text;
+
+            container.appendChild(barrage);
+            setTimeout(() => barrage.remove(), 30000);
+        }
+
+        // 弹幕生成器
+        setInterval(createBarrage, 1500);
+
+        // 趣味提示
+        const memeTexts = [
+            '「一键三连」', '「下次一定」', '「无限矿业」', 
+            '「老板大气」', '「awsl」', '「XXS」'
+        ];
+        let currentMeme = 0;
+        setInterval(() => {
+            document.getElementById('memeText').innerHTML = memeTexts[currentMeme];
+            currentMeme = (currentMeme + 1) % memeTexts.length;
+        }, 2000);
+
+        // 彩蛋提示
+        function showMemeAlert() {
+            const alert = document.getElementById('memeAlert');
+            alert.style.display = 'block';
+            setTimeout(() => alert.style.display = 'none', 3000);
+        }
+
+        // 右键菜单彩蛋
+        document.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            showMemeAlert();
+            document.getElementById('memeAlert').innerHTML = "🎁 你发现了开发者的小秘密！";
+        });
+
+        // 控制台彩蛋
+        console.log("%c🚀 干员3546620564081436号档案已解密！", 
+            "color:#FF69B4;font-size:20px;font-weight:bold");
+        console.log("%c🔑 访问完整档案：https://space.bilibili.com/3546620564081436", 
+            "color:#00AEEC;font-size:14px;");
+    </script>
+</body>
+</html>
