@@ -1,31 +1,29 @@
-name: Deploy Subdirectories as Roots
+ 
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # 触发分支
+    branches: [ main ] # 或你使用的分支名
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set Up Directories
-        run: |
-          # 创建根目录的符号链接（或直接复制）
-          ln -s ./API/Blog ./Blog || true
-          ln -s ./API/pay ./pay || true
-          ln -s ./API/WTP ./WTP || true
-          ln -s ./API/WTW ./WTW || true
-          ln -s ./API/TianBIN ./TianBIN || true
-
-          # 如果符号链接不生效，改用复制（适用于 GitHub Pages）
-          # cp -r ./API/Blog ./Blog
-          # cp -r ./API/pay ./pay
-
+      - uses: actions/checkout@v4
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          
+      - name: Install dependencies
+        run: npm install
+        # 如果你有构建步骤，可以在这里添加
+      
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # 发布整个仓库根目录
+          publish_dir: ./
+          force_orphan: true
+ 
