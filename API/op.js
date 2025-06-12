@@ -75,10 +75,10 @@ document.body.appendChild(popupContainer);
 // 显示弹窗
 popupContainer.style.display = 'block';
 
-// 30秒后自动关闭
+// 40秒后自动关闭
 setTimeout(function() {
     popupContainer.style.display = 'none';
-}, 30000);
+}, 40000);
 
 // 检测域名延迟的函数
 function pingDomain(domain) {
