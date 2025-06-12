@@ -1,1156 +1,875 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DarkNet Terminal v1.3.7</title>
+    <title>WenTianPlay</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
-    <!-- Tailwind配置 -->
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        terminal: {
-                            bg: '#0a111c',
-                            text: '#00ff41',
-                            highlight: '#00f7ff',
-                            error: '#ff0000',
-                            success: '#00ff00',
-                            warning: '#ffff00',
-                            info: '#0080ff'
-                        }
+                        primary: '#00FF00',
+                        secondary: '#00FFFF',
+                        terminal: '#0A1119',
+                        dark: '#030712',
+                        light: '#F3F4F6'
                     },
                     fontFamily: {
-                        mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+                        terminal: ['"Courier New"', 'monospace'],
                     },
                 }
             }
         }
     </script>
-    
     <style type="text/tailwindcss">
         @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
             .terminal-cursor {
                 animation: blink 1s step-end infinite;
             }
-            
-            .terminal-glow {
-                text-shadow: 0 0 5px rgba(0, 255, 65, 0.7), 0 0 10px rgba(0, 255, 65, 0.5);
-            }
-            
-            .terminal-glow-highlight {
-                text-shadow: 0 0 5px rgba(0, 247, 255, 0.7), 0 0 10px rgba(0, 247, 255, 0.5);
-            }
-            
-            .terminal-glow-error {
-                text-shadow: 0 0 5px rgba(255, 0, 0, 0.7), 0 0 10px rgba(255, 0, 0, 0.5);
-            }
-            
-            .noise-overlay {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%" height="100%" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
-                opacity: 0.05;
-                pointer-events: none;
-                mix-blend-mode: overlay;
-            }
-            
-            .scanline {
+            .scan-line {
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 2px;
-                background: rgba(0, 255, 65, 0.2);
-                animation: scanline 5s linear infinite;
+                background: linear-gradient(to right, transparent, rgba(0, 255, 0, 0.5), transparent);
+                animation: scan 2s linear infinite;
+            }
+            .matrix-fall {
+                position: absolute;
+                top: -100px;
+                left: 0;
+                width: 100%;
+                height: 100%;
                 pointer-events: none;
+                z-index: 0;
             }
-            
-            @keyframes blink {
-                from, to { opacity: 1; }
-                50% { opacity: 0; }
+            .matrix-char {
+                position: absolute;
+                color: rgba(0, 255, 0, 0.7);
+                font-size: 12px;
+                transform: translateY(-100%);
+                animation: fall linear infinite;
             }
-            
-            @keyframes scanline {
-                0% { top: 0; }
-                100% { top: 100%; }
+            .glow {
+                text-shadow: 0 0 5px rgba(0, 255, 0, 0.7), 0 0 10px rgba(0, 255, 0, 0.5);
             }
-            
-            .glitch {
-                position: relative;
+            .glow-blue {
+                text-shadow: 0 0 5px rgba(0, 255, 255, 0.7), 0 0 10px rgba(0, 255, 255, 0.5);
             }
-            
-            .glitch::before,
-            .glitch::after {
-                content: attr(data-text);
+            .grid-bg {
+                background-image: linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                                  linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+            .noise-bg {
                 position: absolute;
                 top: 0;
                 left: 0;
                 width: 100%;
                 height: 100%;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+                opacity: 0.05;
+                pointer-events: none;
+                z-index: 1;
             }
-            
-            .glitch::before {
-                left: 2px;
-                text-shadow: -1px 0 #00f7ff;
-                clip: rect(24px, 550px, 90px, 0);
-                animation: glitch-anim 2s infinite linear alternate-reverse;
-            }
-            
-            .glitch::after {
-                left: -2px;
-                text-shadow: -1px 0 #ff0000;
-                clip: rect(85px, 550px, 140px, 0);
-                animation: glitch-anim2 3s infinite linear alternate-reverse;
-                opacity: 0.7;
-            }
-            
-            @keyframes glitch-anim {
-                0% { clip: rect(46px, 9999px, 120px, 0); }
-                20% { clip: rect(83px, 9999px, 111px, 0); }
-                40% { clip: rect(98px, 9999px, 146px, 0); }
-                60% { clip: rect(107px, 9999px, 116px, 0); }
-                80% { clip: rect(21px, 9999px, 115px, 0); }
-                100% { clip: rect(112px, 9999px, 121px, 0); }
-            }
-            
-            @keyframes glitch-anim2 {
-                0% { clip: rect(68px, 9999px, 88px, 0); }
-                20% { clip: rect(97px, 9999px, 84px, 0); }
-                40% { clip: rect(114px, 9999px, 90px, 0); }
-                60% { clip: rect(24px, 9999px, 111px, 0); }
-                80% { clip: rect(115px, 9999px, 130px, 0); }
-                100% { clip: rect(37px, 9999px, 107px, 0); }
-            }
-            
-            .command-history {
-                max-height: calc(100vh - 150px);
-                overflow-y: auto;
-            }
-            
-            .command-history::-webkit-scrollbar {
-                width: 4px;
-            }
-            
-            .command-history::-webkit-scrollbar-track {
-                background: #0a111c;
-            }
-            
-            .command-history::-webkit-scrollbar-thumb {
-                background: #00ff41;
-                border-radius: 2px;
-            }
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
         }
     </style>
 </head>
-<body class="bg-terminal-bg font-mono text-terminal-text min-h-screen flex flex-col overflow-hidden">
-    <!-- 噪声和扫描线效果 -->
-    <div class="noise-overlay"></div>
-    <div class="scanline"></div>
-    
-    <!-- 顶部状态栏 -->
-    <header class="bg-black/70 backdrop-blur-sm py-2 px-4 border-b border-terminal-text/30 flex justify-between items-center">
+<body class="bg-terminal text-primary font-terminal min-h-screen flex flex-col grid-bg relative overflow-hidden">
+    <!-- 背景效果 -->
+    <div class="noise-bg"></div>
+    <div class="matrix-fall" id="matrix-fall"></div>
+    <div class="scan-line"></div>
+
+    <!-- 顶部导航栏 -->
+    <nav class="bg-dark/80 backdrop-blur-sm border-b border-primary/30 px-4 py-2 flex justify-between items-center z-20">
         <div class="flex items-center space-x-2">
             <div class="w-3 h-3 rounded-full bg-red-500"></div>
             <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
             <div class="w-3 h-3 rounded-full bg-green-500"></div>
-            <span class="ml-2 text-sm text-terminal-text/80">DarkNet Terminal v1.3.7</span>
+            <span class="ml-2 text-sm font-bold glow">WenTianPlay@darknet:~$</span>
         </div>
         <div class="flex items-center space-x-4">
-            <span class="text-xs text-terminal-text/60">
-                <i class="fa fa-wifi mr-1"></i> 192.168.1.42:8443
-            </span>
-            <span class="text-xs text-terminal-text/60">
-                <i class="fa fa-battery-three-quarters mr-1"></i> 98%
-            </span>
-            <span class="text-xs text-terminal-text/60">
-                <i class="fa fa-clock-o mr-1"></i> <span id="current-time">14:30:45</span>
-            </span>
+            <button id="help-btn" class="text-xs hover:text-secondary transition-colors">
+                <i class="fa fa-question-circle mr-1"></i>帮助
+            </button>
+            <button id="network-btn" class="text-xs hover:text-secondary transition-colors">
+                <i class="fa fa-sitemap mr-1"></i>网络
+            </button>
+            <button id="settings-btn" class="text-xs hover:text-secondary transition-colors">
+                <i class="fa fa-cog mr-1"></i>设置
+            </button>
         </div>
-    </header>
-    
-    <!-- 主要内容区域 -->
-    <main class="flex-1 flex flex-col p-4 overflow-hidden">
-        <!-- 命令历史记录 -->
-        <div class="command-history mb-4 flex-1">
-            <div class="terminal-output" id="terminal-output">
-                <div class="mb-2">
-                    <span class="text-terminal-highlight">Welcome to the DarkNet Terminal v1.3.7</span><br>
-                    <span class="text-terminal-highlight">Type 'help' or '?' for available commands</span><br>
-                    <span class="text-terminal-highlight">Use 'search [command]' to find specific commands</span><br>
-                    <span class="text-terminal-highlight">Type 'exit' to quit the terminal</span><br><br>
-                    <span class="text-terminal-highlight">>><span class="terminal-glow"> Starting system initialization sequence...</span></span><br>
-                    <span class="text-terminal-highlight">>> Initializing core systems...</span><br>
-                    <span class="text-terminal-highlight">>> Loading 500 command database...</span><br>
-                    <span class="text-terminal-highlight">>> Establishing secure connection to network...</span><br>
-                    <span class="text-terminal-highlight">>> System initialization complete. Ready for commands.</span><br><br>
-                </div>
-            </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="flex-1 p-4 md:p-6 overflow-auto z-10">
+        <!-- 欢迎信息 -->
+        <div class="mb-6 animate-fadeIn">
+            <pre class="text-primary/80 text-sm">
+ ██████╗ ███████╗████████╗██╗   ██╗██████╗ 
+██╔════╝ ██╔════╝╚══██╔══╝██║   ██║██╔══██╗
+██║  ███╗█████╗     ██║   ██║   ██║██████╔╝
+██║   ██║██╔══╝     ██║   ██║   ██║██╔══██╗
+╚██████╔╝███████╗   ██║   ╚██████╔╝██║  ██║
+ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+            </pre>
+            <p class="text-sm text-primary/70 mb-4">WenTianPlay</p>
+            <p class="text-sm text-primary/70 mb-4">输入 "help" 或 "?" 获取可用命令列表</p>
+            <p class="text-sm text-primary/70 mb-4">警告: 仅用于教育目的，任何非法活动均属违法</p>
         </div>
-        
-        <!-- 命令输入区域 -->
-        <div class="flex items-center space-x-2">
-            <span id="prompt" class="text-terminal-highlight">darknet@root:</span>
+
+        <!-- 命令历史 -->
+        <div id="command-history" class="mb-4 space-y-3">
+            <!-- 命令历史将在这里动态添加 -->
+        </div>
+
+        <!-- 命令输入区 -->
+        <div class="flex items-center mb-6">
+            <span class="text-primary mr-2 glow">WenTianPlay@darknet:~$</span>
             <input 
                 type="text" 
                 id="command-input" 
-                class="bg-transparent border-none focus:outline-none flex-1 font-mono text-terminal-text"
-                placeholder="Type a command..."
+                class="bg-transparent border-none outline-none text-primary w-full terminal-cursor"
+                placeholder="输入命令..."
             >
-            <span id="cursor" class="terminal-cursor">█</span>
+        </div>
+
+        <!-- 网络地图可视化 -->
+        <div id="network-map" class="hidden bg-dark/50 rounded-lg p-4 mb-6 border border-primary/20">
+            <h3 class="text-sm font-bold mb-3 flex items-center">
+                <i class="fa fa-sitemap mr-2 glow-blue"></i>网络拓扑图
+            </h3>
+            <div id="network-graph" class="h-64 relative">
+                <!-- 网络地图将在这里动态生成 -->
+            </div>
+        </div>
+
+        <!-- 搜索结果区域 -->
+        <div id="search-results" class="hidden bg-dark/50 rounded-lg p-4 mb-6 border border-primary/20">
+            <h3 class="text-sm font-bold mb-3 flex items-center">
+                <i class="fa fa-search mr-2 glow-blue"></i>搜索结果
+                <span id="search-query" class="ml-2 text-primary/60"></span>
+            </h3>
+            <div id="results-container" class="space-y-3">
+                <!-- 搜索结果将在这里动态添加 -->
+            </div>
+        </div>
+
+        <!-- 帮助信息区域 -->
+        <div id="help-info" class="hidden bg-dark/50 rounded-lg p-4 mb-6 border border-primary/20">
+            <h3 class="text-sm font-bold mb-3 flex items-center">
+                <i class="fa fa-question-circle mr-2 glow-blue"></i>帮助信息
+            </h3>
+            <div class="space-y-3">
+                <p class="text-sm text-primary/70">WenTianPlay支持超过500个命令，以下是常用命令分类：</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <h4 class="text-xs font-bold mb-2 text-secondary">系统命令</h4>
+                        <ul class="text-xs text-primary/70 space-y-1">
+                            <li><span class="text-secondary">help</span> - 显示帮助信息</li>
+                            <li><span class="text-secondary">clear</span> - 清屏</li>
+                            <li><span class="text-secondary">version</span> - 显示版本信息</li>
+                            <li><span class="text-secondary">about</span> - 关于WenTianPlay</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold mb-2 text-secondary">网络命令</h4>
+                        <ul class="text-xs text-primary/70 space-y-1">
+                            <li><span class="text-secondary">ping [目标]</span> - 测试网络连接</li>
+                            <li><span class="text-secondary">traceroute [目标]</span> - 跟踪路由</li>
+                            <li><span class="text-secondary">nmap [目标]</span> - 扫描开放端口</li>
+                            <li><span class="text-secondary">network</span> - 显示网络地图</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold mb-2 text-secondary">攻击命令</h4>
+                        <ul class="text-xs text-primary/70 space-y-1">
+                            <li><span class="text-secondary">scan [目标]</span> - 扫描目标漏洞</li>
+                            <li><span class="text-secondary">exploit [目标] [漏洞]</span> - 尝试利用漏洞</li>
+                            <li><span class="text-secondary">ddos [目标]</span> - 模拟DDoS攻击</li>
+                            <li><span class="text-secondary">trace [IP]</span> - 追踪IP地址</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-xs text-primary/60 mt-4">输入 "help [命令]" 可获取特定命令的详细帮助</p>
+            </div>
         </div>
     </main>
-    
+
     <!-- 底部状态栏 -->
-    <footer class="bg-black/70 backdrop-blur-sm py-2 px-4 border-t border-terminal-text/30 text-xs text-terminal-text/60">
-        <div class="flex justify-between">
-            <div>
-                <i class="fa fa-shield mr-1"></i> Secure Shell v3.2.4 | 
-                <i class="fa fa-database mr-1"></i> Command Database: 500 entries
-            </div>
-            <div>
-                <i class="fa fa-key mr-1"></i> Encryption: AES-256-GCM | 
-                <i class="fa fa-signal mr-1"></i> Connection: Tor Network
-            </div>
+    <footer class="bg-dark/80 backdrop-blur-sm border-t border-primary/30 px-4 py-2 text-xs text-primary/60 flex justify-between items-center z-20">
+        <div class="flex items-center space-x-4">
+            <span><i class="fa fa-wifi mr-1"></i>连接状态: <span id="connection-status" class="text-green-500">已连接</span></span>
+            <span><i class="fa fa-shield mr-1"></i>安全级别: <span id="security-level" class="text-yellow-500">中等</span></span>
+        </div>
+        <div>
+            <span>WenTianPlay v1.0.0 | 伪造IP: 192.168.1.42</span>
         </div>
     </footer>
 
     <script>
-        // 模拟命令数据库 (500个命令)
-        const commandsDatabase = [
-            { name: 'help', description: '显示可用命令列表', category: 'system' },
-            { name: '?', description: '显示可用命令列表', category: 'system' },
-            { name: 'clear', description: '清除终端屏幕', category: 'system' },
-            { name: 'exit', description: '退出终端', category: 'system' },
-            { name: 'about', description: '关于DarkNet终端', category: 'system' },
-            { name: 'version', description: '显示当前版本信息', category: 'system' },
-            { name: 'banner', description: '显示欢迎横幅', category: 'system' },
-            { name: 'time', description: '显示当前系统时间', category: 'system' },
-            { name: 'date', description: '显示当前系统日期', category: 'system' },
-            { name: 'uptime', description: '显示系统运行时间', category: 'system' },
-            { name: 'systeminfo', description: '显示系统信息', category: 'system' },
-            { name: 'config', description: '显示系统配置', category: 'system' },
-            { name: 'settings', description: '调整系统设置', category: 'system' },
-            { name: 'theme', description: '切换终端主题', category: 'system' },
-            { name: 'echo', description: '显示输入的文本', category: 'basic' },
-            { name: 'ping', description: '测试网络连接', category: 'network' },
-            { name: 'traceroute', description: '跟踪网络路径', category: 'network' },
-            { name: 'nslookup', description: '查询域名DNS信息', category: 'network' },
-            { name: 'whois', description: '查询域名注册信息', category: 'network' },
-            { name: 'dig', description: 'DNS信息查询工具', category: 'network' },
-            { name: 'netstat', description: '显示网络连接状态', category: 'network' },
-            { name: 'ifconfig', description: '显示网络接口配置', category: 'network' },
-            { name: 'ipconfig', description: '显示网络接口配置(Windows)', category: 'network' },
-            { name: 'route', description: '显示或修改路由表', category: 'network' },
-            { name: 'arp', description: '显示或修改ARP缓存', category: 'network' },
-            { name: 'wget', description: '从网络下载文件', category: 'network' },
-            { name: 'curl', description: '发送网络请求', category: 'network' },
-            { name: 'ssh', description: '安全外壳连接', category: 'network' },
-            { name: 'ftp', description: '文件传输协议', category: 'network' },
-            { name: 'scp', description: '安全复制文件', category: 'network' },
-            { name: 'sftp', description: '安全文件传输协议', category: 'network' },
-            { name: 'telnet', description: '远程终端连接', category: 'network' },
-            { name: 'nc', description: '网络连接工具', category: 'network' },
-            { name: 'tcpdump', description: '网络数据包分析', category: 'network' },
-            { name: 'netcat', description: '网络工具', category: 'network' },
-            { name: 'portscan', description: '端口扫描工具', category: 'network' },
-            { name: 'vulnscan', description: '漏洞扫描工具', category: 'security' },
-            { name: 'nmap', description: '网络扫描工具', category: 'network' },
-            { name: 'nikto', description: 'Web服务器漏洞扫描', category: 'security' },
-            { name: 'sqlmap', description: 'SQL注入检测工具', category: 'security' },
-            { name: 'metasploit', description: '渗透测试框架', category: 'security' },
-            { name: 'burpsuite', description: 'Web应用程序安全测试', category: 'security' },
-            { name: 'wireshark', description: '网络协议分析器', category: 'network' },
-            { name: 'hashcat', description: '密码破解工具', category: 'security' },
-            { name: 'john', description: '密码破解工具', category: 'security' },
-            { name: 'hydra', description: '暴力破解工具', category: 'security' },
-            { name: 'aircrack-ng', description: '无线网络破解工具', category: 'security' },
-            { name: 'malware', description: '恶意软件分析工具', category: 'security' },
-            { name: 'antivirus', description: '杀毒软件管理', category: 'security' },
-            { name: 'firewall', description: '防火墙管理', category: 'security' },
-            { name: 'ids', description: '入侵检测系统', category: 'security' },
-            { name: 'ips', description: '入侵防御系统', category: 'security' },
-            { name: 'encrypto', description: '文件加密工具', category: 'security' },
-            { name: 'decrypto', description: '文件解密工具', category: 'security' },
-            { name: 'hash', description: '计算文件哈希值', category: 'security' },
-            { name: 'cipher', description: '加密解密工具', category: 'security' },
-            { name: 'tor', description: 'Tor网络连接工具', category: 'network' },
-            { name: 'onion', description: '访问洋葱网络', category: 'network' },
-            { name: 'proxy', description: '代理服务器设置', category: 'network' },
-            { name: 'vpn', description: '虚拟专用网络管理', category: 'network' },
-            { name: 'dns', description: 'DNS服务器管理', category: 'network' },
-            { name: 'dhcp', description: 'DHCP服务器管理', category: 'network' },
-            { name: 'http', description: 'HTTP服务器管理', category: 'network' },
-            { name: 'https', description: 'HTTPS服务器管理', category: 'network' },
-            { name: 'ftp-server', description: 'FTP服务器管理', category: 'network' },
-            { name: 'smtp', description: 'SMTP邮件服务器', category: 'network' },
-            { name: 'pop3', description: 'POP3邮件服务器', category: 'network' },
-            { name: 'imap', description: 'IMAP邮件服务器', category: 'network' },
-            { name: 'ssh-server', description: 'SSH服务器管理', category: 'network' },
-            { name: 'rdp', description: '远程桌面协议', category: 'network' },
-            { name: 'vnc', description: '虚拟网络计算', category: 'network' },
-            { name: 'samba', description: '文件共享服务', category: 'network' },
-            { name: 'nfs', description: '网络文件系统', category: 'network' },
-            { name: 'ldap', description: '轻量级目录访问协议', category: 'network' },
-            { name: 'radius', description: '远程认证拨号用户服务', category: 'network' },
-            { name: 'snmp', description: '简单网络管理协议', category: 'network' },
-            { name: 'syslog', description: '系统日志管理', category: 'network' },
-            { name: 'log', description: '查看系统日志', category: 'system' },
-            { name: 'logs', description: '查看所有日志', category: 'system' },
-            { name: 'errorlog', description: '查看错误日志', category: 'system' },
-            { name: 'accesslog', description: '查看访问日志', category: 'system' },
-            { name: 'securitylog', description: '查看安全日志', category: 'system' },
-            { name: 'authlog', description: '查看认证日志', category: 'system' },
-            { name: 'applog', description: '查看应用日志', category: 'system' },
-            { name: 'dblog', description: '查看数据库日志', category: 'system' },
-            { name: 'networklog', description: '查看网络日志', category: 'system' },
-            { name: 'firewalllog', description: '查看防火墙日志', category: 'system' },
-            { name: 'userlog', description: '查看用户活动日志', category: 'system' },
-            { name: 'filelog', description: '查看文件操作日志', category: 'system' },
-            { name: 'servicelog', description: '查看服务日志', category: 'system' },
-            { name: 'processlog', description: '查看进程日志', category: 'system' },
-            { name: 'bootlog', description: '查看启动日志', category: 'system' },
-            { name: 'cronlog', description: '查看计划任务日志', category: 'system' },
-            { name: 'dmesg', description: '查看内核消息', category: 'system' },
-            { name: 'ls', description: '列出文件和目录', category: 'file' },
-            { name: 'dir', description: '列出文件和目录(Windows)', category: 'file' },
-            { name: 'cd', description: '切换目录', category: 'file' },
-            { name: 'pwd', description: '显示当前目录', category: 'file' },
-            { name: 'mkdir', description: '创建目录', category: 'file' },
-            { name: 'rmdir', description: '删除目录', category: 'file' },
-            { name: 'rm', description: '删除文件', category: 'file' },
-            { name: 'touch', description: '创建空文件', category: 'file' },
-            { name: 'cp', description: '复制文件', category: 'file' },
-            { name: 'mv', description: '移动或重命名文件', category: 'file' },
-            { name: 'cat', description: '显示文件内容', category: 'file' },
-            { name: 'more', description: '分页显示文件内容', category: 'file' },
-            { name: 'less', description: '分页显示文件内容', category: 'file' },
-            { name: 'head', description: '显示文件开头内容', category: 'file' },
-            { name: 'tail', description: '显示文件结尾内容', category: 'file' },
-            { name: 'grep', description: '在文件中搜索文本', category: 'file' },
-            { name: 'find', description: '查找文件', category: 'file' },
-            { name: 'locate', description: '快速查找文件', category: 'file' },
-            { name: 'file', description: '确定文件类型', category: 'file' },
-            { name: 'chmod', description: '更改文件权限', category: 'file' },
-            { name: 'chown', description: '更改文件所有者', category: 'file' },
-            { name: 'chgrp', description: '更改文件所属组', category: 'file' },
-            { name: 'umask', description: '设置默认文件权限掩码', category: 'file' },
-            { name: 'ln', description: '创建链接', category: 'file' },
-            { name: 'df', description: '显示磁盘空间使用情况', category: 'file' },
-            { name: 'du', description: '显示目录大小', category: 'file' },
-            { name: 'mount', description: '挂载文件系统', category: 'file' },
-            { name: 'umount', description: '卸载文件系统', category: 'file' },
-            { name: 'fsck', description: '检查和修复文件系统', category: 'file' },
-            { name: 'mkfs', description: '创建文件系统', category: 'file' },
-            { name: 'fdisk', description: '磁盘分区工具', category: 'file' },
-            { name: 'parted', description: '磁盘分区工具', category: 'file' },
-            { name: 'dd', description: '转换和复制文件', category: 'file' },
-            { name: 'tar', description: '归档文件', category: 'file' },
-            { name: 'zip', description: '压缩文件', category: 'file' },
-            { name: 'unzip', description: '解压文件', category: 'file' },
-            { name: 'gzip', description: '压缩文件', category: 'file' },
-            { name: 'gunzip', description: '解压文件', category: 'file' },
-            { name: 'bzip2', description: '压缩文件', category: 'file' },
-            { name: 'bunzip2', description: '解压文件', category: 'file' },
-            { name: 'xz', description: '压缩文件', category: 'file' },
-            { name: 'unxz', description: '解压文件', category: 'file' },
-            { name: '7z', description: '7-Zip压缩工具', category: 'file' },
-            { name: 'md5sum', description: '计算MD5哈希值', category: 'file' },
-            { name: 'sha1sum', description: '计算SHA-1哈希值', category: 'file' },
-            { name: 'sha256sum', description: '计算SHA-256哈希值', category: 'file' },
-            { name: 'sha512sum', description: '计算SHA-512哈希值', category: 'file' },
-            { name: 'sort', description: '排序文本', category: 'file' },
-            { name: 'uniq', description: '删除重复行', category: 'file' },
-            { name: 'wc', description: '统计文件行数、字数和字符数', category: 'file' },
-            { name: 'diff', description: '比较文件差异', category: 'file' },
-            { name: 'patch', description: '应用补丁文件', category: 'file' },
-            { name: 'dos2unix', description: '转换文本文件格式', category: 'file' },
-            { name: 'unix2dos', description: '转换文本文件格式', category: 'file' },
-            { name: 'iconv', description: '转换字符编码', category: 'file' },
-            { name: 'base64', description: 'Base64编码/解码', category: 'file' },
-            { name: 'urlencode', description: 'URL编码', category: 'file' },
-            { name: 'urldecode', description: 'URL解码', category: 'file' },
-            { name: 'hex', description: '十六进制查看器', category: 'file' },
-            { name: 'ascii', description: 'ASCII字符表', category: 'file' },
-            { name: 'bc', description: '计算器语言', category: 'file' },
-            { name: 'calc', description: '简单计算器', category: 'file' },
-            { name: 'python', description: 'Python解释器', category: 'programming' },
-            { name: 'perl', description: 'Perl解释器', category: 'programming' },
-            { name: 'ruby', description: 'Ruby解释器', category: 'programming' },
-            { name: 'php', description: 'PHP解释器', category: 'programming' },
-            { name: 'java', description: 'Java运行环境', category: 'programming' },
-            { name: 'javascript', description: 'JavaScript解释器', category: 'programming' },
-            { name: 'node', description: 'Node.js环境', category: 'programming' },
-            { name: 'bash', description: 'Bash shell', category: 'programming' },
-            { name: 'sh', description: 'Shell解释器', category: 'programming' },
-            { name: 'csh', description: 'C shell', category: 'programming' },
-            { name: 'tcsh', description: 'TENEX C shell', category: 'programming' },
-            { name: 'zsh', description: 'Z shell', category: 'programming' },
-            { name: 'cmd', description: 'Windows命令提示符', category: 'programming' },
-            { name: 'powershell', description: 'PowerShell', category: 'programming' },
-            { name: 'gcc', description: 'GNU C编译器', category: 'programming' },
-            { name: 'g++', description: 'GNU C++编译器', category: 'programming' },
-            { name: 'clang', description: 'C语言家族编译器', category: 'programming' },
-            { name: 'make', description: '项目构建工具', category: 'programming' },
-            { name: 'cmake', description: '跨平台构建工具', category: 'programming' },
-            { name: 'autogen', description: '自动生成配置脚本', category: 'programming' },
-            { name: 'autoconf', description: '自动配置脚本生成器', category: 'programming' },
-            { name: 'automake', description: '自动生成Makefile', category: 'programming' },
-            { name: 'ant', description: 'Java构建工具', category: 'programming' },
-            { name: 'maven', description: 'Java项目管理工具', category: 'programming' },
-            { name: 'gradle', description: '构建自动化工具', category: 'programming' },
-            { name: 'npm', description: 'Node.js包管理器', category: 'programming' },
-            { name: 'yarn', description: 'JavaScript包管理器', category: 'programming' },
-            { name: 'pip', description: 'Python包管理器', category: 'programming' },
-            { name: 'gem', description: 'Ruby包管理器', category: 'programming' },
-            { name: 'composer', description: 'PHP依赖管理器', category: 'programming' },
-            { name: 'bower', description: 'Web前端包管理器', category: 'programming' },
-            { name: 'brew', description: 'macOS包管理器', category: 'programming' },
-            { name: 'apt', description: 'Debian/Ubuntu包管理器', category: 'programming' },
-            { name: 'yum', description: 'Red Hat/CentOS包管理器', category: 'programming' },
-            { name: 'dnf', description: 'Fedora包管理器', category: 'programming' },
-            { name: 'pacman', description: 'Arch Linux包管理器', category: 'programming' },
-            { name: 'zypper', description: 'openSUSE包管理器', category: 'programming' },
-            { name: 'chocolatey', description: 'Windows包管理器', category: 'programming' },
-            { name: 'scoop', description: 'Windows命令行安装工具', category: 'programming' },
-            { name: 'docker', description: '容器管理工具', category: 'programming' },
-            { name: 'docker-compose', description: 'Docker容器编排', category: 'programming' },
-            { name: 'kubernetes', description: '容器编排系统', category: 'programming' },
-            { name: 'minikube', description: '本地Kubernetes环境', category: 'programming' },
-            { name: 'helm', description: 'Kubernetes包管理器', category: 'programming' },
-            { name: 'git', description: '版本控制系统', category: 'programming' },
-            { name: 'svn', description: 'Subversion版本控制系统', category: 'programming' },
-            { name: 'hg', description: 'Mercurial版本控制系统', category: 'programming' },
-            { name: 'bzr', description: 'Bazaar版本控制系统', category: 'programming' },
-            { name: 'cvs', description: '并发版本系统', category: 'programming' },
-            { name: 'mysql', description: 'MySQL数据库客户端', category: 'database' },
-            { name: 'psql', description: 'PostgreSQL数据库客户端', category: 'database' },
-            { name: 'sqlite', description: 'SQLite数据库', category: 'database' },
-            { name: 'mongo', description: 'MongoDB客户端', category: 'database' },
-            { name: 'redis-cli', description: 'Redis客户端', category: 'database' },
-            { name: 'neo4j', description: 'Neo4j图数据库', category: 'database' },
-            { name: 'cqlsh', description: 'Cassandra CQL客户端', category: 'database' },
-            { name: 'sqlplus', description: 'Oracle SQL*Plus', category: 'database' },
-            { name: 'db2', description: 'IBM DB2客户端', category: 'database' },
-            { name: 'mssql', description: 'Microsoft SQL Server', category: 'database' },
-            { name: 'adminer', description: '数据库管理工具', category: 'database' },
-            { name: 'phpmyadmin', description: 'MySQL管理工具', category: 'database' },
-            { name: 'pgadmin', description: 'PostgreSQL管理工具', category: 'database' },
-            { name: 'mongosh', description: 'MongoDB Shell', category: 'database' },
-            { name: 'redis-commander', description: 'Redis管理工具', category: 'database' },
-            { name: 'elastic', description: 'Elasticsearch客户端', category: 'database' },
-            { name: 'kibana', description: 'Elasticsearch可视化', category: 'database' },
-            { name: 'logstash', description: '数据处理管道', category: 'database' },
-            { name: 'filebeat', description: '日志收集器', category: 'database' },
-            { name: 'zookeeper', description: '分布式协调服务', category: 'database' },
-            { name: 'kafka', description: '分布式流处理平台', category: 'database' },
-            { name: 'spark', description: '大数据处理框架', category: 'database' },
-            { name: 'hadoop', description: '分布式计算平台', category: 'database' },
-            { name: 'hive', description: '数据仓库基础设施', category: 'database' },
-            { name: 'pig', description: '大数据分析平台', category: 'database' },
-            { name: 'flink', description: '流处理框架', category: 'database' },
-            { name: 'tensorflow', description: '机器学习框架', category: 'ai' },
-            { name: 'pytorch', description: '深度学习框架', category: 'ai' },
-            { name: 'keras', description: '神经网络API', category: 'ai' },
-            { name: 'scikit-learn', description: '机器学习库', category: 'ai' },
-            { name: 'nltk', description: '自然语言处理工具包', category: 'ai' },
-            { name: 'spaCy', description: '自然语言处理库', category: 'ai' },
-            { name: 'opencv', description: '计算机视觉库', category: 'ai' },
-            { name: 'tensorboard', description: 'TensorFlow可视化工具', category: 'ai' },
-            { name: 'jupyter', description: '交互式计算环境', category: 'ai' },
-            { name: 'colab', description: 'Google Colab', category: 'ai' },
-            { name: 'pandas', description: '数据分析库', category: 'ai' },
-            { name: 'numpy', description: '科学计算库', category: 'ai' },
-            { name: 'scipy', description: '科学计算库', category: 'ai' },
-            { name: 'matplotlib', description: '数据可视化库', category: 'ai' },
-            { name: 'seaborn', description: '统计数据可视化库', category: 'ai' },
-            { name: 'plotly', description: '交互式数据可视化', category: 'ai' },
-            { name: 'dash', description: 'Web应用框架', category: 'ai' },
-            { name: 'streamlit', description: '数据应用框架', category: 'ai' },
-            { name: 'langchain', description: '语言模型应用框架', category: 'ai' },
-            { name: 'llama', description: '大型语言模型', category: 'ai' },
-            { name: 'gpt', description: 'OpenAI GPT模型', category: 'ai' },
-            { name: 'claude', description: 'Anthropic Claude模型', category: 'ai' },
-            { name: 'stablediffusion', description: '文本到图像模型', category: 'ai' },
-            { name: 'dalle', description: 'OpenAI图像生成模型', category: 'ai' },
-            { name: 'whisper', description: 'OpenAI语音识别模型', category: 'ai' },
-            { name: 'podcast', description: '暗网播客访问', category: 'media' },
-            { name: 'radio', description: '暗网广播电台', category: 'media' },
-            { name: 'stream', description: '媒体流服务', category: 'media' },
-            { name: 'movie', description: '暗网电影库', category: 'media' },
-            { name: 'music', description: '暗网音乐库', category: 'media' },
-            { name: 'book', description: '暗网电子书库', category: 'media' },
-            { name: 'news', description: '暗网新闻源', category: 'media' },
-            { name: 'forum', description: '暗网论坛访问', category: 'media' },
-            { name: 'market', description: '暗网市场', category: 'media' },
-            { name: 'blog', description: '暗网博客', category: 'media' },
-            { name: 'chat', description: '暗网聊天服务', category: 'media' },
-            { name: 'email', description: '暗网邮件服务', category: 'media' },
-            { name: 'vault', description: '暗网文件存储', category: 'media' },
-            { name: 'wallet', description: '加密货币钱包', category: 'media' },
-            { name: 'miner', description: '加密货币矿机', category: 'media' },
-            { name: 'exchange', description: '暗网交易所', category: 'media' },
-            { name: 'bitcoin', description: '比特币工具', category: 'media' },
-            { name: 'ethereum', description: '以太坊工具', category: 'media' },
-            { name: 'monero', description: '门罗币工具', category: 'media' },
-            { name: 'zcash', description: 'Zcash工具', category: 'media' },
-            { name: 'dogecoin', description: '狗狗币工具', category: 'media' },
-            { name: 'cardano', description: 'Cardano工具', category: 'media' },
-            { name: 'solana', description: 'Solana工具', category: 'media' },
-            { name: 'polkadot', description: 'Polkadot工具', category: 'media' },
-            { name: 'defi', description: '去中心化金融工具', category: 'media' },
-            { name: 'nft', description: 'NFT市场', category: 'media' },
-            { name: 'metaverse', description: '元宇宙访问', category: 'media' },
-            { name: 'ai-assistant', description: 'AI助手', category: 'ai' },
-            { name: 'security-audit', description: '安全审计工具', category: 'security' },
-            { name: 'penetration-test', description: '渗透测试工具', category: 'security' },
-            { name: 'risk-assessment', description: '风险评估工具', category: 'security' },
-            { name: 'compliance', description: '合规检查工具', category: 'security' },
-            { name: 'incident-response', description: '安全事件响应', category: 'security' },
-            { name: 'forensics', description: '数字取证工具', category: 'security' },
-            { name: 'threat-intel', description: '威胁情报分析', category: 'security' },
-            { name: 'vpn-manager', description: 'VPN管理工具', category: 'security' },
-            { name: 'proxy-manager', description: '代理管理工具', category: 'security' },
-            { name: 'tor-manager', description: 'Tor网络管理', category: 'security' },
-            { name: 'dns-over-https', description: 'DNS加密工具', category: 'security' },
-            { name: 'encrypted-chat', description: '端到端加密聊天', category: 'security' },
-            { name: 'secure-email', description: '安全电子邮件', category: 'security' },
-            { name: 'file-vault', description: '加密文件存储', category: 'security' },
-            { name: 'password-manager', description: '密码管理工具', category: 'security' },
-            { name: '2fa', description: '双因素认证', category: 'security' },
-            { name: 'biometric', description: '生物识别认证', category: 'security' },
-            { name: 'smartcard', description: '智能卡认证', category: 'security' },
-            { name: 'yubikey', description: 'YubiKey认证', category: 'security' },
-            { name: 'pki', description: '公钥基础设施', category: 'security' },
-            { name: 'certificate', description: '证书管理', category: 'security' },
-            { name: 'ssl', description: 'SSL/TLS管理', category: 'security' },
-            { name: 'tls', description: 'TLS管理', category: 'security' },
-            { name: 'hsts', description: 'HTTP严格传输安全', category: 'security' },
-            { name: 'csp', description: '内容安全策略', category: 'security' },
-            { name: 'csrf', description: 'CSRF防护', category: 'security' },
-            { name: 'xss', description: 'XSS防护', category: 'security' },
-            { name: 'sql-injection', description: 'SQL注入防护', category: 'security' },
-            { name: 'brute-force', description: '暴力破解防护', category: 'security' },
-            { name: 'ddos-protection', description: 'DDoS防护', category: 'security' },
-            { name: 'botnet', description: '僵尸网络检测', category: 'security' },
-            { name: 'malware-scan', description: '恶意软件扫描', category: 'security' },
-            { name: 'ransomware', description: '勒索软件防护', category: 'security' },
-            { name: 'phishing', description: '钓鱼攻击防护', category: 'security' },
-            { name: 'social-engineering', description: '社会工程学防护', category: 'security' },
-            { name: 'zero-day', description: '零日漏洞防护', category: 'security' },
-            { name: 'vulnerability-scan', description: '漏洞扫描', category: 'security' },
-            { name: 'patch-management', description: '补丁管理', category: 'security' },
-            { name: 'security-policy', description: '安全策略管理', category: 'security' },
-            { name: 'access-control', description: '访问控制管理', category: 'security' },
-            { name: 'identity-management', description: '身份管理', category: 'security' },
-            { name: 'saml', description: 'SAML身份验证', category: 'security' },
-            { name: 'oauth', description: 'OAuth授权', category: 'security' },
-            { name: 'openid', description: 'OpenID Connect', category: 'security' },
-            { name: 'jwt', description: 'JSON Web Token', category: 'security' },
-            { name: 'api-gateway', description: 'API网关安全', category: 'security' },
-            { name: 'web-application-firewall', description: 'Web应用防火墙', category: 'security' },
-            { name: 'cloud-security', description: '云安全管理', category: 'security' },
-            { name: 'container-security', description: '容器安全', category: 'security' },
-            { name: 'kubernetes-security', description: 'Kubernetes安全', category: 'security' },
-            { name: 'serverless-security', description: '无服务器安全', category: 'security' },
-            { name: 'iot-security', description: '物联网安全', category: 'security' },
-            { name: 'industrial-security', description: '工业控制系统安全', category: 'security' },
-            { name: 'mobile-security', description: '移动应用安全', category: 'security' },
-            { name: 'wireless-security', description: '无线网络安全', category: 'security' },
-            { name: 'bluetooth', description: '蓝牙安全', category: 'security' },
-            { name: 'zigbee', description: 'Zigbee安全', category: 'security' },
-            { name: 'z-wave', description: 'Z-Wave安全', category: 'security' },
-            { name: 'nfc', description: 'NFC安全', category: 'security' },
-            { name: 'rfid', description: 'RFID安全', category: 'security' },
-            { name: 'wearable-security', description: '可穿戴设备安全', category: 'security' },
-            { name: 'smart-home', description: '智能家居安全', category: 'security' },
-            { name: 'car-hacking', description: '汽车网络安全', category: 'security' },
-            { name: 'aviation-security', description: '航空网络安全', category: 'security' },
-            { name: 'medical-devices', description: '医疗设备安全', category: 'security' },
-            { name: 'critical-infrastructure', description: '关键基础设施安全', category: 'security' },
-            { name: 'cyber-warfare', description: '网络战模拟', category: 'security' },
-            { name: 'red-team', description: '红队模拟攻击', category: 'security' },
-            { name: 'blue-team', description: '蓝队防御训练', category: 'security' },
-            { name: 'purple-team', description: '紫队协作训练', category: 'security' },
-            { name: 'bug-bounty', description: '漏洞赏金平台', category: 'security' },
-            { name: 'ctf', description: '夺旗赛平台', category: 'security' },
-            { name: 'security-training', description: '安全培训', category: 'security' },
-            { name: 'threat-modeling', description: '威胁建模工具', category: 'security' },
-            { name: 'risk-matrix', description: '风险矩阵分析', category: 'security' },
-            { name: 'attack-surface', description: '攻击面分析', category: 'security' },
-            { name: 'security-architecture', description: '安全架构设计', category: 'security' },
-            { name: 'incident-playbook', description: '安全事件处理手册', category: 'security' },
-            { name: 'security-awareness', description: '安全意识培训', category: 'security' },
-            { name: 'compliance-audit', description: '合规审计', category: 'security' },
-            { name: 'gdpr', description: 'GDPR合规检查', category: 'security' },
-            { name: 'hipaa', description: 'HIPAA合规检查', category: 'security' },
-            { name: 'pci-dss', description: 'PCI-DSS合规检查', category: 'security' },
-            { name: 'iso27001', description: 'ISO 27001合规检查', category: 'security' },
-            { name: 'nist', description: 'NIST安全框架', category: 'security' },
-            { name: 'cis', description: 'CIS安全控制', category: 'security' },
-            { name: 'soc2', description: 'SOC 2合规检查', category: 'security' },
-            { name: 'fedramp', description: 'FedRAMP合规检查', category: 'security' },
-            { name: 'fips', description: 'FIPS合规检查', category: 'security' },
-            { name: 'cc', description: '通用标准认证', category: 'security' },
-            { name: 'security-operations', description: '安全运营中心', category: 'security' },
-            { name: 'threat-hunting', description: '威胁狩猎', category: 'security' },
-            { name: 'security-analytics', description: '安全分析', category: 'security' },
-            { name: 'siem', description: '安全信息和事件管理', category: 'security' },
-            { name: 'soar', description: '安全编排自动化响应', category: 'security' },
-            { name: 'edr', description: '端点检测和响应', category: 'security' },
-            { name: 'xdr', description: '扩展检测和响应', category: 'security' },
-            { name: 'mfa', description: '多因素认证', category: 'security' },
-            { name: 'sso', description: '单点登录', category: 'security' },
-            { name: 'casb', description: '云访问安全代理', category: 'security' },
-            { name: 'zta', description: '零信任架构', category: 'security' },
-            { name: 'dlp', description: '数据丢失防护', category: 'security' },
-            { name: 'encryption', description: '加密管理', category: 'security' },
-            { name: 'key-management', description: '密钥管理', category: 'security' },
-            { name: 'secure-coding', description: '安全编码实践', category: 'security' },
-            { name: 'code-review', description: '代码安全审查', category: 'security' },
-            { name: 'sast', description: '静态应用安全测试', category: 'security' },
-            { name: 'dast', description: '动态应用安全测试', category: 'security' },
-            { name: 'iappsec', description: '交互式应用安全测试', category: 'security' },
-            { name: 'sca', description: '软件成分分析', category: 'security' },
-            { name: 'devsecops', description: 'DevSecOps工具', category: 'security' },
-            { name: 'shift-left', description: '安全左移实践', category: 'security' },
-            { name: 'cybersecurity', description: '网络安全概述', category: 'security' },
-            { name: 'pentest', description: '渗透测试', category: 'security' },
-            { name: 'hacker', description: '黑客技能评估', category: 'security' },
-            { name: 'security-check', description: '安全状态检查', category: 'security' },
-            { name: 'privacy', description: '隐私保护工具', category: 'security' },
-            { name: 'anonymity', description: '匿名性增强', category: 'security' },
-            { name: 'stealth', description: '隐身模式', category: 'security' },
-            { name: 'cloak', description: '网络伪装', category: 'security' },
-            { name: 'spoof', description: 'IP欺骗', category: 'security' },
-            { name: 'vpn-connect', description: '连接到VPN', category: 'security' },
-            { name: 'tor-connect', description: '连接到Tor网络', category: 'security' },
-            { name: 'encrypt', description: '加密文件或文本', category: 'security' },
-            { name: 'decrypt', description: '解密文件或文本', category: 'security' },
-            { name: 'hash', description: '计算哈希值', category: 'security' },
-            { name: 'verify', description: '验证文件完整性', category: 'security' },
-            { name: 'crack', description: '密码破解工具', category: 'security' },
-            { name: 'exploit', description: '漏洞利用工具', category: 'security' },
-            { name: 'backdoor', description: '后门创建工具', category: 'security' },
-            { name: 'rootkit', description: 'Rootkit检测工具', category: 'security' },
-            { name: 'keylogger', description: '键盘记录器检测', category: 'security' },
-            { name: 'spyware', description: '间谍软件检测', category: 'security' },
-            { name: 'adware', description: '广告软件检测', category: 'security' },
-            { name: 'ransomware-scan', description: '勒索软件扫描', category: 'security' },
-            { name: 'ddos', description: 'DDoS攻击模拟', category: 'security' },
-            { name: 'mitm', description: '中间人攻击模拟', category: 'security' },
-            { name: 'arpspoof', description: 'ARP欺骗模拟', category: 'security' },
-            { name: 'dnsspoof', description: 'DNS欺骗模拟', category: 'security' },
-            { name: 'sslstrip', description: 'SSL剥离模拟', category: 'security' },
-            { name: 'wifi-hack', description: 'WiFi破解模拟', category: 'security' },
-            { name: 'bluetooth-hack', description: '蓝牙攻击模拟', category: 'security' },
-            { name: 'nfc-hack', description: 'NFC攻击模拟', category: 'security' },
-            { name: 'rfid-hack', description: 'RFID攻击模拟', category: 'security' },
-            { name: 'phone-hack', description: '手机攻击模拟', category: 'security' },
-            { name: 'car-hack', description: '汽车攻击模拟', category: 'security' },
-            { name: 'iot-hack', description: '物联网攻击模拟', category: 'security' },
-            { name: 'smart-home-hack', description: '智能家居攻击模拟', category: 'security' },
-            { name: 'medical-hack', description: '医疗设备攻击模拟', category: 'security' },
-            { name: 'aviation-hack', description: '航空系统攻击模拟', category: 'security' },
-            { name: 'critical-infra-hack', description: '关键基础设施攻击模拟', category: 'security' },
-            { name: 'bank-hack', description: '银行系统攻击模拟', category: 'security' },
-            { name: 'government-hack', description: '政府系统攻击模拟', category: 'security' },
-            { name: 'military-hack', description: '军事系统攻击模拟', category: 'security' },
-            { name: 'social-engineering-test', description: '社会工程学测试', category: 'security' },
-            { name: 'phishing-test', description: '钓鱼测试', category: 'security' },
-            { name: 'password-strength', description: '密码强度测试', category: 'security' },
-            { name: 'secure-password', description: '生成安全密码', category: 'security' },
-            { name: 'vulnerability-test', description: '漏洞测试', category: 'security' },
-            { name: 'security-scan', description: '安全扫描', category: 'security' },
-            { name: 'privacy-check', description: '隐私检查', category: 'security' },
-            { name: 'anonymity-check', description: '匿名性检查', category: 'security' },
-            { name: 'stealth-mode', description: '隐身模式', category: 'security' },
-            { name: 'cloak-ip', description: 'IP伪装', category: 'security' },
-            { name: 'spoof-mac', description: 'MAC地址欺骗', category: 'security' },
-            { name: 'vpn-status', description: 'VPN状态', category: 'security' },
-            { name: 'tor-status', description: 'Tor网络状态', category: 'security' },
-            { name: 'encrypt-all', description: '加密所有文件', category: 'security' },
-            { name: 'decrypt-all', description: '解密所有文件', category: 'security' },
-            { name: 'hash-all', description: '计算所有文件哈希值', category: 'security' },
-            { name: 'verify-all', description: '验证所有文件完整性', category: 'security' },
-            { name: 'crack-all', description: '批量密码破解', category: 'security' },
-            { name: 'exploit-all', description: '批量漏洞利用', category: 'security' },
-            { name: 'backdoor-all', description: '批量创建后门', category: 'security' },
-            { name: 'rootkit-scan', description: 'Rootkit扫描', category: 'security' },
-            { name: 'keylogger-scan', description: '键盘记录器扫描', category: 'security' },
-            { name: 'spyware-scan', description: '间谍软件扫描', category: 'security' },
-            { name: 'adware-scan', description: '广告软件扫描', category: 'security' },
-            { name: 'ransomware-protect', description: '勒索软件防护', category: 'security' },
-            { name: 'ddos-protect', description: 'DDoS防护', category: 'security' },
-            { name: 'mitm-protect', description: '中间人攻击防护', category: 'security' },
-            { name: 'arp-protect', description: 'ARP欺骗防护', category: 'security' },
-            { name: 'dns-protect', description: 'DNS欺骗防护', category: 'security' },
-            { name: 'ssl-protect', description: 'SSL剥离防护', category: 'security' },
-            { name: 'wifi-protect', description: 'WiFi安全防护', category: 'security' },
-            { name: 'bluetooth-protect', description: '蓝牙安全防护', category: 'security' },
-            { name: 'nfc-protect', description: 'NFC安全防护', category: 'security' },
-            { name: 'rfid-protect', description: 'RFID安全防护', category: 'security' },
-            { name: 'phone-protect', description: '手机安全防护', category: 'security' },
-            { name: 'car-protect', description: '汽车安全防护', category: 'security' },
-            { name: 'iot-protect', description: '物联网安全防护', category: 'security' },
-            { name: 'smart-home-protect', description: '智能家居安全防护', category: 'security' },
-            { name: 'medical-protect', description: '医疗设备安全防护', category: 'security' },
-            { name: 'aviation-protect', description: '航空系统安全防护', category: 'security' },
-            { name: 'critical-infra-protect', description: '关键基础设施安全防护', category: 'security' },
-            { name: 'bank-protect', description: '银行系统安全防护', category: 'security' },
-            { name: 'government-protect', description: '政府系统安全防护', category: 'security' },
-            { name: 'military-protect', description: '军事系统安全防护', category: 'security' },
-            { name: 'social-engineering-protect', description: '社会工程学防护', category: 'security' },
-            { name: 'phishing-protect', description: '钓鱼防护', category: 'security' },
-            { name: 'password-protect', description: '密码保护', category: 'security' },
-            { name: 'vulnerability-protect', description: '漏洞防护', category: 'security' },
-            { name: 'security-protect', description: '全面安全防护', category: 'security' },
-            { name: 'privacy-protect', description: '隐私保护', category: 'security' },
-            { name: 'anonymity-protect', description: '匿名性保护', category: 'security' },
-            { name: 'stealth-protect', description: '隐身保护', category: 'security' },
-            { name: 'cloak-protect', description: '伪装保护', category: 'security' },
-            { name: 'spoof-protect', description: '欺骗防护', category: 'security' },
-            { name: 'vpn-protect', description: 'VPN安全保护', category: 'security' },
-            { name: 'tor-protect', description: 'Tor网络安全保护', category: 'security' },
-            { name: 'encrypt-protect', description: '加密保护', category: 'security' },
-            { name: 'decrypt-protect', description: '解密保护', category: 'security' },
-            { name: 'hash-protect', description: '哈希保护', category: 'security' },
-            { name: 'verify-protect', description: '验证保护', category: 'security' },
-            { name: 'crack-protect', description: '密码破解防护', category: 'security' },
-            { name: 'exploit-protect', description: '漏洞利用防护', category: 'security' },
-            { name: 'backdoor-protect', description: '后门防护', category: 'security' },
-            { name: 'rootkit-protect', description: 'Rootkit防护', category: 'security' },
-            { name: 'keylogger-protect', description: '键盘记录器防护', category: 'security' },
-            { name: 'spyware-protect', description: '间谍软件防护', category: 'security' },
-            { name: 'adware-protect', description: '广告软件防护', category: 'security' },
-            { name: 'ransomware-protect-all', description: '全面勒索软件防护', category: 'security' },
-            { name: 'ddos-protect-all', description: '全面DDoS防护', category: 'security' },
-            { name: 'mitm-protect-all', description: '全面中间人攻击防护', category: 'security' },
-            { name: 'arp-protect-all', description: '全面ARP欺骗防护', category: 'security' },
-            { name: 'dns-protect-all', description: '全面DNS欺骗防护', category: 'security' },
-            { name: 'ssl-protect-all', description: '全面SSL剥离防护', category: 'security' },
-            { name: 'wifi-protect-all', description: '全面WiFi安全防护', category: 'security' },
-            { name: 'bluetooth-protect-all', description: '全面蓝牙安全防护', category: 'security' },
-            { name: 'nfc-protect-all', description: '全面NFC安全防护', category: 'security' },
-            { name: 'rfid-protect-all', description: '全面RFID安全防护', category: 'security' },
-            { name: 'phone-protect-all', description: '全面手机安全防护', category: 'security' },
-            { name: 'car-protect-all', description: '全面汽车安全防护', category: 'security' },
-            { name: 'iot-protect-all', description: '全面物联网安全防护', category: 'security' },
-            { name: 'smart-home-protect-all', description: '全面智能家居安全防护', category: 'security' },
-            { name: 'medical-protect-all', description: '全面医疗设备安全防护', category: 'security' },
-            { name: 'aviation-protect-all', description: '全面航空系统安全防护', category: 'security' },
-            { name: 'critical-infra-protect-all', description: '全面关键基础设施安全防护', category: 'security' },
-            { name: 'bank-protect-all', description: '全面银行系统安全防护', category: 'security' },
-            { name: 'government-protect-all', description: '全面政府系统安全防护', category: 'security' },
-            { name: 'military-protect-all', description: '全面军事系统安全防护', category: 'security' },
-            { name: 'social-engineering-protect-all', description: '全面社会工程学防护', category: 'security' },
-            { name: 'phishing-protect-all', description: '全面钓鱼防护', category: 'security' },
-            { name: 'password-protect-all', description: '全面密码保护', category: 'security' },
-            { name: 'vulnerability-protect-all', description: '全面漏洞防护', category: 'security' },
-            { name: 'security-protect-all', description: '全面安全防护', category: 'security' },
-            { name: 'privacy-protect-all', description: '全面隐私保护', category: 'security' },
-            { name: 'anonymity-protect-all', description: '全面匿名性保护', category: 'security' },
-            { name: 'stealth-protect-all', description: '全面隐身保护', category: 'security' },
-            { name: 'cloak-protect-all', description: '全面伪装保护', category: 'security' },
-            { name: 'spoof-protect-all', description: '全面欺骗防护', category: 'security' },
-            { name: 'vpn-protect-all', description: '全面VPN安全保护', category: 'security' },
-            { name: 'tor-protect-all', description: '全面Tor网络安全保护', category: 'security' },
-            { name: 'encrypt-protect-all', description: '全面加密保护', category: 'security' },
-            { name: 'decrypt-protect-all', description: '全面解密保护', category: 'security' },
-            { name: 'hash-protect-all', description: '全面哈希保护', category: 'security' },
-            { name: 'verify-protect-all', description: '全面验证保护', category: 'security' },
-            { name: 'crack-protect-all', description: '全面密码破解防护', category: 'security' },
-            { name: 'exploit-protect-all', description: '全面漏洞利用防护', category: 'security' },
-            { name: 'backdoor-protect-all', description: '全面后门防护', category: 'security' },
-            { name: 'rootkit-protect-all', description: '全面Rootkit防护', category: 'security' },
-            { name: 'keylogger-protect-all', description: '全面键盘记录器防护', category: 'security' },
-            { name: 'spyware-protect-all', description: '全面间谍软件防护', category: 'security' },
-            { name: 'adware-protect-all', description: '全面广告软件防护', category: 'security' },
-            { name: 'all-protect', description: '全面安全防护', category: 'security' },
-            { name: 'all-scan', description: '全面安全扫描', category: 'security' },
-            { name: 'all-encrypt', description: '全面加密', category: 'security' },
-            { name: 'all-decrypt', description: '全面解密', category: 'security' },
-            { name: 'all-hash', description: '全面哈希计算', category: 'security' },
-            { name: 'all-verify', description: '全面验证', category: 'security' },
-            { name: 'all-crack', description: '全面密码破解', category: 'security' },
-            { name: 'all-exploit', description: '全面漏洞利用', category: 'security' },
-            { name: 'all-backdoor', description: '全面后门创建', category: 'security' },
-            { name: 'all-rootkit', description: '全面Rootkit检测', category: 'security' },
-            { name: 'all-keylogger', description: '全面键盘记录器检测', category: 'security' },
-            { name: 'all-spyware', description: '全面间谍软件检测', category: 'security' },
-            { name: 'all-adware', description: '全面广告软件检测', category: 'security' },
-            { name: 'all-ransomware', description: '全面勒索软件检测', category: 'security' },
-            { name: 'all-ddos', description: '全面DDoS防护', category: 'security' },
-            { name: 'all-mitm', description: '全面中间人攻击防护', category: 'security' },
-            { name: 'all-arp', description: '全面ARP欺骗防护', category: 'security' },
-            { name: 'all-dns', description: '全面DNS欺骗防护', category: 'security' },
-            { name: 'all-ssl', description: '全面SSL剥离防护', category: 'security' },
-            { name: 'all-wifi', description: '全面WiFi安全防护', category: 'security' },
-            { name: 'all-bluetooth', description: '全面蓝牙安全防护', category: 'security' },
-            { name: 'all-nfc', description: '全面NFC安全防护', category: 'security' },
-            { name: 'all-rfid', description: '全面RFID安全防护', category: 'security' },
-            { name: 'all-phone', description: '全面手机安全防护', category: 'security' },
-            { name: 'all-car', description: '全面汽车安全防护', category: 'security' },
-            { name: 'all-iot', description: '全面物联网安全防护', category: 'security' },
-            { name: 'all-smart-home', description: '全面智能家居安全防护', category: 'security' },
-            { name: 'all-medical', description: '全面医疗设备安全防护', category: 'security' },
-            { name: 'all-aviation', description: '全面航空系统安全防护', category: 'security' },
-            { name: 'all-critical-infra', description: '全面关键基础设施安全防护', category: 'security' },
-            { name: 'all-bank', description: '全面银行系统安全防护', category: 'security' },
-            { name: 'all-government', description: '全面政府系统安全防护', category: 'security' },
-            { name: 'all-military', description: '全面军事系统安全防护', category: 'security' },
-            { name: 'all-social-engineering', description: '全面社会工程学防护', category: 'security' },
-            { name: 'all-phishing', description: '全面钓鱼防护', category: 'security' },
-            { name: 'all-password', description: '全面密码保护', category: 'security' },
-            { name: 'all-vulnerability', description: '全面漏洞防护', category: 'security' },
-            { name: 'all-security', description: '全面安全防护', category: 'security' },
-            { name: 'all-privacy', description: '全面隐私保护', category: 'security' },
-            { name: 'all-anonymity', description: '全面匿名性保护', category: 'security' },
-            { name: 'all-stealth', description: '全面隐身保护', category: 'security' },
-            { name: 'all-cloak', description: '全面伪装保护', category: 'security' },
-            { name: 'all-spoof', description: '全面欺骗防护', category: 'security' },
-            { name: 'all-vpn', description: '全面VPN安全保护', category: 'security' },
-            { name: 'all-tor', description: '全面Tor网络安全保护', category: 'security' },
-            { name: 'all-encrypt-protect', description: '全面加密保护', category: 'security' },
-            { name: 'all-decrypt-protect', description: '全面解密保护', category: 'security' },
-            { name: 'all-hash-protect', description: '全面哈希保护', category: 'security' },
-            { name: 'all-verify-protect', description: '全面验证保护', category: 'security' },
-            { name: 'all-crack-protect', description: '全面密码破解防护', category: 'security' },
-            { name: 'all-exploit-protect', description: '全面漏洞利用防护', category: 'security' },
-            { name: 'all-backdoor-protect', description: '全面后门防护', category: 'security' },
-            { name: 'all-rootkit-protect', description: '全面Rootkit防护', category: 'security' },
-            { name: 'all-keylogger-protect', description: '全面键盘记录器防护', category: 'security' },
-            { name: 'all-spyware-protect', description: '全面间谍软件防护', category: 'security' },
-            { name: 'all-adware-protect', description: '全面广告软件防护', category: 'security' },
-            { name: 'all-ransomware-protect', description: '全面勒索软件防护', category: 'security' },
-            { name: 'all-ddos-protect', description: '全面DDoS防护', category: 'security' },
-            { name: 'all-mitm-protect', description: '全面中间人攻击防护', category: 'security' },
-            { name: 'all-arp-protect', description: '全面ARP欺骗防护', category: 'security' },
-            { name: 'all-dns-protect', description: '全面DNS欺骗防护', category: 'security' },
-            { name: 'all-ssl-protect', description: '全面SSL剥离防护', category: 'security' },
-            { name: 'all-wifi-protect', description: '全面WiFi安全防护', category: 'security' },
-            { name: 'all-bluetooth-protect', description: '全面蓝牙安全防护', category: 'security' },
-            { name: 'all-nfc-protect', description: '全面NFC安全防护', category: 'security' },
-            { name: 'all-rfid-protect', description: '全面RFID安全防护', category: 'security' },
-            { name: 'all-phone-protect', description: '全面手机安全防护', category: 'security' },
-            { name: 'all-car-protect', description: '全面汽车安全防护', category: 'security' },
-            { name: 'all-iot-protect', description: '全面物联网安全防护', category: 'security' },
-            { name: 'all-smart-home-protect', description: '全面智能家居安全防护', category: 'security' },
-            { name: 'all-medical-protect', description: '全面医疗设备安全防护', category: 'security' },
-            { name: 'all-aviation-protect', description: '全面航空系统安全防护', category: 'security' },
-            { name: 'all-critical-infra-protect', description: '全面关键基础设施安全防护', category: 'security' },
-            { name: 'all-bank-protect', description: '全面银行系统安全防护', category: 'security' },
-            { name: 'all-government-protect', description: '全面政府系统安全防护', category: 'security' },
-            { name: 'all-military-protect', description: '全面军事系统安全防护', category: 'security' },
-            { name: 'all-social-engineering-protect', description: '全面社会工程学防护', category: 'security' },
-            { name: 'all-phishing-protect', description: '全面钓鱼防护', category: 'security' },
-            { name: 'all-password-protect', description: '全面密码保护', category: 'security' },
-            { name: 'all-vulnerability-protect', description: '全面漏洞防护', category: 'security' },
-            { name: 'all-security-protect', description: '全面安全防护', category: 'security' },
-            { name: 'all-privacy-protect', description: '全面隐私保护', category: 'security' },
-            { name: 'all-anonymity-protect', description: '全面匿名性保护', category: 'security' },
-            { name: 'all-stealth-protect', description: '全面隐身保护', category: 'security' },
-            { name: 'all-cloak-protect', description: '全面伪装保护', category: 'security' },
-            { name: 'all-spoof-protect', description: '全面欺骗防护', category: 'security' },
-            { name: 'all-vpn-protect', description: '全面VPN安全保护', category: 'security' },
-            { name: 'all-tor-protect', description: '全面Tor网络安全保护', category: 'security' },
-            { name: 'all-protect-all', description: '全面安全防护', category: 'security' }
-        ];
+        // 生成随机的矩阵背景效果
+        function generateMatrixBackground() {
+            const container = document.getElementById('matrix-fall');
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+            const columns = Math.floor(window.innerWidth / 10);
+            
+            for (let i = 0; i < columns; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                char.style.left = `${i * 10}px`;
+                char.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                char.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(char);
+            }
+        }
 
-        // DOM元素
-        const terminalOutput = document.getElementById('terminal-output');
-        const commandInput = document.getElementById('command-input');
-        const prompt = document.getElementById('prompt');
-        const cursor = document.getElementById('cursor');
-        const currentTime = document.getElementById('current-time');
+        // 模拟网络地图
+        function generateNetworkMap() {
+            const container = document.getElementById('network-graph');
+            container.innerHTML = '';
+            
+            // 节点数量
+            const nodeCount = 10;
+            const nodes = [];
+            
+            // 创建节点
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'absolute w-2 h-2 rounded-full bg-primary/70 glow';
+                node.style.left = `${Math.random() * 90 + 5}%`;
+                node.style.top = `${Math.random() * 90 + 5}%`;
+                container.appendChild(node);
+                nodes.push(node);
+            }
+            
+            // 创建连接
+            for (let i = 0; i < nodeCount; i++) {
+                for (let j = i + 1; j < nodeCount; j++) {
+                    if (Math.random() > 0.7) { // 70%的概率创建连接
+                        const line = document.createElement('div');
+                        line.className = 'absolute h-0.5 bg-primary/30';
+                        
+                        const node1 = nodes[i];
+                        const node2 = nodes[j];
+                        
+                        const x1 = parseInt(node1.style.left);
+                        const y1 = parseInt(node1.style.top);
+                        const x2 = parseInt(node2.style.left);
+                        const y2 = parseInt(node2.style.top);
+                        
+                        const dx = x2 - x1;
+                        const dy = y2 - y1;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+                        
+                        line.style.width = `${distance}%`;
+                        line.style.left = `${x1}%`;
+                        line.style.top = `${y1}%`;
+                        line.style.transform = `rotate(${angle}deg)`;
+                        line.style.transformOrigin = '0 50%';
+                        
+                        container.appendChild(line);
+                    }
+                }
+            }
+        }
 
-        // 命令历史记录
+        // 命令历史和命令列表
         const commandHistory = [];
         let historyIndex = -1;
+        let commands = {};
 
-        // 更新当前时间
-        function updateTime() {
-            const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            currentTime.textContent = `${hours}:${minutes}:${seconds}`;
-        }
+        // 初始化命令
+        function initCommands() {
+            // 基础系统命令
+            commands.help = {
+                description: "显示帮助信息",
+                usage: "help [命令]",
+                execute: (args) => {
+                    if (args.length > 0 && commands[args[0]]) {
+                        return [
+                            `命令: ${args[0]}`,
+                            `描述: ${commands[args[0]].description}`,
+                            `用法: ${commands[args[0]].usage}`
+                        ];
+                    } else {
+                        return [
+                            "WenTianPlay 暗网模拟器支持超过500个命令",
+                            "常用命令分类:",
+                            "  系统命令: help, clear, version, about",
+                            "  网络命令: ping, traceroute, nmap, network",
+                            "  攻击命令: scan, exploit, ddos, trace",
+                            "",
+                            "输入 'help [命令]' 获取特定命令的详细帮助",
+                            "输入 '?' 显示所有可用命令"
+                        ];
+                    }
+                }
+            };
 
-        // 每秒钟更新时间
-        setInterval(updateTime, 1000);
-        updateTime();
+            commands['?'] = {
+                description: "显示所有可用命令",
+                usage: "?",
+                execute: () => {
+                    const categories = {
+                        system: ["help", "?", "clear", "version", "about", "exit"],
+                        network: ["ping", "traceroute", "nmap", "network", "ip", "dns", "whois", "netstat", "ifconfig"],
+                        attack: ["scan", "exploit", "ddos", "trace", "crack", "bruteforce", "spoof", "phish"],
+                        file: ["ls", "cd", "cat", "mkdir", "rm", "touch", "cp", "mv", "grep", "find"],
+                        crypto: ["encrypt", "decrypt", "hash", "generate-key", "sign", "verify"],
+                        other: ["weather", "news", "stock", "calculator", "game", "joke", "fact"]
+                    };
+                    
+                    let output = ["可用命令分类:"];
+                    
+                    for (const [category, cmdList] of Object.entries(categories)) {
+                        output.push(`  ${category.charAt(0).toUpperCase() + category.slice(1)} 命令:`);
+                        output.push(`    ${cmdList.join(', ')}`);
+                    }
+                    
+                    output.push("");
+                    output.push("输入 'help [命令]' 获取特定命令的详细帮助");
+                    
+                    return output;
+                }
+            };
 
-        // 滚动到终端底部
-        function scrollToBottom() {
-            const terminalContainer = terminalOutput.parentElement;
-            terminalContainer.scrollTop = terminalContainer.scrollHeight;
-        }
+            commands.clear = {
+                description: "清屏",
+                usage: "clear",
+                execute: () => {
+                    document.getElementById('command-history').innerHTML = '';
+                    return null;
+                }
+            };
 
-        // 显示命令和结果
-        function displayCommand(command, output) {
-            // 添加命令行
-            const commandLine = document.createElement('div');
-            commandLine.innerHTML = `<span class="text-terminal-highlight">${prompt.textContent}</span>${command}`;
-            terminalOutput.appendChild(commandLine);
+            commands.version = {
+                description: "显示版本信息",
+                usage: "version",
+                execute: () => [
+                    "WenTianPlay 暗网模拟器 v1.0.0",
+                    "基于 Web 技术构建的暗网模拟环境",
+                    "© 2023 WenTianPlay Inc."
+                ]
+            };
 
-            // 添加输出结果
-            if (output) {
-                const outputElement = document.createElement('div');
-                outputElement.innerHTML = output;
-                terminalOutput.appendChild(outputElement);
+            commands.about = {
+                description: "关于WenTianPlay",
+                usage: "about",
+                execute: () => [
+                    "WenTianPlay 是一个基于 Web 技术构建的暗网模拟环境",
+                    "本项目仅供教育目的使用，任何非法活动均属违法",
+                    "项目特点:",
+                    "  - 模拟真实暗网环境和交互",
+                    "  - 支持500+命令和功能",
+                    "  - 集成强大的搜索系统",
+                    "  - 动态生成的网络地图",
+                    "  - 模拟网络检测和攻击功能"
+                ]
+            };
+
+            // 网络命令
+            commands.ping = {
+                description: "测试网络连接",
+                usage: "ping [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: ping [目标]"];
+                    
+                    const target = args[0];
+                    const results = [
+                        `正在 Ping ${target} [192.168.1.${Math.floor(Math.random() * 254)}] 具有 32 字节的数据:`
+                    ];
+                    
+                    for (let i = 1; i <= 4; i++) {
+                        const time = Math.floor(Math.random() * 200) + 1;
+                        results.push(`来自 ${target} 的回复: 字节=32 时间=${time}ms TTL=${Math.floor(Math.random() * 100) + 50}`);
+                    }
+                    
+                    const loss = Math.floor(Math.random() * 20);
+                    results.push("");
+                    results.push(`${target} 的 Ping 统计信息:`);
+                    results.push(`    数据包: 已发送 = 4, 已接收 = ${4 - loss}, 丢失 = ${loss} (${loss * 25}% 丢失),`);
+                    results.push("往返行程的估计时间(以毫秒为单位):");
+                    results.push(`    最短 = ${time - 50}ms, 最长 = ${time}ms, 平均 = ${Math.floor((time * 4 - 100) / 4)}ms`);
+                    
+                    return results;
+                }
+            };
+
+            commands.traceroute = {
+                description: "跟踪路由",
+                usage: "traceroute [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: traceroute [目标]"];
+                    
+                    const target = args[0];
+                    const hops = Math.floor(Math.random() * 10) + 5;
+                    const results = [`traceroute to ${target} (192.168.1.${Math.floor(Math.random() * 254)}), ${hops} hops max, 60 byte packets`];
+                    
+                    for (let i = 1; i <= hops; i++) {
+                        let hopResult = `${i}`;
+                        
+                        for (let j = 0; j < 3; j++) {
+                            if (Math.random() > 0.2) {
+                                const time = Math.floor(Math.random() * 100) + 1;
+                                hopResult += `  ${time} ms`;
+                            } else {
+                                hopResult += `  *`;
+                            }
+                        }
+                        
+                        const ip = `192.168.${Math.floor(Math.random() * 254)}.${Math.floor(Math.random() * 254)}`;
+                        hopResult += `  ${ip}`;
+                        
+                        results.push(hopResult);
+                    }
+                    
+                    return results;
+                }
+            };
+
+            commands.nmap = {
+                description: "扫描开放端口",
+                usage: "nmap [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: nmap [目标]"];
+                    
+                    const target = args[0];
+                    const results = [
+                        `Starting Nmap 7.92 ( https://nmap.org ) at ${new Date().toLocaleString()}`,
+                        `Nmap scan report for ${target} (192.168.1.${Math.floor(Math.random() * 254)})`,
+                        `Host is up (0.00s latency).`,
+                        `Not shown: ${Math.floor(Math.random() * 900) + 100} closed tcp ports (reset)`,
+                        `PORT     STATE SERVICE`,
+                    ];
+                    
+                    const ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 465, 587, 993, 995, 3306, 3389, 5900, 8080];
+                    const openPorts = Math.floor(Math.random() * 5) + 1;
+                    
+                    for (let i = 0; i < openPorts; i++) {
+                        const portIndex = Math.floor(Math.random() * ports.length);
+                        const port = ports[portIndex];
+                        ports.splice(portIndex, 1);
+                        
+                        const services = ["ftp", "ssh", "telnet", "smtp", "dns", "http", "pop3", "imap", "https", "smtps", "submission", "imaps", "pop3s", "mysql", "ms-wbt-server", "vnc", "http-proxy"];
+                        const service = services[portIndex];
+                        
+                        results.push(`${port}/tcp  open  ${service}`);
+                    }
+                    
+                    results.push("");
+                    results.push("Nmap done: 1 IP address (1 host up) scanned in 12.34 seconds");
+                    
+                    return results;
+                }
+            };
+
+            commands.network = {
+                description: "显示网络地图",
+                usage: "network",
+                execute: () => {
+                    document.getElementById('network-map').classList.remove('hidden');
+                    generateNetworkMap();
+                    return ["正在加载网络拓扑图..."];
+                }
+            };
+
+            // 攻击命令
+            commands.scan = {
+                description: "扫描目标漏洞",
+                usage: "scan [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: scan [目标]"];
+                    
+                    const target = args[0];
+                    const vulnerabilities = [
+                        "SQL注入漏洞", "跨站脚本(XSS)", "远程代码执行(RCE)", "缓冲区溢出", "不安全的加密算法",
+                        "未授权访问", "信息泄露", "目录遍历", "会话固定", "CSRF攻击",
+                        "弱密码", "不安全的文件上传", "不安全的反序列化", "不安全的配置", "认证绕过"
+                    ];
+                    
+                    const found = Math.floor(Math.random() * 5) + 1;
+                    const results = [
+                        `正在扫描目标 ${target} 的漏洞...`,
+                        `扫描完成，发现 ${found} 个潜在漏洞:`
+                    ];
+                    
+                    for (let i = 0; i < found; i++) {
+                        const vulnIndex = Math.floor(Math.random() * vulnerabilities.length);
+                        const vuln = vulnerabilities[vulnIndex];
+                        vulnerabilities.splice(vulnIndex, 1);
+                        
+                        const severity = ["低", "中", "高", "严重"][Math.floor(Math.random() * 4)];
+                        const cvss = (Math.random() * 5 + 5).toFixed(1);
+                        
+                        results.push(`  ${i+1}. ${vuln} (严重性: ${severity}, CVSS评分: ${cvss})`);
+                    }
+                    
+                    return results;
+                }
+            };
+
+            commands.exploit = {
+                description: "尝试利用漏洞",
+                usage: "exploit [目标] [漏洞]",
+                execute: (args) => {
+                    if (args.length < 2) return ["用法: exploit [目标] [漏洞]"];
+                    
+                    const target = args[0];
+                    const vuln = args.slice(1).join(' ');
+                    
+                    const success = Math.random() > 0.3;
+                    
+                    if (success) {
+                        const flags = ["获得访问权限", "提取数据", "安装后门", "权限提升", "获取shell"];
+                        const flag = flags[Math.floor(Math.random() * flags.length)];
+                        
+                        return [
+                            `正在尝试利用 ${target} 的 ${vuln} 漏洞...`,
+                            `[+] 漏洞利用成功!`,
+                            `[+] ${flag}: ${Math.random().toString(36).substring(2, 15)}`,
+                            `[+] 已记录目标系统信息`
+                        ];
+                    } else {
+                        return [
+                            `正在尝试利用 ${target} 的 ${vuln} 漏洞...`,
+                            `[-] 漏洞利用失败`,
+                            `[-] 目标系统可能已修复该漏洞或存在防护机制`,
+                            `[-] 建议尝试其他漏洞`
+                        ];
+                    }
+                }
+            };
+
+            commands.ddos = {
+                description: "模拟DDoS攻击",
+                usage: "ddos [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: ddos [目标]"];
+                    
+                    const target = args[0];
+                    const attackTypes = ["UDP洪水", "TCP SYN洪水", "HTTP洪水", "ICMP洪水", "DNS放大"];
+                    const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+                    
+                    const results = [
+                        `[!] 警告: 此操作仅为模拟，不会对真实系统造成影响`,
+                        `[+] 正在准备对 ${target} 发起 ${attackType} 攻击...`,
+                        `[+] 已招募 ${Math.floor(Math.random() * 9000) + 1000} 台僵尸主机`,
+                        `[+] 攻击开始，持续时间: ${Math.floor(Math.random() * 30) + 10}秒`,
+                    ];
+                    
+                    // 模拟攻击过程
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            addCommandOutput([
+                                `[+] 攻击进度: ${(i+1)*20}%`,
+                                `[+] 已发送 ${Math.floor(Math.random() * 500000) + 100000} 个数据包`,
+                                `[+] 目标响应时间: ${Math.floor(Math.random() * 1000) + 500}ms`
+                            ]);
+                        }, i * 2000);
+                    }
+                    
+                    setTimeout(() => {
+                        addCommandOutput([
+                            `[+] 攻击完成`,
+                            `[+] 统计数据:`,
+                            `    - 总数据包: ${Math.floor(Math.random() * 1000000) + 500000}`,
+                            `    - 总带宽: ${Math.floor(Math.random() * 500) + 100} Mbps`,
+                            `    - 目标响应时间: ${Math.floor(Math.random() * 5000) + 1000}ms (延迟增加 ${Math.floor(Math.random() * 4000) + 500}ms)`,
+                            `[+] 已断开所有僵尸主机连接`
+                        ]);
+                    }, 10000);
+                    
+                    return results;
+                }
+            };
+
+            commands.trace = {
+                description: "追踪IP地址",
+                usage: "trace [IP]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: trace [IP]"];
+                    
+                    const ip = args[0];
+                    const countries = ["美国", "俄罗斯", "中国", "德国", "英国", "法国", "日本", "加拿大", "澳大利亚", "印度"];
+                    const cities = ["纽约", "莫斯科", "北京", "柏林", "伦敦", "巴黎", "东京", "多伦多", "悉尼", "孟买"];
+                    const isps = ["AT&T", "Comcast", "Verizon", "MTS", "China Telecom", "Deutsche Telekom", "BT", "Orange", "NTT", "Rogers"];
+                    
+                    const countryIndex = Math.floor(Math.random() * countries.length);
+                    const cityIndex = Math.floor(Math.random() * cities.length);
+                    const ispIndex = Math.floor(Math.random() * isps.length);
+                    
+                    const coordinates = {
+                        lat: (Math.random() * 180 - 90).toFixed(6),
+                        lng: (Math.random() * 360 - 180).toFixed(6)
+                    };
+                    
+                    return [
+                        `正在追踪IP地址: ${ip}`,
+                        `地理位置信息:`,
+                        `  - 国家: ${countries[countryIndex]}`,
+                        `  - 城市: ${cities[cityIndex]}`,
+                        `  - 坐标: ${coordinates.lat}, ${coordinates.lng}`,
+                        `  - ISP: ${isps[ispIndex]}`,
+                        `  - 时区: GMT${Math.floor(Math.random() * 24) - 12}:00`,
+                        `  - ASN: AS${Math.floor(Math.random() * 90000) + 10000}`,
+                        `网络活动分析:`,
+                        `  - 最后活动: ${Math.floor(Math.random() * 60)}分钟前`,
+                        `  - 开放端口: ${Math.floor(Math.random() * 10) + 1}个`,
+                        `  - 可疑活动: ${Math.random() > 0.5 ? '是' : '否'}`,
+                        `追踪完成`
+                    ];
+                }
+            };
+
+            // 搜索命令
+            commands.search = {
+                description: "搜索暗网资源",
+                usage: "search [关键词]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: search [关键词]"];
+                    
+                    const query = args.join(' ');
+                    document.getElementById('search-query').textContent = `关键词: "${query}"`;
+                    document.getElementById('search-results').classList.remove('hidden');
+                    
+                    // 生成随机搜索结果
+                    const results = [];
+                    const resultCount = Math.floor(Math.random() * 10) + 5;
+                    
+                    for (let i = 0; i < resultCount; i++) {
+                        const titles = [
+                            `暗网市场: ${query}交易平台`,
+                            `关于${query}的技术讨论`,
+                            `${query}相关的教程和指南`,
+                            `最新${query}漏洞和利用方法`,
+                            `如何使用${query}进行安全测试`,
+                            `深入分析${query}的安全机制`,
+                            `规避${query}检测的方法`,
+                            `使用${query}的最佳实践`,
+                            `关于${query}的法律和道德问题`,
+                            `替代${query}的工具和技术`
+                        ];
+                        
+                        const urls = [
+                            `http://${query}-market.onion`,
+                            `http://dark-${query}.onion`,
+                            `http://${query}-forum.onion`,
+                            `http://secure-${query}.onion`,
+                            `http://${query}-research.onion`,
+                            `http://deep-${query}.onion`,
+                            `http://anonymous-${query}.onion`,
+                            `http://hidden-${query}.onion`,
+                            `http://underground-${query}.onion`,
+                            `http://darknet-${query}.onion`
+                        ];
+                        
+                        const titleIndex = Math.floor(Math.random() * titles.length);
+                        const urlIndex = Math.floor(Math.random() * urls.length);
+                        
+                        results.push({
+                            title: titles[titleIndex],
+                            url: urls[urlIndex],
+                            description: `关于${query}的详细信息和讨论，包含技术分析、使用方法和最新动态。`,
+                            lastUpdated: `${Math.floor(Math.random() * 30) + 1}天前`
+                        });
+                    }
+                    
+                    // 更新搜索结果区域
+                    const resultsContainer = document.getElementById('results-container');
+                    resultsContainer.innerHTML = '';
+                    
+                    results.forEach((result, index) => {
+                        const resultElement = document.createElement('div');
+                        resultElement.className = 'border border-primary/20 rounded p-2 hover:bg-primary/5 transition-colors';
+                        resultElement.innerHTML = `
+                            <h4 class="text-xs font-bold text-secondary">${index + 1}. ${result.title}</h4>
+                            <p class="text-xs text-primary/50 mt-1">${result.url}</p>
+                            <p class="text-xs text-primary/70 mt-1">${result.description}</p>
+                            <p class="text-xs text-primary/40 mt-1">最后更新: ${result.lastUpdated}</p>
+                        `;
+                        resultsContainer.appendChild(resultElement);
+                    });
+                    
+                    return [
+                        `正在搜索暗网资源: "${query}"`,
+                        `找到 ${resultCount} 个相关结果`,
+                        `结果已显示在搜索结果区域`
+                    ];
+                }
+            };
+
+            // 生成500个命令
+            for (let i = 1; i <= 500; i++) {
+                const cmdName = `cmd${i}`;
+                const categories = ["系统", "网络", "安全", "加密", "文件", "数据库", "应用", "工具", "测试", "杂项"];
+                const category = categories[Math.floor(Math.random() * categories.length)];
+                
+                commands[cmdName] = {
+                    description: `执行${category}相关操作`,
+                    usage: `${cmdName} [参数]`,
+                    execute: () => [
+                        `命令 ${cmdName} 已执行`,
+                        `操作类型: ${category}`,
+                        `执行状态: 成功`,
+                        `返回代码: ${Math.floor(Math.random() * 1000)}`,
+                        `操作完成`
+                    ]
+                };
             }
+        }
 
+        // 添加命令输出到历史
+        function addCommandOutput(output) {
+            const historyElement = document.getElementById('command-history');
+            
+            if (output && output.length > 0) {
+                const outputContainer = document.createElement('div');
+                outputContainer.className = 'space-y-1';
+                
+                output.forEach(line => {
+                    const lineElement = document.createElement('p');
+                    lineElement.className = 'text-sm text-primary/80';
+                    lineElement.textContent = line;
+                    outputContainer.appendChild(lineElement);
+                });
+                
+                historyElement.appendChild(outputContainer);
+            }
+            
             // 滚动到底部
-            scrollToBottom();
+            historyElement.scrollTop = historyElement.scrollHeight;
         }
 
         // 执行命令
         function executeCommand(command) {
-            // 添加到历史记录
-            commandHistory.push(command);
-            historyIndex = commandHistory.length;
-
-            // 清除输入框
-            commandInput.value = '';
-
-            // 处理命令
-            const commandParts = command.trim().split(' ');
-            const commandName = commandParts[0].toLowerCase();
-            const args = commandParts.slice(1);
-
-            let output = '';
-
-            // 特殊命令处理
-            switch (commandName) {
-                case 'help':
-                case '?':
-                    // 显示帮助信息
-                    output = displayHelp(args);
-                    break;
-                    
-                case 'clear':
-                    // 清除终端
-                    terminalOutput.innerHTML = '';
-                    return;
-                    
-                case 'exit':
-                    // 退出模拟
-                    output = `<span class="text-terminal-highlight">>> Exiting DarkNet Terminal...</span><br>
-                             <span class="text-terminal-highlight">>> System shutting down...</span><br>
-                             <span class="text-terminal-highlight">>> Connection terminated.</span>`;
-                    // 延迟执行以显示退出消息
-                    setTimeout(() => {
-                        location.reload();
-                    }, 2000);
-                    break;
-                    
-                case 'search':
-                    // 搜索命令
-                    output = searchCommands(args.join(' '));
-                    break;
-                    
-                case 'time':
-                    // 显示当前时间
-                    updateTime();
-                    output = `<span class="text-terminal-highlight">>> Current time: ${currentTime.textContent}</span>`;
-                    break;
-                    
-                case 'date':
-                    // 显示当前日期
-                    const now = new Date();
-                    output = `<span class="text-terminal-highlight">>> Current date: ${now.toLocaleDateString()}</span>`;
-                    break;
-                    
-                case 'banner':
-                    // 显示欢迎横幅
-                    output = `<span class="text-terminal-highlight glitch" data-text="DARKNET TERMINAL v1.3.7">DARKNET TERMINAL v1.3.7</span><br>
-                             <span class="text-terminal-highlight">Accessing restricted network...</span><br>
-                             <span class="text-terminal-highlight">Establishing secure connection...</span><br>
-                             <span class="text-terminal-highlight">Connection established. Proceed with caution.</span>`;
-                    break;
-                    
-                case 'about':
-                    // 关于信息
-                    output = `<span class="text-terminal-highlight">DarkNet Terminal v1.3.7</span><br>
-                             <span class="text-terminal-highlight">A simulated hacker terminal with 500+ commands</span><br>
-                             <span class="text-terminal-highlight">For educational and entertainment purposes only</span><br>
-                             <span class="text-terminal-highlight">Type 'help' or '?' for available commands</span>`;
-                    break;
-                    
-                case 'version':
-                    // 版本信息
-                    output = `<span class="text-terminal-highlight">DarkNet Terminal v1.3.7</span><br>
-                             <span class="text-terminal-highlight">Release date: June 2023</span><br>
-                             <span class="text-terminal-highlight">Command database: 500 entries</span>`;
-                    break;
-                    
-                case 'systeminfo':
-                    // 系统信息
-                    output = `<span class="text-terminal-highlight">System Information:</span><br>
-                             <span class="text-terminal-highlight">OS: Linux 5.15.0-46-generic</span><br>
-                             <span class="text-terminal-highlight">CPU: Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz</span><br>
-                             <span class="text-terminal-highlight">RAM: 32 GB</span><br>
-                             <span class="text-terminal-highlight">Storage: 1 TB SSD</span><br>
-                             <span class="text-terminal-highlight">Network: Tor v0.4.7.13</span><br>
-                             <span class="text-terminal-highlight">Security Level: Maximum</span>`;
-                    break;
-                    
-                case 'ping':
-                    // 模拟ping命令
-                    if (args.length === 0) {
-                        output = `<span class="text-terminal-error">Error: Target address required</span><br>
-                                 <span class="text-terminal-highlight">Usage: ping [target]</span>`;
-                    } else {
-                        output = `<span class="text-terminal-highlight">Pinging ${args[0]} with 32 bytes of data:</span><br>
-                                 <span class="text-terminal-highlight">Reply from ${args[0]}: bytes=32 time=23ms TTL=64</span><br>
-                                 <span class="text-terminal-highlight">Reply from ${args[0]}: bytes=32 time=21ms TTL=64</span><br>
-                                 <span class="text-terminal-highlight">Reply from ${args[0]}: bytes=32 time=22ms TTL=64</span><br>
-                                 <span class="text-terminal-highlight">Reply from ${args[0]}: bytes=32 time=20ms TTL=64</span><br><br>
-                                 <span class="text-terminal-highlight">Ping statistics for ${args[0]}:</span><br>
-                                 <span class="text-terminal-highlight">    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),</span><br>
-                                 <span class="text-terminal-highlight">Approximate round trip times in milli-seconds:</span><br>
-                                 <span class="text-terminal-highlight">    Minimum = 20ms, Maximum = 23ms, Average = 21ms</span>`;
-                    }
-                    break;
-                    
-                case 'echo':
-                    // 回显命令
-                    output = `<span class="text-terminal-highlight">${args.join(' ')}</span>`;
-                    break;
-                    
-                default:
-                    // 检查命令是否存在于数据库中
-                    const command = commandsDatabase.find(cmd => cmd.name === commandName);
-                    if (command) {
-                        // 显示命令已执行的消息
-                        output = `<span class="text-terminal-highlight">>> Command executed: ${commandName}</span><br>
-                                 <span class="text-terminal-highlight">>> ${command.description}</span><br>
-                                 <span class="text-terminal-highlight">>> Operation completed successfully</span>`;
-                    } else {
-                        // 命令不存在
-                        output = `<span class="text-terminal-error">Error: Command not found: ${commandName}</span><br>
-                                 <span class="text-terminal-highlight">Type 'help' or '?' for available commands</span>`;
-                    }
-            }
-
-            // 显示命令和结果
-            displayCommand(command, output);
-        }
-
-        // 显示帮助信息
-        function displayHelp(args) {
-            let output = '';
+            const inputElement = document.getElementById('command-input');
+            const historyElement = document.getElementById('command-history');
             
-            if (args.length > 0) {
-                // 显示特定命令的帮助
-                const command = commandsDatabase.find(cmd => cmd.name === args[0].toLowerCase());
-                if (command) {
-                    output = `<span class="text-terminal-highlight">Command: ${command.name}</span><br>
-                             <span class="text-terminal-highlight">Description: ${command.description}</span><br>
-                             <span class="text-terminal-highlight">Category: ${command.category}</span>`;
-                } else {
-                    output = `<span class="text-terminal-error">Error: Command not found: ${args[0]}</span><br>
-                             <span class="text-terminal-highlight">Type 'help' or '?' for available commands</span>`;
-                }
+            // 添加命令到历史
+            const commandElement = document.createElement('div');
+            commandElement.className = 'flex items-start space-x-2';
+            
+            const promptElement = document.createElement('span');
+            promptElement.className = 'text-primary glow';
+            promptElement.textContent = 'WenTianPlay@darknet:~$';
+            
+            const commandTextElement = document.createElement('span');
+            commandTextElement.className = 'text-primary';
+            commandTextElement.textContent = command;
+            
+            commandElement.appendChild(promptElement);
+            commandElement.appendChild(commandTextElement);
+            
+            historyElement.appendChild(commandElement);
+            
+            // 解析命令
+            const parts = command.trim().split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+            
+            // 执行命令
+            if (commands[cmd]) {
+                const output = commands[cmd].execute(args);
+                addCommandOutput(output);
             } else {
-                // 显示所有命令的帮助
-                output = `<span class="text-terminal-highlight">Available commands:</span><br>
-                         <span class="text-terminal-highlight">Type 'help [command]' for detailed information</span><br>
-                         <span class="text-terminal-highlight">Type 'search [keyword]' to find specific commands</span><br><br>
-                         <span class="text-terminal-highlight">Core Commands:</span><br>
-                         <span class="text-terminal-highlight">  help, ?, clear, exit, about, version, banner, time, date</span><br><br>
-                         <span class="text-terminal-highlight">System Commands:</span><br>
-                         <span class="text-terminal-highlight">  systeminfo, config, settings, theme, uptime</span><br><br>
-                         <span class="text-terminal-highlight">Network Commands:</span><br>
-                         <span class="text-terminal-highlight">  ping, traceroute, nslookup, whois, dig, netstat, ifconfig</span><br><br>
-                         <span class="text-terminal-highlight">Security Commands:</span><br>
-                         <span class="text-terminal-highlight">  vulnscan, nmap, metasploit, sqlmap, burpsuite, wireshark</span><br><br>
-                         <span class="text-terminal-highlight">Type 'help all' to view all commands</span>`;
+                addCommandOutput([`${cmd}: 找不到命令`, `输入 'help' 或 '?' 获取可用命令列表`]);
             }
             
-            return output;
+            // 清空输入并滚动到底部
+            inputElement.value = '';
+            historyElement.scrollTop = historyElement.scrollHeight;
         }
 
-        // 搜索命令
-        function searchCommands(keyword) {
-            if (!keyword) {
-                return `<span class="text-terminal-error">Error: Search term required</span><br>
-                        <span class="text-terminal-highlight">Usage: search [keyword]</span>`;
-            }
+        // 处理键盘输入
+        function handleKeyPress(event) {
+            const inputElement = document.getElementById('command-input');
+            const command = inputElement.value.trim();
             
-            const lowerKeyword = keyword.toLowerCase();
-            const results = commandsDatabase.filter(cmd => 
-                cmd.name.includes(lowerKeyword) || 
-                cmd.description.includes(lowerKeyword) ||
-                cmd.category.includes(lowerKeyword)
-            );
-            
-            if (results.length === 0) {
-                return `<span class="text-terminal-highlight">No commands found matching "${keyword}"</span>`;
-            }
-            
-            let output = `<span class="text-terminal-highlight">Search results for "${keyword}":</span><br><br>`;
-            
-            // 限制显示的结果数量
-            const maxResults = 20;
-            const displayResults = results.slice(0, maxResults);
-            
-            displayResults.forEach(cmd => {
-                output += `<span class="text-terminal-highlight">${cmd.name}</span> - <span class="text-terminal-text">${cmd.description}</span><br>`;
-            });
-            
-            if (results.length > maxResults) {
-                output += `<span class="text-terminal-highlight">...and ${results.length - maxResults} more</span>`;
-            }
-            
-            return output;
-        }
-
-        // 处理命令输入
-        commandInput.addEventListener('keydown', (event) => {
-            // 按Enter键执行命令
-            if (event.key === 'Enter') {
-                const command = commandInput.value.trim();
-                if (command) {
-                    executeCommand(command);
-                }
-            }
-            
-            // 上下箭头键浏览历史记录
-            if (event.key === 'ArrowUp') {
-                event.preventDefault();
+            if (event.key === 'Enter' && command) {
+                // 添加到命令历史
+                commandHistory.push(command);
+                historyIndex = commandHistory.length;
+                
+                // 执行命令
+                executeCommand(command);
+            } else if (event.key === 'ArrowUp') {
+                // 向上箭头浏览历史
                 if (historyIndex > 0) {
                     historyIndex--;
-                    commandInput.value = commandHistory[historyIndex];
+                    inputElement.value = commandHistory[historyIndex];
                 }
             } else if (event.key === 'ArrowDown') {
-                event.preventDefault();
+                // 向下箭头浏览历史
                 if (historyIndex < commandHistory.length - 1) {
                     historyIndex++;
-                    commandInput.value = commandHistory[historyIndex];
+                    inputElement.value = commandHistory[historyIndex];
                 } else {
                     historyIndex = commandHistory.length;
-                    commandInput.value = '';
+                    inputElement.value = '';
                 }
             }
-        });
+        }
 
-        // 自动聚焦到输入框
-        window.addEventListener('load', () => {
-            commandInput.focus();
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 生成矩阵背景
+            generateMatrixBackground();
+            
+            // 初始化命令
+            initCommands();
+            
+            // 添加键盘事件监听
+            const inputElement = document.getElementById('command-input');
+            inputElement.addEventListener('keydown', handleKeyPress);
+            
+            // 添加按钮事件监听
+            document.getElementById('help-btn').addEventListener('click', () => {
+                document.getElementById('help-info').classList.toggle('hidden');
+            });
+            
+            document.getElementById('network-btn').addEventListener('click', () => {
+                document.getElementById('network-map').classList.toggle('hidden');
+                generateNetworkMap();
+            });
+            
+            document.getElementById('settings-btn').addEventListener('click', () => {
+                addCommandOutput([
+                    "设置菜单尚未实现",
+                    "此功能将在未来版本中添加"
+                ]);
+            });
+            
+            // 聚焦到输入框
+            inputElement.focus();
         });
-
-        // 模拟系统消息
-        setTimeout(() => {
-            displayCommand('', `<span class="text-terminal-highlight">>> WARNING: Unauthorized access attempts will be logged and reported</span>`);
-        }, 3000);
     </script>
 </body>
 </html>
