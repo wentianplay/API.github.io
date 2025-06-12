@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WenTianPlay</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#00FF00',
+                        secondary: '#00FFFF',
+                        terminal: '#0A1119',
+                        dark: '#030712',
+                        light: '#F3F4F6'
+                    },
+                    fontFamily: {
+                        terminal: ['"Courier New"', 'monospace'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .terminal-cursor {
+                animation: blink 1s step-end infinite;
+            }
+            .scan-line {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(to right, transparent, rgba(0, 255, 0, 0.5), transparent);
+                animation: scan 2s linear infinite;
+            }
+            .matrix-fall {
+                position: absolute;
+                top: -100px;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 0;
+            }
+            .matrix-char {
+                position: absolute;
+                color: rgba(0, 255, 0, 0.7);
+                font-size: 12px;
+                transform: translateY(-100%);
+                animation: fall linear infinite;
+            }
+            .glow {
+                text-shadow: 0 0 5px rgba(0, 255, 0, 0.7), 0 0 10px rgba(0, 255, 0, 0.5);
+            }
+            .glow-blue {
+                text-shadow: 0 0 5px rgba(0, 255, 255, 0.7), 0 0 10px rgba(0, 255, 255, 0.5);
+            }
+            .grid-bg {
+                background-image: linear-gradient(rgba(0, 255, 0, 0.1) 1px, transparent 1px),
+                                  linear-gradient(90deg, rgba(0, 255, 0, 0.1) 1px, transparent 1px);
+                background-size: 20px 20px;
+            }
+            .noise-bg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+                opacity: 0.05;
+                pointer-events: none;
+                z-index: 1;
+            }
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes scan {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-terminal text-primary font-terminal min-h-screen flex flex-col grid-bg relative overflow-hidden">
+    <!-- 背景效果 -->
+    <div class="noise-bg"></div>
+    <div class="matrix-fall" id="matrix-fall"></div>
+    <div class="scan-line"></div>
+
+    <!-- 顶部导航栏 -->
+    <nav class="bg-dark/80 backdrop-blur-sm border-b border-primary/30 px-4 py-2 flex justify-between items-center z-20">
+        <div class="flex items-center space-x-2">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+            <span class="ml-2 text-sm font-bold glow">WenTianPlay@darknet:~$</span>
+        </div>
+        <div class="flex items-center space-x-4">
+            <button id="help-btn" class="text-xs hover:text-secondary transition-colors">
+                <i class="fa fa-question-circle mr-1"></i>帮助
+            </button>
+            <button id="network-btn" class="text-xs hover:text-secondary transition-colors">
+                <i class="fa fa-sitemap mr-1"></i>网络
+            </button>
+            <button id="settings-btn" class="text-xs hover:text-secondary transition-colors">
+                <i class="fa fa-cog mr-1"></i>设置
+            </button>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <main class="flex-1 p-4 md:p-6 overflow-auto z-10">
+        <!-- 欢迎信息 -->
+        <div class="mb-6 animate-fadeIn">
+            <pre class="text-primary/80 text-sm">
+ ██████╗ ███████╗████████╗██╗   ██╗██████╗ 
+██╔════╝ ██╔════╝╚══██╔══╝██║   ██║██╔══██╗
+██║  ███╗█████╗     ██║   ██║   ██║██████╔╝
+██║   ██║██╔══╝     ██║   ██║   ██║██╔══██╗
+╚██████╔╝███████╗   ██║   ╚██████╔╝██║  ██║
+ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝
+            </pre>
+            <p class="text-sm text-primary/70 mb-4">WenTianPlay</p>
+            <p class="text-sm text-primary/70 mb-4">输入 "help" 或 "?" 获取可用命令列表</p>
+            <p class="text-sm text-primary/70 mb-4">警告: 仅用于教育目的，任何非法活动均属违法</p>
+        </div>
+
+        <!-- 命令历史 -->
+        <div id="command-history" class="mb-4 space-y-3">
+            <!-- 命令历史将在这里动态添加 -->
+        </div>
+
+        <!-- 命令输入区 -->
+        <div class="flex items-center mb-6">
+            <span class="text-primary mr-2 glow">WenTianPlay@darknet:~$</span>
+            <input 
+                type="text" 
+                id="command-input" 
+                class="bg-transparent border-none outline-none text-primary w-full terminal-cursor"
+                placeholder="输入命令..."
+            >
+        </div>
+
+        <!-- 网络地图可视化 -->
+        <div id="network-map" class="hidden bg-dark/50 rounded-lg p-4 mb-6 border border-primary/20">
+            <h3 class="text-sm font-bold mb-3 flex items-center">
+                <i class="fa fa-sitemap mr-2 glow-blue"></i>网络拓扑图
+            </h3>
+            <div id="network-graph" class="h-64 relative">
+                <!-- 网络地图将在这里动态生成 -->
+            </div>
+        </div>
+
+        <!-- 搜索结果区域 -->
+        <div id="search-results" class="hidden bg-dark/50 rounded-lg p-4 mb-6 border border-primary/20">
+            <h3 class="text-sm font-bold mb-3 flex items-center">
+                <i class="fa fa-search mr-2 glow-blue"></i>搜索结果
+                <span id="search-query" class="ml-2 text-primary/60"></span>
+            </h3>
+            <div id="results-container" class="space-y-3">
+                <!-- 搜索结果将在这里动态添加 -->
+            </div>
+        </div>
+
+        <!-- 帮助信息区域 -->
+        <div id="help-info" class="hidden bg-dark/50 rounded-lg p-4 mb-6 border border-primary/20">
+            <h3 class="text-sm font-bold mb-3 flex items-center">
+                <i class="fa fa-question-circle mr-2 glow-blue"></i>帮助信息
+            </h3>
+            <div class="space-y-3">
+                <p class="text-sm text-primary/70">WenTianPlay支持超过500个命令，以下是常用命令分类：</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <h4 class="text-xs font-bold mb-2 text-secondary">系统命令</h4>
+                        <ul class="text-xs text-primary/70 space-y-1">
+                            <li><span class="text-secondary">help</span> - 显示帮助信息</li>
+                            <li><span class="text-secondary">clear</span> - 清屏</li>
+                            <li><span class="text-secondary">version</span> - 显示版本信息</li>
+                            <li><span class="text-secondary">about</span> - 关于WenTianPlay</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold mb-2 text-secondary">网络命令</h4>
+                        <ul class="text-xs text-primary/70 space-y-1">
+                            <li><span class="text-secondary">ping [目标]</span> - 测试网络连接</li>
+                            <li><span class="text-secondary">traceroute [目标]</span> - 跟踪路由</li>
+                            <li><span class="text-secondary">nmap [目标]</span> - 扫描开放端口</li>
+                            <li><span class="text-secondary">network</span> - 显示网络地图</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold mb-2 text-secondary">攻击命令</h4>
+                        <ul class="text-xs text-primary/70 space-y-1">
+                            <li><span class="text-secondary">scan [目标]</span> - 扫描目标漏洞</li>
+                            <li><span class="text-secondary">exploit [目标] [漏洞]</span> - 尝试利用漏洞</li>
+                            <li><span class="text-secondary">ddos [目标]</span> - 模拟DDoS攻击</li>
+                            <li><span class="text-secondary">trace [IP]</span> - 追踪IP地址</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="text-xs text-primary/60 mt-4">输入 "help [命令]" 可获取特定命令的详细帮助</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 底部状态栏 -->
+    <footer class="bg-dark/80 backdrop-blur-sm border-t border-primary/30 px-4 py-2 text-xs text-primary/60 flex justify-between items-center z-20">
+        <div class="flex items-center space-x-4">
+            <span><i class="fa fa-wifi mr-1"></i>连接状态: <span id="connection-status" class="text-green-500">已连接</span></span>
+            <span><i class="fa fa-shield mr-1"></i>安全级别: <span id="security-level" class="text-yellow-500">中等</span></span>
+        </div>
+        <div>
+            <span>WenTianPlay v1.0.0 | 伪造IP: 192.168.1.42</span>
+        </div>
+    </footer>
+
+    <script>
+        // 生成随机的矩阵背景效果
+        function generateMatrixBackground() {
+            const container = document.getElementById('matrix-fall');
+            const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+            const columns = Math.floor(window.innerWidth / 10);
+
+            for (let i = 0; i < columns; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars.charAt(Math.floor(Math.random() * chars.length));
+                char.style.left = `${i * 10}px`;
+                char.style.animationDuration = `${Math.random() * 10 + 5}s`;
+                char.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(char);
+            }
+        }
+
+        // 模拟网络地图
+        function generateNetworkMap() {
+            const container = document.getElementById('network-graph');
+            container.innerHTML = '';
+
+            // 节点数量
+            const nodeCount = 10;
+            const nodes = [];
+
+            // 创建节点
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.className = 'absolute w-2 h-2 rounded-full bg-primary/70 glow';
+                node.style.left = `${Math.random() * 90 + 5}%`;
+                node.style.top = `${Math.random() * 90 + 5}%`;
+                container.appendChild(node);
+                nodes.push(node);
+            }
+
+            // 创建连接
+            for (let i = 0; i < nodeCount; i++) {
+                for (let j = i + 1; j < nodeCount; j++) {
+                    if (Math.random() > 0.7) { // 70%的概率创建连接
+                        const line = document.createElement('div');
+                        line.className = 'absolute h-0.5 bg-primary/30';
+
+                        const node1 = nodes[i];
+                        const node2 = nodes[j];
+
+                        const x1 = parseInt(node1.style.left);
+                        const y1 = parseInt(node1.style.top);
+                        const x2 = parseInt(node2.style.left);
+                        const y2 = parseInt(node2.style.top);
+
+                        const dx = x2 - x1;
+                        const dy = y2 - y1;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+                        line.style.width = `${distance}%`;
+                        line.style.left = `${x1}%`;
+                        line.style.top = `${y1}%`;
+                        line.style.transform = `rotate(${angle}deg)`;
+                        line.style.transformOrigin = '0 50%';
+
+                        container.appendChild(line);
+                    }
+                }
+            }
+        }
+
+        // 命令历史和命令列表
+        const commandHistory = [];
+        let historyIndex = -1;
+        let commands = {};
+
+        // 初始化命令
+        function initCommands() {
+            // 基础系统命令
+            commands.help = {
+                description: "显示帮助信息",
+                usage: "help [命令]",
+                execute: (args) => {
+                    if (args.length > 0 && commands[args[0]]) {
+                        return [
+                            `命令: ${args[0]}`,
+                            `描述: ${commands[args[0]].description}`,
+                            `用法: ${commands[args[0]].usage}`
+                        ];
+                    } else {
+                        return [
+                            "WenTianPlay 暗网模拟器支持超过500个命令",
+                            "常用命令分类:",
+                            "  系统命令: help, clear, version, about",
+                            "  网络命令: ping, traceroute, nmap, network",
+                            "  攻击命令: scan, exploit, ddos, trace",
+                            "",
+                            "输入 'help [命令]' 获取特定命令的详细帮助",
+                            "输入 '?' 显示所有可用命令"
+                        ];
+                    }
+                }
+            };
+
+            commands['?'] = {
+                description: "显示所有可用命令",
+                usage: "?",
+                execute: () => {
+                    const categories = {
+                        system: ["help", "?", "clear", "version", "about", "exit"],
+                        network: ["ping", "traceroute", "nmap", "network", "ip", "dns", "whois", "netstat", "ifconfig"],
+                        attack: ["scan", "exploit", "ddos", "trace", "crack", "bruteforce", "spoof", "phish"],
+                        file: ["ls", "cd", "cat", "mkdir", "rm", "touch", "cp", "mv", "grep", "find"],
+                        crypto: ["encrypt", "decrypt", "hash", "generate-key", "sign", "verify"],
+                        other: ["weather", "news", "stock", "calculator", "game", "joke", "fact"]
+                    };
+
+                    let output = ["可用命令分类:"];
+
+                    for (const [category, cmdList] of Object.entries(categories)) {
+                        output.push(`  ${category.charAt(0).toUpperCase() + category.slice(1)} 命令:`);
+                        output.push(`    ${cmdList.join(', ')}`);
+                    }
+
+                    output.push("");
+                    output.push("输入 'help [命令]' 获取特定命令的详细帮助");
+
+                    return output;
+                }
+            };
+
+            commands.clear = {
+                description: "清屏",
+                usage: "clear",
+                execute: () => {
+                    document.getElementById('command-history').innerHTML = '';
+                    return null;
+                }
+            };
+
+            commands.version = {
+                description: "显示版本信息",
+                usage: "version",
+                execute: () => [
+                    "WenTianPlay 暗网模拟器 v1.0.0",
+                    "基于 Web 技术构建的暗网模拟环境",
+                    "© 2023 WenTianPlay Inc."
+                ]
+            };
+
+            commands.about = {
+                description: "关于WenTianPlay",
+                usage: "about",
+                execute: () => [
+                    "WenTianPlay 是一个基于 Web 技术构建的暗网模拟环境",
+                    "本项目仅供教育目的使用，任何非法活动均属违法",
+                    "项目特点:",
+                    "  - 模拟真实暗网环境和交互",
+                    "  - 支持500+命令和功能",
+                    "  - 集成强大的搜索系统",
+                    "  - 动态生成的网络地图",
+                    "  - 模拟网络检测和攻击功能"
+                ]
+            };
+
+            // 网络命令
+            commands.ping = {
+                description: "测试网络连接",
+                usage: "ping [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: ping [目标]"];
+
+                    const target = args[0];
+                    const results = [
+                        `正在 Ping ${target} [192.168.1.${Math.floor(Math.random() * 254)}] 具有 32 字节的数据:`
+                    ];
+
+                    for (let i = 1; i <= 4; i++) {
+                        const time = Math.floor(Math.random() * 200) + 1;
+                        results.push(`来自 ${target} 的回复: 字节=32 时间=${time}ms TTL=${Math.floor(Math.random() * 100) + 50}`);
+                    }
+
+                    const loss = Math.floor(Math.random() * 20);
+                    results.push("");
+                    results.push(`${target} 的 Ping 统计信息:`);
+                    results.push(`    数据包: 已发送 = 4, 已接收 = ${4 - loss}, 丢失 = ${loss} (${loss * 25}% 丢失),`);
+                    results.push("往返行程的估计时间(以毫秒为单位):");
+                    results.push(`    最短 = ${time - 50}ms, 最长 = ${time}ms, 平均 = ${Math.floor((time * 4 - 100) / 4)}ms`);
+
+                    return results;
+                }
+            };
+
+            commands.traceroute = {
+                description: "跟踪路由",
+                usage: "traceroute [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: traceroute [目标]"];
+
+                    const target = args[0];
+                    const hops = Math.floor(Math.random() * 10) + 5;
+                    const results = [`traceroute to ${target} (192.168.1.${Math.floor(Math.random() * 254)}), ${hops} hops max, 60 byte packets`];
+
+                    for (let i = 1; i <= hops; i++) {
+                        let hopResult = `${i}`;
+
+                        for (let j = 0; j < 3; j++) {
+                            if (Math.random() > 0.2) {
+                                const time = Math.floor(Math.random() * 100) + 1;
+                                hopResult += `  ${time} ms`;
+                            } else {
+                                hopResult += `  *`;
+                            }
+                        }
+
+                        const ip = `192.168.${Math.floor(Math.random() * 254)}.${Math.floor(Math.random() * 254)}`;
+                        hopResult += `  ${ip}`;
+
+                        results.push(hopResult);
+                    }
+
+                    return results;
+                }
+            };
+
+            commands.nmap = {
+                description: "扫描开放端口",
+                usage: "nmap [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: nmap [目标]"];
+
+                    const target = args[0];
+                    const results = [
+                        `Starting Nmap 7.92 ( https://nmap.org ) at ${new Date().toLocaleString()}`,
+                        `Nmap scan report for ${target} (192.168.1.${Math.floor(Math.random() * 254)})`,
+                        `Host is up (0.00s latency).`,
+                        `Not shown: ${Math.floor(Math.random() * 900) + 100} closed tcp ports (reset)`,
+                        `PORT     STATE SERVICE`,
+                    ];
+
+                    const ports = [21, 22, 23, 25, 53, 80, 110, 143, 443, 465, 587, 993, 995, 3306, 3389, 5900, 8080];
+                    const openPorts = Math.floor(Math.random() * 5) + 1;
+
+                    for (let i = 0; i < openPorts; i++) {
+                        const portIndex = Math.floor(Math.random() * ports.length);
+                        const port = ports[portIndex];
+                        ports.splice(portIndex, 1);
+
+                        const services = ["ftp", "ssh", "telnet", "smtp", "dns", "http", "pop3", "imap", "https", "smtps", "submission", "imaps", "pop3s", "mysql", "ms-wbt-server", "vnc", "http-proxy"];
+                        const service = services[portIndex];
+
+                        results.push(`${port}/tcp  open  ${service}`);
+                    }
+
+                    results.push("");
+                    results.push("Nmap done: 1 IP address (1 host up) scanned in 12.34 seconds");
+
+                    return results;
+                }
+            };
+
+            commands.network = {
+                description: "显示网络地图",
+                usage: "network",
+                execute: () => {
+                    document.getElementById('network-map').classList.remove('hidden');
+                    generateNetworkMap();
+                    return ["正在加载网络拓扑图..."];
+                }
+            };
+
+            // 攻击命令
+            commands.scan = {
+                description: "扫描目标漏洞",
+                usage: "scan [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: scan [目标]"];
+
+                    const target = args[0];
+                    const vulnerabilities = [
+                        "SQL注入漏洞", "跨站脚本(XSS)", "远程代码执行(RCE)", "缓冲区溢出", "不安全的加密算法",
+                        "未授权访问", "信息泄露", "目录遍历", "会话固定", "CSRF攻击",
+                        "弱密码", "不安全的文件上传", "不安全的反序列化", "不安全的配置", "认证绕过"
+                    ];
+
+                    const found = Math.floor(Math.random() * 5) + 1;
+                    const results = [
+                        `正在扫描目标 ${target} 的漏洞...`,
+                        `扫描完成，发现 ${found} 个潜在漏洞:`
+                    ];
+
+                    for (let i = 0; i < found; i++) {
+                        const vulnIndex = Math.floor(Math.random() * vulnerabilities.length);
+                        const vuln = vulnerabilities[vulnIndex];
+                        vulnerabilities.splice(vulnIndex, 1);
+
+                        const severity = ["低", "中", "高", "严重"][Math.floor(Math.random() * 4)];
+                        const cvss = (Math.random() * 5 + 5).toFixed(1);
+
+                        results.push(`  ${i+1}. ${vuln} (严重性: ${severity}, CVSS评分: ${cvss})`);
+                    }
+
+                    return results;
+                }
+            };
+
+            commands.exploit = {
+                description: "尝试利用漏洞",
+                usage: "exploit [目标] [漏洞]",
+                execute: (args) => {
+                    if (args.length < 2) return ["用法: exploit [目标] [漏洞]"];
+
+                    const target = args[0];
+                    const vuln = args.slice(1).join(' ');
+
+                    const success = Math.random() > 0.3;
+
+                    if (success) {
+                        const flags = ["获得访问权限", "提取数据", "安装后门", "权限提升", "获取shell"];
+                        const flag = flags[Math.floor(Math.random() * flags.length)];
+
+                        return [
+                            `正在尝试利用 ${target} 的 ${vuln} 漏洞...`,
+                            `[+] 漏洞利用成功!`,
+                            `[+] ${flag}: ${Math.random().toString(36).substring(2, 15)}`,
+                            `[+] 已记录目标系统信息`
+                        ];
+                    } else {
+                        return [
+                            `正在尝试利用 ${target} 的 ${vuln} 漏洞...`,
+                            `[-] 漏洞利用失败`,
+                            `[-] 目标系统可能已修复该漏洞或存在防护机制`,
+                            `[-] 建议尝试其他漏洞`
+                        ];
+                    }
+                }
+            };
+
+            commands.ddos = {
+                description: "模拟DDoS攻击",
+                usage: "ddos [目标]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: ddos [目标]"];
+
+                    const target = args[0];
+                    const attackTypes = ["UDP洪水", "TCP SYN洪水", "HTTP洪水", "ICMP洪水", "DNS放大"];
+                    const attackType = attackTypes[Math.floor(Math.random() * attackTypes.length)];
+
+                    const results = [
+                        `[!] 警告: 此操作仅为模拟，不会对真实系统造成影响`,
+                        `[+] 正在准备对 ${target} 发起 ${attackType} 攻击...`,
+                        `[+] 已招募 ${Math.floor(Math.random() * 9000) + 1000} 台僵尸主机`,
+                        `[+] 攻击开始，持续时间: ${Math.floor(Math.random() * 30) + 10}秒`,
+                    ];
+
+                    // 模拟攻击过程
+                    for (let i = 0; i < 5; i++) {
+                        setTimeout(() => {
+                            addCommandOutput([
+                                `[+] 攻击进度: ${(i+1)*20}%`,
+                                `[+] 已发送 ${Math.floor(Math.random() * 500000) + 100000} 个数据包`,
+                                `[+] 目标响应时间: ${Math.floor(Math.random() * 1000) + 500}ms`
+                            ]);
+                        }, i * 2000);
+                    }
+
+                    setTimeout(() => {
+                        addCommandOutput([
+                            `[+] 攻击完成`,
+                            `[+] 统计数据:`,
+                            `    - 总数据包: ${Math.floor(Math.random() * 1000000) + 500000}`,
+                            `    - 总带宽: ${Math.floor(Math.random() * 500) + 100} Mbps`,
+                            `    - 目标响应时间: ${Math.floor(Math.random() * 5000) + 1000}ms (延迟增加 ${Math.floor(Math.random() * 4000) + 500}ms)`,
+                            `[+] 已断开所有僵尸主机连接`
+                        ]);
+                    }, 10000);
+
+                    return results;
+                }
+            };
+
+            commands.trace = {
+                description: "追踪IP地址",
+                usage: "trace [IP]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: trace [IP]"];
+
+                    const ip = args[0];
+                    const countries = ["美国", "俄罗斯", "中国", "德国", "英国", "法国", "日本", "加拿大", "澳大利亚", "印度"];
+                    const cities = ["纽约", "莫斯科", "北京", "柏林", "伦敦", "巴黎", "东京", "多伦多", "悉尼", "孟买"];
+                    const isps = ["AT&T", "Comcast", "Verizon", "MTS", "China Telecom", "Deutsche Telekom", "BT", "Orange", "NTT", "Rogers"];
+
+                    const countryIndex = Math.floor(Math.random() * countries.length);
+                    const cityIndex = Math.floor(Math.random() * cities.length);
+                    const ispIndex = Math.floor(Math.random() * isps.length);
+
+                    const coordinates = {
+                        lat: (Math.random() * 180 - 90).toFixed(6),
+                        lng: (Math.random() * 360 - 180).toFixed(6)
+                    };
+
+                    return [
+                        `正在追踪IP地址: ${ip}`,
+                        `地理位置信息:`,
+                        `  - 国家: ${countries[countryIndex]}`,
+                        `  - 城市: ${cities[cityIndex]}`,
+                        `  - 坐标: ${coordinates.lat}, ${coordinates.lng}`,
+                        `  - ISP: ${isps[ispIndex]}`,
+                        `  - 时区: GMT${Math.floor(Math.random() * 24) - 12}:00`,
+                        `  - ASN: AS${Math.floor(Math.random() * 90000) + 10000}`,
+                        `网络活动分析:`,
+                        `  - 最后活动: ${Math.floor(Math.random() * 60)}分钟前`,
+                        `  - 开放端口: ${Math.floor(Math.random() * 10) + 1}个`,
+                        `  - 可疑活动: ${Math.random() > 0.5 ? '是' : '否'}`,
+                        `追踪完成`
+                    ];
+                }
+            };
+
+            // 搜索命令
+            commands.search = {
+                description: "搜索暗网资源",
+                usage: "search [关键词]",
+                execute: (args) => {
+                    if (args.length === 0) return ["用法: search [关键词]"];
+
+                    const query = args.join(' ');
+                    document.getElementById('search-query').textContent = `关键词: "${query}"`;
+                    document.getElementById('search-results').classList.remove('hidden');
+
+                    // 生成随机搜索结果
+                    const results = [];
+                    const resultCount = Math.floor(Math.random() * 10) + 5;
+
+                    for (let i = 0; i < resultCount; i++) {
+                        const titles = [
+                            `暗网市场: ${query}交易平台`,
+                            `关于${query}的技术讨论`,
+                            `${query}相关的教程和指南`,
+                            `最新${query}漏洞和利用方法`,
+                            `如何使用${query}进行安全测试`,
+                            `深入分析${query}的安全机制`,
+                            `规避${query}检测的方法`,
+                            `使用${query}的最佳实践`,
+                            `关于${query}的法律和道德问题`,
+                            `替代${query}的工具和技术`
+                        ];
+
+                        const urls = [
+                            `http://${query}-market.onion`,
+                            `http://dark-${query}.onion`,
+                            `http://${query}-forum.onion`,
+                            `http://secure-${query}.onion`,
+                            `http://${query}-research.onion`,
+                            `http://deep-${query}.onion`,
+                            `http://anonymous-${query}.onion`,
+                            `http://hidden-${query}.onion`,
+                            `http://underground-${query}.onion`,
+                            `http://darknet-${query}.onion`
+                        ];
+
+                        const titleIndex = Math.floor(Math.random() * titles.length);
+                        const urlIndex = Math.floor(Math.random() * urls.length);
+
+                        results.push({
+                            title: titles[titleIndex],
+                            url: urls[urlIndex],
+                            description: `关于${query}的详细信息和讨论，包含技术分析、使用方法和最新动态。`,
+                            lastUpdated: `${Math.floor(Math.random() * 30) + 1}天前`
+                        });
+                    }
+
+                    // 更新搜索结果区域
+                    const resultsContainer = document.getElementById('results-container');
+                    resultsContainer.innerHTML = '';
+
+                    results.forEach((result, index) => {
+                        const resultElement = document.createElement('div');
+                        resultElement.className = 'border border-primary/20 rounded p-2 hover:bg-primary/5 transition-colors';
+                        resultElement.innerHTML = `
+                            <h4 class="text-xs font-bold text-secondary">${index + 1}. ${result.title}</h4>
+                            <p class="text-xs text-primary/50 mt-1">${result.url}</p>
+                            <p class="text-xs text-primary/70 mt-1">${result.description}</p>
+                            <p class="text-xs text-primary/40 mt-1">最后更新: ${result.lastUpdated}</p>
+                        `;
+                        resultsContainer.appendChild(resultElement);
+                    });
+
+                    return [
+                        `正在搜索暗网资源: "${query}"`,
+                        `找到 ${resultCount} 个相关结果`,
+                        `结果已显示在搜索结果区域`
+                    ];
+                }
+            };
+
+            // 生成500个命令
+            for (let i = 1; i <= 500; i++) {
+                const cmdName = `cmd${i}`;
+                const categories = ["系统", "网络", "安全", "加密", "文件", "数据库", "应用", "工具", "测试", "杂项"];
+                const category = categories[Math.floor(Math.random() * categories.length)];
+
+                commands[cmdName] = {
+                    description: `执行${category}相关操作`,
+                    usage: `${cmdName} [参数]`,
+                    execute: () => [
+                        `命令 ${cmdName} 已执行`,
+                        `操作类型: ${category}`,
+                        `执行状态: 成功`,
+                        `返回代码: ${Math.floor(Math.random() * 1000)}`,
+                        `操作完成`
+                    ]
+                };
+            }
+        }
+
+        // 添加命令输出到历史
+        function addCommandOutput(output) {
+            const historyElement = document.getElementById('command-history');
+
+            if (output && output.length > 0) {
+                const outputContainer = document.createElement('div');
+                outputContainer.className = 'space-y-1';
+
+                output.forEach(line => {
+                    const lineElement = document.createElement('p');
+                    lineElement.className = 'text-sm text-primary/80';
+                    lineElement.textContent = line;
+                    outputContainer.appendChild(lineElement);
+                });
+
+                historyElement.appendChild(outputContainer);
+            }
+
+            // 滚动到底部
+            historyElement.scrollTop = historyElement.scrollHeight;
+        }
+
+        // 执行命令
+        function executeCommand(command) {
+            const inputElement = document.getElementById('command-input');
+            const historyElement = document.getElementById('command-history');
+
+            // 添加命令到历史
+            const commandElement = document.createElement('div');
+            commandElement.className = 'flex items-start space-x-2';
+
+            const promptElement = document.createElement('span');
+            promptElement.className = 'text-primary glow';
+            promptElement.textContent = 'WenTianPlay@darknet:~$';
+
+            const commandTextElement = document.createElement('span');
+            commandTextElement.className = 'text-primary';
+            commandTextElement.textContent = command;
+
+            commandElement.appendChild(promptElement);
+            commandElement.appendChild(commandTextElement);
+
+            historyElement.appendChild(commandElement);
+
+            // 解析命令
+            const parts = command.trim().split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1);
+
+            // 执行命令
+            if (commands[cmd]) {
+                const output = commands[cmd].execute(args);
+                addCommandOutput(output);
+            } else {
+                addCommandOutput([`${cmd}: 找不到命令`, `输入 'help' 或 '?' 获取可用命令列表`]);
+            }
+
+            // 清空输入并滚动到底部
+            inputElement.value = '';
+            historyElement.scrollTop = historyElement.scrollHeight;
+        }
+
+        // 处理键盘输入
+        function handleKeyPress(event) {
+            const inputElement = document.getElementById('command-input');
+            const command = inputElement.value.trim();
+
+            if (event.key === 'Enter' && command) {
+                // 添加到命令历史
+                commandHistory.push(command);
+                historyIndex = commandHistory.length;
+
+                // 执行命令
+                executeCommand(command);
+            } else if (event.key === 'ArrowUp') {
+                // 向上箭头浏览历史
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    inputElement.value = commandHistory[historyIndex];
+                }
+            } else if (event.key === 'ArrowDown') {
+                // 向下箭头浏览历史
+                if (historyIndex < commandHistory.length - 1) {
+                    historyIndex++;
+                    inputElement.value = commandHistory[historyIndex];
+                } else {
+                    historyIndex = commandHistory.length;
+                    inputElement.value = '';
+                }
+            }
+        }
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            // 生成矩阵背景
+            generateMatrixBackground();
+
+            // 初始化命令
+            initCommands();
+
+            // 添加键盘事件监听
+            const inputElement = document.getElementById('command-input');
+            inputElement.addEventListener('keydown', handleKeyPress);
+
+            // 添加按钮事件监听
+            document.getElementById('help-btn').addEventListener('click', () => {
+                document.getElementById('help-info').classList.toggle('hidden');
+            });
+
+            document.getElementById('network-btn').addEventListener('click', () => {
+                document.getElementById('network-map').classList.toggle('hidden');
+                generateNetworkMap();
+            });
+
+            document.getElementById('settings-btn').addEventListener('click', () => {
+                addCommandOutput([
+                    "设置菜单尚未实现",
+                    "此功能将在未来版本中添加"
+                ]);
+            });
+
+            // 聚焦到输入框
+            inputElement.focus();
+        });
+    </script>
+</body>
+</html>
