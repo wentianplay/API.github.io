@@ -149,7 +149,7 @@ Promise.all(domains.map(pingDomain)).then(results => {
             statusSpan.textContent = '超时';
             statusSpan.style.color = '#F44336';
         } else {
-            statusSpan.textContent = '错误';
+            statusSpan.textContent = '超时';
             statusSpan.style.color = '#F44336';
         }
         
