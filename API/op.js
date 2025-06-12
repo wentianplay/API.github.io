@@ -75,10 +75,10 @@ document.body.appendChild(popupContainer);
 // 显示弹窗
 popupContainer.style.display = 'block';
 
-// 40秒后自动关闭
+// 42秒后自动关闭
 setTimeout(function() {
     popupContainer.style.display = 'none';
-}, 40000);
+}, 42000);
 
 // 检测域名延迟的函数
 function pingDomain(domain) {
@@ -143,8 +143,8 @@ Promise.all(domains.map(pingDomain)).then(results => {
         
         if (result.status === 'success' && result.latency !== null) {
             statusSpan.textContent = result.latency + 'ms';
-            statusSpan.style.color = result.latency < 200 ? '#4CAF50' : 
-                                     result.latency < 500 ? '#FF9800' : '#F44336';
+            statusSpan.style.color = result.latency < 300 ? '#4CAF50' : 
+                                     result.latency < 600 ? '#FF9800' : '#F44336';
         } else if (result.status === 'timeout') {
             statusSpan.textContent = '超时';
             statusSpan.style.color = '#F44336';
