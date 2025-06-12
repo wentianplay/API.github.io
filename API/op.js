@@ -1,4 +1,5 @@
- 
+ try {
+    // 你的弹窗代码
 // 创建弹窗容器
 var popupContainer = document.createElement('div');
 popupContainer.id = 'network-popup';
@@ -20,7 +21,7 @@ popupContainer.style.cssText = `
 
 // 创建弹窗标题
 var popupTitle = document.createElement('h2');
-popupTitle.textContent = '网络延迟检测';
+popupTitle.textContent = '官方权威域名延迟检测';
 popupTitle.style.cssText = `
     margin-top: 0;
     color: #333;
@@ -109,12 +110,12 @@ function pingDomain(domain) {
 
 // 检测所有域名的延迟
 var domains = [
-    'wentianplay.com',
-    'wentianplay.cn',
-    'wentianplay.net',
-    'wentianplay.top',
-    'wentianwan.com',
-    'wentianwan.cn'
+    'www.wentianplay.com',
+    'www.wentianplay.cn',
+    'www.wentianplay.net',
+    'www.wentianplay.top',
+    'www.wentianwan.com',
+    'www.wentianwan.cn'
 ];
 
 // 执行检测
@@ -194,4 +195,9 @@ adjustPopupForMobile();
 
 // 窗口大小变化时调整
 window.addEventListener('resize', adjustPopupForMobile);
+  
+
+} catch (e) {
+    console.error('OP.js error:', e);
+}
  
