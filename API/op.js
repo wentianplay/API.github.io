@@ -100,11 +100,11 @@ function pingDomain(domain) {
         
         img.src = 'https://' + domain + '/favicon.ico?t=' + start;
         
-        // 设置超时（15秒）
+        // 设置超时（28秒）
         setTimeout(() => {
             if (img.onload || img.onerror) return;
             resolve({domain: domain, latency: null, status: 'timeout'});
-        }, 15000);
+        }, 28000);
     });
 }
 
