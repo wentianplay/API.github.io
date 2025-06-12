@@ -21,7 +21,7 @@ popupContainer.style.cssText = `
 
 // 创建弹窗标题
 var popupTitle = document.createElement('h2');
-popupTitle.textContent = '官方权威域名延迟检测';
+popupTitle.textContent = '文天玩官方权威域名延迟检测';
 popupTitle.style.cssText = `
     margin-top: 0;
     color: #333;
