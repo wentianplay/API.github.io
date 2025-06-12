@@ -143,8 +143,8 @@ Promise.all(domains.map(pingDomain)).then(results => {
         
         if (result.status === 'success' && result.latency !== null) {
             statusSpan.textContent = result.latency + 'ms';
-            statusSpan.style.color = result.latency < 300 ? '#4CAF50' : 
-                                     result.latency < 600 ? '#FF9800' : '#F44336';
+            statusSpan.style.color = result.latency < 200 ? '#4CAF50' : 
+                                     result.latency < 500 ? '#FF9800' : '#F44336';
         } else if (result.status === 'timeout') {
             statusSpan.textContent = '超时';
             statusSpan.style.color = '#F44336';
