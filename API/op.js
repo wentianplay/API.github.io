@@ -187,10 +187,10 @@ try {
             if (result.status === 'success' && result.latency !== null) {
                 statusSpan.textContent = result.latency + 'ms';
                 // 调整颜色阈值，更符合实际延迟范围
-                statusSpan.style.color = result.latency < 50 ? '#4CAF50' : 
-                                        result.latency < 100 ? '#8BC34A' :
-                                        result.latency < 200 ? '#FFC107' :
-                                        result.latency < 500 ? '#FF9800' : '#F44336';
+                statusSpan.style.color = result.latency < 100 ? '#4CAF50' : 
+                                        result.latency < 300 ? '#8BC34A' :
+                                        result.latency < 400 ? '#FFC107' :
+                                        result.latency < 600 ? '#FF9800' : '#F44336';
             } else {
                 statusSpan.textContent = result.status === 'timeout' ? '超时' : '超时';
                 statusSpan.style.color = '#F44336';
