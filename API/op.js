@@ -21,7 +21,7 @@ try {
 
     // 创建弹窗标题
     var popupTitle = document.createElement('h2');
-    popupTitle.textContent = '文天玩官方权威域名';
+    popupTitle.textContent = '文天玩官方权威域名延迟检测';
     popupTitle.style.cssText = `
         margin-top: 0;
         color: #333;
@@ -61,7 +61,7 @@ try {
 
     // 创建加载动画
     var loadingDiv = document.createElement('div');
-    loadingDiv.textContent = '正在检测域名延迟...';
+    loadingDiv.textContent = '正在检测官方权威域名延迟...';
     loadingDiv.style.cssText = `
         text-align: center;
         padding: 20px;
@@ -215,7 +215,7 @@ try {
                 border-radius: 4px;
                 font-size: 14px;
             `;
-            recommendation.textContent = `官方域名: ${bestResult.domain} (延迟最低: ${bestResult.latency}ms)`;
+            recommendation.textContent = `官方: ${bestResult.domain} (最低: ${bestResult.latency}ms)`;
             contentDiv.appendChild(recommendation);
         }
     }).catch(error => {
