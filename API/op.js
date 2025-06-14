@@ -75,15 +75,15 @@ try {
     // 显示弹窗
     popupContainer.style.display = 'block';
 
-    // 40秒后自动关闭
+    // 60秒后自动关闭
     setTimeout(function() {
         popupContainer.style.display = 'none';
-    }, 40000);
+    }, 60000);
 
     // 更精确的检测域名延迟的函数
     async function pingDomain(domain) {
-        const testCount = 3; // 每个域名测试3次取平均值
-        const timeouts = [3000, 6000, 12000]; // 每次测试的超时时间
+        const testCount = 6; // 每个域名测试6次取平均值
+        const timeouts = [1000, 3000,4000,6000,12000,28000]; // 每次测试的超时时间
         let totalLatency = 0;
         let successCount = 0;
         let lastError = null;
