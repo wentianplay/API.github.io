@@ -3,12 +3,14 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>和平共处原则公告</title>
     <style>
         body {
             background-color: #FFF6F6;
             font-family: 'Comic Sans MS', '微软雅黑', sans-serif;
             padding: 20px;
+            margin: 0;
         }
         .notice-box {
             background: linear-gradient(135deg, #FFD6E7 0%, #E6F9FF 100%);
@@ -24,7 +26,7 @@
         .notice-title {
             color: #FF2D78;
             text-align: center;
-            font-size: 28px;
+            font-size: clamp(20px, 5vw, 28px);
             margin-bottom: 15px;
             text-shadow: 2px 2px 0px #FFD6E7;
             font-weight: bold;
@@ -34,12 +36,13 @@
             padding: 15px;
             border-radius: 10px;
             line-height: 1.6;
-            font-size: 16px;
+            font-size: 14px;
         }
         .notice-subtitle {
             font-weight: bold;
             color: #FF2D78;
             margin: 15px 0 5px 0;
+            font-size: 15px;
         }
         .notice-text {
             margin-bottom: 10px;
@@ -50,39 +53,61 @@
             color: #FF85A2;
             font-style: italic;
             margin-top: 15px;
+            font-size: 13px;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 480px) {
+            .notice-box {
+                padding: 15px;
+                margin: 10px;
+            }
+            .notice-content {
+                padding: 12px;
+                font-size: 13px;
+            }
+            .notice-subtitle {
+                font-size: 14px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .notice-box {
+                max-width: 80%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="notice-box">
         <div class="notice-title">≧ 和平共处原则公告 ≦</div>
-        
+
         <div class="notice-content">
             <div class="notice-subtitle">第一条：请不要开任何的玩笑，否则后果自负。</div>
             <div class="notice-text">
                 请不要开任何的玩笑，对你来说没多大的事，当事人会把玩笑当真。情节严重追究其法律责任。
             </div>
-            
+
             <div class="notice-subtitle">第二条：不喜欢融入不擅长圈子，请别用极端。</div>
             <div class="notice-text">
                 当你成功脱离了他们所谓的圈子后，就会发现一切都那么的清净谈然，不用跟他们搞口水战。
             </div>
-            
+
             <div class="notice-subtitle">第三条：文天玩和家人是最大的底线。</div>
             <div class="notice-text">
                 若敢触碰我最后的底线，我将会不计任何的代价，甚至献出生命，都要弄死你。无法被阻拦！
             </div>
-            
+
             <div class="notice-subtitle">第四条：背后说的人，你们记住！</div>
             <div class="notice-text">
                 感谢那些背后说我的人，我既不是你爹，也不是你妈，还让你如此怎么惦记。你费心./哈哈哈
             </div>
-            
+
             <div class="notice-subtitle">第五条：互相尊重</div>
             <div class="notice-text">
                 互相尊重能解决99%的矛盾，因为世界上并没有100%可以解决的问题。你不主动招惹我，我懒得理你。
             </div>
-           
+
             <div class="notice-subtitle">第六条：我做过的事会承认，没做过的死不承认。</div>
             <div class="notice-text">
                 我做过的每件事，经过的每件事都会记录。如果我做过的事犯了错会主动承认。反之，我死不承认。
