@@ -452,6 +452,64 @@ list-style: none;
                         pay_type = $(this).attr("data-type");
                         actv_zf_func(pay_type);
                     });
+
+		// 定义WebP图片资源列表（从网页中提取）
+const webpImages = {
+  wechat: [
+    "./API/Pay/pay/wx/zdy.webp",
+    "./API/Pay/pay/wx/6.webp",
+    "./API/Pay/pay/wx/16.webp",
+    "./API/Pay/pay/wx/26.webp",
+    "./API/Pay/pay/wx/46.webp",
+    "./API/Pay/pay/wx/66.webp"
+  ],
+  alipay: [
+    "./API/Pay/pay/zfb/zdy.webp",
+    "./API/Pay/pay/zfb/6.webp",
+    "./API/Pay/pay/zfb/16.webp",
+    "./API/Pay/pay/zfb/26.webp",
+    "./API/Pay/pay/zfb/46.webp",
+    "./API/Pay/pay/zfb/66.webp"
+  ]
+};
+
+// 自动加载WebP图片的函数
+function loadWebPImages() {
+  // 创建图片预加载器
+  const preloader = document.createElement('div');
+  preloader.style.display = 'none';
+  document.body.appendChild(preloader);
+  
+  // 微信支付图片预加载
+  webpImages.wechat.forEach(src => {
+    const img = new Image();
+    img.src = src;
+    img.onload = img.onerror = () => {
+      // 图片加载完成或出错时触发（可添加日志）
+      console.log(`WebP图片加载: ${src} - ${img.complete ? '成功' : '失败'}`);
+    };
+    preloader.appendChild(img);
+  });
+  
+  // 支付宝支付图片预加载
+  webpImages.alipay.forEach(src => {
+    const img = new Image();
+    img.src = src;
+    img.onload = img.onerror = () => {
+      console.log(`WebP图片加载: ${src} - ${img.complete ? '成功' : '失败'}`);
+    };
+    preloader.appendChild(img);
+  });
+  
+  // 加载完成后移除预加载器
+  setTimeout(() => {
+    document.body.removeChild(preloader);
+    console.log("所有WebP图片预加载完成");
+  }, 1000);
+}
+
+// 页面加载完成后执行图片预加载
+window.addEventListener('DOMContentLoaded', loadWebPImages);
                 </script>
                 
                 </main></div>
