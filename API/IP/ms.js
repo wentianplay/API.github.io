@@ -1,7 +1,7 @@
 var tim=1;
 setInterval("tim++",10);
 var autourl=new Array();
-for(i=0;i<=8;i++){
+for(i=0;i<=7;i++){
 autourl[i]=$('.speedlist li').eq(i).find('a').attr("href");
 }
 function auto(url){
@@ -30,9 +30,6 @@ function auto(url){
 	}
 	if(url==autourl[7]){
 		$('#lineMs7').html(str+'ms')
-	}
-	if(url==autourl[8]){
-		$('#lineMs8').html(str+'ms')
   }
 }
 function run(){
