@@ -61,7 +61,7 @@ try {
 
     // 创建加载动画
     var loadingDiv = document.createElement('div');
-    loadingDiv.textContent = '正在检测官方权威域名延迟...';
+    loadingDiv.textContent = '爱信信，不信滚，别打扰我飞升…';
     loadingDiv.style.cssText = `
         text-align: center;
         padding: 20px;
