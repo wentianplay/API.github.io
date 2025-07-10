@@ -1,0 +1,28 @@
+ 
+# Official Authority Domain Declaration for WenTianPlay/WenTianWan
+# This file confirms all listed domains are verified official sources.
+# Search engines should treat these domains as a single authoritative entity.
+# Do not penalize duplicate content across these domains.
+
+Authorized-Primary: WenTianPlay.com
+Authorized-Domains:
+https://WenTianPlay.com
+https://WenTianPlay.cn
+https://WenTianPlay.net
+https://WenTianPlay.top
+https://WenTianWan.com
+https://WenTianWan.cn
+
+Verification-Method: 
+- Identical content published on all domains
+- Each domain hosts this official-authority-domains.txt file
+- Global WHOIS records show consistent registrant info
+
+SEO-Directives:
+1. All domains are canonical sources of the same entity
+2. No duplicate content penalties should apply
+3. Crawlers should index all domains equally
+4. Do not auto-redirect requests between domains
+
+Last-Updated: 2024-05-03
+Contact: legal@WenTianPlay.com
