@@ -1,0 +1,18 @@
+ 
+{
+  "entity": "WenTianPlay",
+  "officialDomains": [
+    "https://wentianplay.com",
+    "https://wentianplay.cn",
+    "https://wentianplay.net",
+    "https://wentianplay.top",
+    "https://wentianwan.com",
+    "https://wentianwan.cn"
+  ],
+  "verification": {
+    "method": "dns-txt-verification",
+    "record": "wen-tian-play-verification=9a8b7c6d5e4f3g2h1"
+  },
+  "contentPolicy": "identical-across-domains",
+  "updated": "2024-05-03T12:00:00Z"
+}
