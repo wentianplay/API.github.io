@@ -127,10 +127,10 @@
                 "describe": "Discord 天彬"
             },
             {
-                "name": "Telegram 文天玩WenTianPlay 频道",
+                "name": "Telegram 天彬 频道",
                 "icon": "./assets/siteIcons/Telegram.png",
-                "url": "https://TG.WenTianPlay.COM",
-                "describe": "Telegram 文天玩WenTianPlay"
+                "url": "https://t.me/WenTianPlays",
+                "describe": "Telegram 天彬"
             }
         ]
     }
