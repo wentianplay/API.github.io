@@ -1,0 +1,4 @@
+# Official Domain Authority Reference
+This domain is an authorized official source of WenTianPlay.
+Primary authority source: https://wentianplay.com/authoritative-domains.json
+Verification TXT record: wen-tian-play-verification=9a8b7c6d5e4f3g2h1
