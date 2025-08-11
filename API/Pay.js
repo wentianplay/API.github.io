@@ -1,4 +1,3 @@
-
 try {
     // 创建弹窗容器
     var popupContainer = document.createElement('div');
@@ -57,6 +56,13 @@ try {
         max-height: 300px;
         overflow-y: auto;
     `;
+    
+    // 添加所需内容
+    var contentText = document.createElement('p');
+    contentText.innerHTML = `<br>网速无法加载二维码请前往<br><a href="https://www.wentianplay.com/Pay" target="_blank">文天玩赞助捐款站-极速版</a>`;
+    contentText.style.cssText = `color: #666; line-height: 1.6;`;
+    contentDiv.appendChild(contentText);
+    
     popupContainer.appendChild(contentDiv);
 
 
@@ -71,7 +77,7 @@ try {
         popupContainer.style.display = 'none';
     }, 60000);
 
-    
+
     // 响应式设计
     function adjustPopupForMobile() {
         if (window.innerWidth <= 600) {
@@ -92,5 +98,5 @@ try {
     window.addEventListener('resize', adjustPopupForMobile);
 
 } catch (e) {
-    console.error('OP.js error:', e);
+    console.error('Pay.js error:', e);
 }
