@@ -20,7 +20,7 @@ try {
 
     // 创建弹窗标题
     var popupTitle = document.createElement('h2');
-    popupTitle.textContent = '文天玩赞助捐款站';
+    popupTitle.textContent = '网速无法加载二维码请前往';
     popupTitle.style.cssText = `
         margin-top: 0;
         color: #333;
@@ -59,7 +59,7 @@ try {
 
     // 添加所需内容
     var contentText = document.createElement('p');
-    contentText.innerHTML = `<br>网速无法加载二维码请前往<br><a href="https://www.wentianplay.com/pay" target="_blank">文天玩赞助捐款站</a>`;
+    contentText.innerHTML = `<a href="https://www.wentianplay.com/pay" target="_blank">点击》》》文天玩赞助捐款站《《《此处</a>`;
     contentText.style.cssText = `color: #666; line-height: 1.6;`;
     contentDiv.appendChild(contentText);
 
