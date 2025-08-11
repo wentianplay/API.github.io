@@ -59,7 +59,7 @@ try {
     
     // 添加所需内容
     var contentText = document.createElement('p');
-    contentText.innerHTML = `<br>网速无法加载二维码请前往<br><a href="https://www.wentianplay.com/Pay" target="_blank">文天玩赞助捐款站-极速版</a>`;
+    contentText.innerHTML = `<br>网速无法加载二维码请前往<br><a href="https://www.wentianplay.com/pay" target="_blank">文天玩赞助捐款站-极速版</a>`;
     contentText.style.cssText = `color: #666; line-height: 1.6;`;
     contentDiv.appendChild(contentText);
     
