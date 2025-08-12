@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文天玩官方权威域名</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌐</text></svg>">
+    <style>
+        :root {
+            --primary: #00c9a7;  /* 碧绿主色 */
+            --secondary: #0b4f40; /* 深绿强调色 */
+            --bg: #f5fffd;       /* 浅绿背景 */
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, var(--bg) 0%, #e0f7fa 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 201, 167, 0.2);
+            overflow: hidden;
+            border: 1px solid rgba(11, 79, 64, 0.1);
+        }
+        header {
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            position: relative;
+        }
+        h1 {
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        .domain-list {
+            padding: 30px 20px;
+        }
+        .domain-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            border-bottom: 1px dashed #e0e0e0;
+            transition: all 0.4s ease;
+        }
+        .domain-item:last-child {
+            border-bottom: none;
+        }
+        .domain-name {
+            flex: 1;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--secondary);
+            letter-spacing: 1px;
+        }
+        .domain-status {
+            width: 120px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .status-success { color: #00c9a7; }
+        .status-warning { color: #ff9800; }
+        .status-error { color: #f44336; }
+        .domain-latency {
+            width: 100px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 1.3rem;
+        }
+        .domain-action a {
+            display: inline-block;
+            padding: 12px 25px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 201, 167, 0.3);
+        }
+        .domain-action a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0, 201, 167, 0.4);
+        }
+        .pulse {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.3); }
+            100% { opacity: 0.6; transform: scale(1); }
+        }
+        .status-success .pulse { background: #00c9a7; }
+        .status-warning .pulse { background: #ff9800; }
+        .status-error .pulse { background: #f44336; }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .domain-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            .domain-name, .domain-status, 
+            .domain-latency, .domain-action {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>文天玩官方权威域名</h1>
+            <div class="subtitle">官方认证</div>
+        </header>
+
+        <div class="domain-list" id="domainList">
+            <!-- 域名状态动态生成 -->
+        </div>
+    </div>
+
+    <script>
+        // 待检测域名列表
+        const domains = [
+            { name: "wentianplay.com", url: "https://www.wentianplay.com" },
+            { name: "wentianplay.cn", url: "https://www.wentianplay.cn" },
+            { name: "wentianplay.net", url: "https://www.wentianplay.net" },
+            { name: "wentianplay.top", url: "https://www.wentianplay.top" },
+            { name: "wentianwan.com", url: "https://www.wentianwan.com" },
+            { name: "wentianwan.cn", url: "https://www.wentianwan.cn" }
+        ];
+
+        // 状态检测函数
+        async function checkDomain(domain) {
+            const startTime = performance.now();
+            try {
+                const response = await fetch(domain.url, {
+                    method: 'HEAD',
+                    mode: 'no-cors',
+                    cache: 'no-store'
+                });
+                const latency = Math.round(performance.now() - startTime);
+                return { status: 'success', latency };
+            } catch (error) {
+                try {
+                    // 备用检测方案
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 3000);
+                    await fetch(domain.url, { signal: controller.signal });
+                    clearTimeout(timeoutId);
+                    const latency = Math.round(performance.now() - startTime);
+                    return { status: 'success', latency };
+                } catch {
+                    return { status: 'error', latency: -1 };
+                }
+            }
+        }
+
+        // 渲染域名状态
+        function renderDomainStatus(domain, status, latency) {
+            const domainList = document.getElementById('domainList');
+            const item = document.createElement('div');
+            item.className = 'domain-item';
+
+            let statusClass = 'status-warning';
+            let statusText = '检测中...';
+            let latencyText = '--';
+
+            if (status === 'success') {
+                statusClass = 'status-success';
+                statusText = '访问正常';
+                latencyText = `${latency}ms`;
+            } else if (status === 'error') {
+                statusClass = 'status-error';
+                statusText = '无法访问';
+                latencyText = '超时';
+            }
+
+            item.innerHTML = `
+                <div class="domain-name">${domain.name}</div>
+                <div class="domain-status ${statusClass}">
+                    <span class="pulse"></span>${statusText}
+                </div>
+                <div class="domain-latency">${latencyText}</div>
+                <div class="domain-action">
+                    <a href="${domain.url}" target="_blank">立即访问</a>
+                </div>
+            `;
+
+            domainList.appendChild(item);
+        }
+
+        // 初始化检测
+        document.addEventListener('DOMContentLoaded', () => {
+            domains.forEach(domain => {
+                // 先显示检测中状态
+                renderDomainStatus(domain, 'checking');
+
+                // 执行检测
+                checkDomain(domain).then(result => {
+                    const items = document.querySelectorAll('.domain-item');
+                    const currentItem = items[domains.indexOf(domain)];
+
+                    // 更新状态
+                    const statusEl = currentItem.querySelector('.domain-status');
+                    const latencyEl = currentItem.querySelector('.domain-latency');
+
+                    if (result.status === 'success') {
+                        statusEl.innerHTML = '<span class="pulse"></span>访问正常';
+                        statusEl.className = 'domain-status status-success';
+                        latencyEl.textContent = `${result.latency}ms`;
+                    } else {
+                        statusEl.innerHTML = '<span class="pulse"></span>无法访问';
+                        statusEl.className = 'domain-status status-error';
+                        latencyEl.textContent = '超时';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
