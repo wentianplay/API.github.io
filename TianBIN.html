@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文天玩WenTianPlay官方权威域名运行时间</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            text-align: center;
+            padding: 20px;
+        }
+        .server {
+            background: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            width: 250px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+      
+        body {
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+        }
+    </style>
+</head>
+<body>
+
+<h1>文天玩WenTianPlay官方权威域名运行时间</h1>
+
+<div class="server" id="server1">
+    <h2>WenTianPlay.com</h2>
+    <p>官方权威认证</p>
+    <p id="time1"></p>
+</div>
+
+<div class="server" id="server2">
+    <h2>WenTianPlay.cn</h2>
+    <p>官方权威认证</p>
+    <p id="time2"></p>
+</div>
+
+<div class="server" id="server3">
+    <h2>WenTianPlay.net</h2>
+    <p>官方权威认证</p>
+    <p id="time3"></p>
+</div>
+
+<div class="server" id="server4">
+    <h2>WenTianPlay.top</h2>
+    <p>官方权威认证</p>
+    <p id="time4"></p>
+</div>
+
+<div class="server" id="server5">
+    <h2>WenTianWan.com</h2>
+    <p>官方权威认证</p>
+    <p id="time5"></p>
+</div>
+
+<div class="server" id="server6">
+    <h2>WenTianWan.cn</h2>
+    <p>官方权威认证</p>
+    <p id="time6"></p>
+</div>
+
+<div class="server" id="server7">
+    <h2>TianBIN.net</h2>
+    <p>官方权威认证</p>
+    <p id="time7"></p>
+</div>
+<script>
+    function startTime(startDateString, timeElementId) {
+        const startDate = new Date(startDateString).getTime();
+        const timeElement = document.getElementById(timeElementId);
+
+        function updateTime() {
+            const now = new Date().getTime();
+            const elapsedSeconds = Math.floor((now - startDate) / 1000);
+            const days = Math.floor(elapsedSeconds / 86400);
+            const hours = Math.floor((elapsedSeconds % 86400) / 3600);
+            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+            const seconds = elapsedSeconds % 60;
+
+            timeElement.innerHTML = `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+        }
+
+        setInterval(updateTime, 1000);
+        updateTime();  
+    }
+
+    window.onload = function() {
+        startTime('2024/05/03', 'time1'); 
+        startTime('2024/12/14', 'time2'); 
+        startTime('2024/12/27', 'time3'); 
+        startTime('2025/03/31', 'time4'); 
+        startTime('2025/04/03', 'time5'); 
+        startTime('2025/05/13', 'time6'); 
+        startTime('2025/08/28', 'time7'); 
+    }
+
+  
+    document.addEventListener('contextmenu', function (e) {
+        e.preventDefault();
+    });
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+            e.preventDefault();
+        }
+    });
+</script>
+
+</body>
+</html>
