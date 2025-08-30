@@ -4,121 +4,437 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文天玩WenTianPlay官方权威域名注册时间</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(125deg, #0c0e2a, #1a1c45, #2a1c4d);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
             text-align: center;
+        }
+
+        /* 星空背景 */
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle var(--duration, 5s) infinite ease-in-out;
+            opacity: 0;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: var(--opacity, 0.8); }
+        }
+
+        /* 标题样式 */
+        .header {
+            margin: 30px 0;
+            position: relative;
+            z-index: 10;
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(100, 149, 237, 0.7);
+            background: linear-gradient(45deg, #a18cd1, #fbc2eb, #8fd3f4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #d0d0ff;
+            line-height: 1.6;
+        }
+
+        /* 卡片容器 */
+        .servers-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            max-width: 1400px;
+            margin: 40px auto;
             padding: 20px;
         }
+
+        /* 卡片样式 */
         .server {
-            background: #fff;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+            background: rgba(20, 22, 45, 0.6);
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.2);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .server:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(93, 109, 255, 0.3);
+            border: 1px solid rgba(150, 180, 255, 0.3);
+        }
+
+        .server::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            z-index: -1;
+            transform: rotate(30deg);
+        }
+
+        .server h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #8fd3f4;
+            text-shadow: 0 0 10px rgba(143, 211, 244, 0.5);
+        }
+
+        .server .official {
+            background: linear-gradient(45deg, #6a11cb, #2575fc);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(37, 117, 252, 0.3);
+        }
+
+        .time-display {
+            text-align: center;
+            width: 100%;
+        }
+
+        .initial-time {
+            font-size: 1rem;
+            color: #a0a0ff;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .running-time {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #fbc2eb;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            text-shadow: 0 0 8px rgba(251, 194, 235, 0.7);
+        }
+
+        /* 粒子效果 */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* 底部装饰 */
+        .footer {
+            margin-top: 50px;
             padding: 20px;
-            margin: 10px;
-            display: inline-block;
-            width: 250px;
+            color: #8a8ac4;
+            font-size: 0.9rem;
         }
-        h1 {
-            color: #2c3e50;
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .server {
+                width: 100%;
+                max-width: 400px;
+            }
         }
-      
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .header p {
+                font-size: 1rem;
+            }
+            
+            .server h2 {
+                font-size: 1.5rem;
+            }
+            
+            .running-time {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* 禁止选择文本 */
         body {
-            -webkit-user-select: none; /* Safari */
-            -moz-user-select: none; /* Firefox */
-            -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
     </style>
 </head>
 <body>
+    <!-- 星空背景 -->
+    <div class="stars" id="stars"></div>
+    
+    <!-- 粒子效果 -->
+    <div class="particles" id="particles"></div>
 
-<h1>文天玩WenTianPlay官方权威域名注册时间</h1>
+    <!-- 页面内容 -->
+    <div class="header">
+        <h1>文天玩WenTianPlay官方权威域名注册时间</h1>
+        <p>所有官方域名注册时间精确到秒，实时计算已运行时间</p>
+    </div>
 
-<div class="server" id="server1">
-    <h2>WenTianPlay.com</h2>
-    <p>官方权威认证</p>
-    <p id="time1"></p>
-</div>
+    <div class="servers-container">
+        <!-- 域名卡片 -->
+        <div class="server">
+            <h2>WenTianPlay.com</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial1"></div>
+                <div class="running-time" id="time1"></div>
+            </div>
+        </div>
 
-<div class="server" id="server2">
-    <h2>WenTianPlay.cn</h2>
-    <p>官方权威认证</p>
-    <p id="time2"></p>
-</div>
+        <div class="server">
+            <h2>WenTianPlay.cn</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial2"></div>
+                <div class="running-time" id="time2"></div>
+            </div>
+        </div>
 
-<div class="server" id="server3">
-    <h2>WenTianPlay.net</h2>
-    <p>官方权威认证</p>
-    <p id="time3"></p>
-</div>
+        <div class="server">
+            <h2>WenTianPlay.net</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial3"></div>
+                <div class="running-time" id="time3"></div>
+            </div>
+        </div>
 
-<div class="server" id="server4">
-    <h2>WenTianPlay.top</h2>
-    <p>官方权威认证</p>
-    <p id="time4"></p>
-</div>
+        <div class="server">
+            <h2>WenTianPlay.top</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial4"></div>
+                <div class="running-time" id="time4"></div>
+            </div>
+        </div>
 
-<div class="server" id="server5">
-    <h2>WenTianWan.com</h2>
-    <p>官方权威认证</p>
-    <p id="time5"></p>
-</div>
+        <div class="server">
+            <h2>WenTianWan.com</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial5"></div>
+                <div class="running-time" id="time5"></div>
+            </div>
+        </div>
 
-<div class="server" id="server6">
-    <h2>WenTianWan.cn</h2>
-    <p>官方权威认证</p>
-    <p id="time6"></p>
-</div>
+        <div class="server">
+            <h2>WenTianWan.cn</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial6"></div>
+                <div class="running-time" id="time6"></div>
+            </div>
+        </div>
 
-<div class="server" id="server7">
-    <h2>TianBIN.net</h2>
-    <p>官方权威认证</p>
-    <p id="time7"></p>
-</div>
-<script>
-    function startTime(startDateString, timeElementId) {
-        const startDate = new Date(startDateString).getTime();
-        const timeElement = document.getElementById(timeElementId);
+        <div class="server">
+            <h2>TianBIN.net</h2>
+            <div class="official">官方权威认证</div>
+            <div class="time-display">
+                <div class="initial-time" id="initial7"></div>
+                <div class="running-time" id="time7"></div>
+            </div>
+        </div>
+    </div>
 
-        function updateTime() {
-            const now = new Date().getTime();
-            const elapsedSeconds = Math.floor((now - startDate) / 1000);
-            const days = Math.floor(elapsedSeconds / 86400);
-            const hours = Math.floor((elapsedSeconds % 86400) / 3600);
-            const minutes = Math.floor((elapsedSeconds % 3600) / 60);
-            const seconds = elapsedSeconds % 60;
+    <div class="footer">
+        <p>©2025 WenTianPlay 官方权威域名注册时间</p>
+    </div>
 
-            timeElement.innerHTML = `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+    <script>
+        // 创建星空背景
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            const starCount = 200;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机位置
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机大小
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机动画参数
+                star.style.setProperty('--opacity', Math.random() * 0.8 + 0.2);
+                star.style.setProperty('--duration', Math.random() * 4 + 3 + 's');
+                
+                starsContainer.appendChild(star);
+            }
         }
 
-        setInterval(updateTime, 1000);
-        updateTime();  
-    }
+        // 创建粒子效果
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // 随机位置
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // 随机大小
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // 随机动画
+                particle.style.animation = `float ${Math.random() * 10 + 5}s infinite ease-in-out`;
+                particle.style.animationDelay = `${Math.random() * 5}s`;
+                
+                particlesContainer.appendChild(particle);
+            }
+            
+            // 添加浮动动画
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes float {
+                    0%, 100% { transform: translate(0, 0); }
+                    25% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
+                    50% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
+                    75% { transform: translate(${Math.random() * 100 - 50}px, ${Math.random() * 100 - 50}px); }
+                }
+            `;
+            document.head.appendChild(style);
+        }
 
-    window.onload = function() {
-        startTime('2024/05/03', 'time1'); 
-        startTime('2024/12/14', 'time2'); 
-        startTime('2024/12/27', 'time3'); 
-        startTime('2025/03/31', 'time4'); 
-        startTime('2025/04/03', 'time5'); 
-        startTime('2025/05/13', 'time6'); 
-        startTime('2025/08/28', 'time7'); 
-    }
+        // 时间计算和显示函数
+        function startTime(startDateString, timeElementId, initialElementId) {
+            const startDate = new Date(startDateString);
+            const timeElement = document.getElementById(timeElementId);
+            const initialElement = document.getElementById(initialElementId);
+            
+            // 格式化初始时间
+            const year = startDate.getFullYear();
+            const month = (startDate.getMonth() + 1).toString().padStart(2, '0');
+            const day = startDate.getDate().toString().padStart(2, '0');
+            const hours = startDate.getHours().toString().padStart(2, '0');
+            const minutes = startDate.getMinutes().toString().padStart(2, '0');
+            const seconds = startDate.getSeconds().toString().padStart(2, '0');
+            
+            initialElement.textContent = `注册时间：${year}年${month}月${day}日 ${hours}时${minutes}分${seconds}秒`;
+            
+            const startTimeStamp = startDate.getTime();
+            
+            function updateTime() {
+                const now = new Date().getTime();
+                const elapsedSeconds = Math.floor((now - startTimeStamp) / 1000);
+                
+                const days = Math.floor(elapsedSeconds / 86400);
+                const hours = Math.floor((elapsedSeconds % 86400) / 3600);
+                const minutes = Math.floor((elapsedSeconds % 3600) / 60);
+                const seconds = elapsedSeconds % 60;
+                
+                timeElement.textContent = `${days}天 ${hours}小时 ${minutes}分 ${seconds}秒`;
+            }
+            
+            setInterval(updateTime, 1000);
+            updateTime();
+        }
 
-  
-    document.addEventListener('contextmenu', function (e) {
-        e.preventDefault();
-    });
+        // 页面加载时初始化
+        window.onload = function() {
+            createStars();
+            createParticles();
+            
+            // 设置每个域名的注册时间（精确到时分秒）
+            startTime('2024-05-03T14:42:49', 'time1', 'initial1');
+            startTime('2024-12-14T10:48:50', 'time2', 'initial2');
+            startTime('2024-12-27T15:09:42', 'time3', 'initial3');
+            startTime('2025-03-31T15:07:22', 'time4', 'initial4');
+            startTime('2025-04-03T15:17:51', 'time5', 'initial5');
+            startTime('2025-05-13T10:11:14', 'time6', 'initial6');
+            startTime('2025-08-28T00:00:50', 'time7', 'initial7');
+        };
 
-    document.addEventListener('keydown', function (e) {
-        if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+        // 禁止右键菜单和开发者工具
+        document.addEventListener('contextmenu', function(e) {
             e.preventDefault();
-        }
-    });
-</script>
+        });
 
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I') || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>
