@@ -238,7 +238,7 @@
     <!-- 页面内容 -->
     <div class="header">
         <h1>文天玩WenTianPlay官方权威域名注册时间</h1>
-        <p>所有官方域名注册时间精确到秒，实时计算已运行时间</p>
+        <p>所有官方域名注册时间精确到秒，实时计算已运行时间（中国时间）</p>
     </div>
 
     <div class="servers-container">
@@ -305,8 +305,7 @@
                 <div class="running-time" id="time7"></div>
             </div>
         </div>
-    </div>
- 
+
         <div class="server">
             <h2>WenTianPlays.com</h2>
             <div class="official">官方权威认证</div>
@@ -386,13 +385,14 @@
             document.head.appendChild(style);
         }
 
-        // 时间计算和显示函数
+        // 时间计算和显示函数（使用中国时间）
         function startTime(startDateString, timeElementId, initialElementId) {
-            const startDate = new Date(startDateString);
+            // 添加时区信息以确保准确解析为中国时间
+            const startDate = new Date(startDateString + '+08:00');
             const timeElement = document.getElementById(timeElementId);
             const initialElement = document.getElementById(initialElementId);
             
-            // 格式化初始时间
+            // 格式化初始时间（中国时间）
             const year = startDate.getFullYear();
             const month = (startDate.getMonth() + 1).toString().padStart(2, '0');
             const day = startDate.getDate().toString().padStart(2, '0');
@@ -425,7 +425,7 @@
             createStars();
             createParticles();
             
-            // 设置每个域名的注册时间（精确到时分秒）
+            // 设置每个域名的注册时间（精确到时分秒，中国时间）
             startTime('2024-05-03T14:42:49', 'time1', 'initial1');
             startTime('2024-12-14T10:48:50', 'time2', 'initial2');
             startTime('2024-12-27T15:09:42', 'time3', 'initial3');
@@ -433,7 +433,7 @@
             startTime('2025-04-03T15:17:51', 'time5', 'initial5');
             startTime('2025-05-13T10:11:14', 'time6', 'initial6');
             startTime('2025-08-28T00:00:50', 'time7', 'initial7');
-           startTime('2025-10-01T08:00:16', 'time8', 'initial8');
+            startTime('2025-10-01T08:00:16', 'time8', 'initial8');
         };
 
         // 禁止右键菜单和开发者工具
